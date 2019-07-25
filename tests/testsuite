@@ -1,0 +1,64 @@
+#!/bin/bash
+# Promts the user to specify a suite number and runs it
+# Number can also be included as an argument (i.e. "testsite 5")
+
+# Prints usage message
+usage()
+{
+    echo "Usage: testsuite [--token | -t YOUR_TOKEN]  [--suite | -s SUITE_NUMBER(0-99)] [--parallel | -p]"
+}
+
+# Detect parameters
+parallel=
+token=
+suite=
+while [ "$1" != "" ]; do
+    case $1 in
+        -t | --token )          shift
+                                token=$1
+                                ;;
+        -s | --suite )          shift
+                                suite=$1
+                                ;;
+        -p | --parallel )       parallel=1
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
+# Print test suites if we didn't get a suite number
+if [ "$suite" == "" ]; then
+    echo "Test suites available:"
+fi
+
+# Get a list of test suites
+i=0
+for file in $PWD/suites/*
+do
+    filename=$(echo $file | cut -d'/' -f 8)
+    names[$i]="$filename"
+    # Print the list of suites if we didn't get a suite number
+    if [ "$suite" == "" ]; then
+        echo ${names[i]}
+    fi
+    ((i++))
+done
+
+# Kill if no token or suite number
+if [ "$token" == "" ] || [ "$suite" == "" ]; then
+    usage
+    exit 1
+fi
+
+##### Main
+
+echo Executing: ${names[suite]}
+if [ "$parallel" == "1" ]; then
+    # Execute tests in parallel
+    pabot --testlevelsplit --outputdir report --loglevel DEBUG --variable token:$token suites/${names[suite]}
+else
+    # Normal robot execution
+    robot --outputdir report --loglevel DEBUG --variable token:$token suites/${names[suite]}
+fi
