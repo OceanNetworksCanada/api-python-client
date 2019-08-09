@@ -170,17 +170,18 @@ class _OncArchive(_OncService):
 
         # parse and remove the artificial paramenter extension
         extension = None
-        if 'extension' in filters:
-            extension = filters['extension']
+        filters2 = filters.copy()
+        if 'extension' in filters2:
+            extension = filters2['extension']
 
         try:
             if allPages:
                 mp = _MultiPage(self)
-                result = mp.getAllPages('archivefiles', url, filters)
+                result = mp.getAllPages('archivefiles', url, filters2)
             else:
-                if 'extension' in filters:
-                    del filters['extension']
-                result = self._doRequest(url, filters)
+                if 'extension' in filters2:
+                    del filters2['extension']
+                result = self._doRequest(url, filters2)
                 result = self._filterByExtension(result, extension)
             return result
         except Exception: raise

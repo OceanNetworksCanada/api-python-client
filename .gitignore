@@ -16,6 +16,7 @@ tests/user-code/
 tests/output/
 tests/htmlcov/
 tests/report/
+.pabotsuitenames
 
 # Don't include deployment scripts
 build/

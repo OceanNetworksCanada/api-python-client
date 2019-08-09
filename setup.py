@@ -1,7 +1,7 @@
 import setuptools
 
 # Modify this version before publishing a new release
-buildVersion = "2.2.0"
+buildVersion = "2.3.0"
 
 print('setup.py has build version: ' + buildVersion + '. Make sure this is the version you want to upload.')
 

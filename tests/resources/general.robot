@@ -48,7 +48,7 @@ List ${data} is empty
     Should Be Equal     ${type}     list
     Length Should Be    ${data}     ${0}
 
-First row in ${list} has key ${name:[^"]+}
+First row in ${list} has key "${name:[^"]+}"
     Dictionary Should Contain Key   ${list}[0]  ${name}
 
 First row in ${list} has key "${name}" with value "${value}"

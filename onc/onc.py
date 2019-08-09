@@ -1,4 +1,6 @@
 import json
+import datetime
+from dateutil import parser
 from modules._OncDiscovery import _OncDiscovery
 from modules._OncDelivery  import _OncDelivery
 from modules._OncRealTime  import _OncRealTime
@@ -38,7 +40,7 @@ class ONC:
     def print(self, obj, filename: str=""):
         """
         Helper for printing a JSON dictionary to the console or to a file
-        @filename: if present, creates the file and prints to it
+        @filename: if present, creates the file and writes the output in it
         """
         text = json.dumps(obj, indent=4)
         if filename == '':
@@ -46,6 +48,20 @@ class ONC:
         else:
             with open(filename, 'w+') as file:
                 file.write(text)
+
+
+    def formatUtc(self, dateString: str='now'):
+        """
+        Helper that returns an ISO8601 UTC string for the provided date string
+        Most date formats are supported, as explained in: http://labix.org/python-dateutil#head-c0e81a473b647dfa787dc11e8c69557ec2c3ecd2
+        A value of "now" returns the current UTC date & time
+        Depends on the local system clock
+        """
+        if dateString == 'now':
+            return datetime.datetime.utcnow().replace(microsecond=0).isoformat() + '.000Z'
+        else:
+            objDate = parser.parse(dateString)
+            return objDate.replace(microsecond=0).isoformat() + '.000Z'
 
 
     # PUBLIC METHOD WRAPPERS
@@ -90,7 +106,14 @@ class ONC:
     # Real-time methods
 
     def getDirectScalar(self, filters: dict=None, allPages: bool=False):
-        return self.realTime.getDirectScalar(filters, allPages)
+        # Alias for getDirectByLocation (to be eventually discontinued)
+        return self.getDirectByLocation(filters, allPages)
+    
+    def getDirectByLocation(self, filters: dict=None, allPages: bool=False):
+        return self.realTime.getDirectByLocation(filters, allPages)
+    
+    def getDirectByDevice(self, filters: dict=None, allPages: bool=False):
+        return self.realTime.getDirectByDevice(filters, allPages)
     
     def getDirectRawByLocation(self, filters: dict=None, allPages: bool=False):
         return self.realTime.getDirectRawByLocation(filters, allPages)

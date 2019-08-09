@@ -38,7 +38,6 @@ class _DataProductFile:
         Can poll, wait and retry if the file is not ready to download
         Return the file information
         """
-        #print('\ndonwload()')
         log = _PollLog(True)
         try:
             self._status = 202
@@ -62,16 +61,13 @@ class _DataProductFile:
                     self._downloaded = True
                     self._downloadingTime = round(duration, 3)
                     filename = self.extractNameFromHeader(response)
-
-                    saveAsFile(response, outPath, filename, overwrite)
                     self._filePath = filename
                     self._fileSize = len(response.content)
+                    saveAsFile(response, outPath, filename, overwrite)
                 
                 elif self._status == 202:
                     # Still processing, wait and retry
                     log.logMessage(response.json())
-                    #print('')
-                    #print(response.json())
                     sleep(pollPeriod)
                 
                 elif self._status == 204:
@@ -93,10 +89,13 @@ class _DataProductFile:
                     print('   FTP Error: File not found. If this product order is recent, retry downloading this product using the method downloadProduct with the runId: ' + runId)
                     _printErrorMessage(response)
         
-        except Exception:
+        except FileExistsError:
+            if self._retries > 1:
+                print('') # new line if required
+            print('   Skipping "{:s}": File already exists.'.format(self._filePath))
+        except Exception as ex:
             raise
 
-        #print('retries: {:d}'.format(self._retries))
         return self._status
 
 

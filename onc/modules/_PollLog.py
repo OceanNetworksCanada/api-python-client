@@ -6,8 +6,7 @@ from decimal import Decimal
 class _PollLog:
     """
     A helper for DataProductFile
-    Keeps track of the download process information (messages, time, etc.) in a
-    single product download process
+    Keeps track of the messages printed in a single product download process
     """
     def __init__(self, showInfo: bool):
         """
@@ -36,8 +35,11 @@ class _PollLog:
         if origin == 'run':
             msg = response[0]['status']
         else:
-            msg = response['message']
-            
+            if 'message' in response:
+                msg = response['message']
+            else:
+                msg = 'Generating'
+        
         if not self._messages or msg != self._messages[-1]:
             # Detect and print change in the file count
             if origin == 'run': 

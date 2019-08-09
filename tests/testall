@@ -1,4 +1,4 @@
-#!/bin/bash          
+#!/bin/bash
 
 echo "This script runs the robot framework tests"
 

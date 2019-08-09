@@ -3,7 +3,6 @@ import os
 import json
 from robot.libraries.BuiltIn import BuiltIn
 from expectedfields import expectedFields
-from robot.libraries.BuiltIn import BuiltIn
 from pathlib import Path
 
 sys.path.append(os.path.join(Path(__file__).parents[2], 'onc'))
@@ -17,30 +16,20 @@ def runMethod(name: str, filters: dict, param1=None):
     Runs a method from the global onc object
     optionally allows for a second nameless parameter
     """
-    if   name == 'getLocations':
-        return onc.getLocations(filters)
-    elif name == 'getLocationHierarchy':
-        return onc.getLocationHierarchy(filters)
-    elif name == 'getDeployments':
-        return onc.getDeployments(filters)
-    elif name == 'getDevices':
-        return onc.getDevices(filters)
-    elif name == 'getDeviceCategories':
-        return onc.getDeviceCategories(filters)
-    elif name == 'getProperties':
-        return onc.getProperties(filters)
-    elif name == 'getDataProducts':
-        return onc.getDataProducts(filters)
-    elif name == 'getDirectScalar':
-        return onc.getDirectScalar(filters, param1)
-    elif name == 'getDirectRawByLocation':
-        return onc.getDirectRawByLocation(filters, param1)
-    elif name == 'getDirectRawByDevice':
-        return onc.getDirectRawByDevice(filters, param1)
-    elif name == 'getListByLocation':
-        return onc.getListByLocation(filters, param1)
-    elif name == 'getListByDevice':
-        return onc.getListByDevice(filters, param1)
+    if   name == 'getLocations'           : return onc.getLocations(filters)
+    elif name == 'getLocationHierarchy'   : return onc.getLocationHierarchy(filters)
+    elif name == 'getDeployments'         : return onc.getDeployments(filters)
+    elif name == 'getDevices'             : return onc.getDevices(filters)
+    elif name == 'getDeviceCategories'    : return onc.getDeviceCategories(filters)
+    elif name == 'getProperties'          : return onc.getProperties(filters)
+    elif name == 'getDataProducts'        : return onc.getDataProducts(filters)
+    elif name == 'getDirectScalar'        : return onc.getDirectScalar(filters, param1)
+    elif name == 'getDirectByLocation'    : return onc.getDirectByLocation(filters, param1)
+    elif name == 'getDirectByDevice'      : return onc.getDirectByDevice(filters, param1)
+    elif name == 'getDirectRawByLocation' : return onc.getDirectRawByLocation(filters, param1)
+    elif name == 'getDirectRawByDevice'   : return onc.getDirectRawByDevice(filters, param1)
+    elif name == 'getListByLocation'      : return onc.getListByLocation(filters, param1)
+    elif name == 'getListByDevice'        : return onc.getListByDevice(filters, param1)
 
 
 def makeOnc(token: str, outPath='output'):
@@ -88,12 +77,17 @@ def isOncInstalled():
     return True
 
 
-def saveJsonToFile(obj, filename):
+def saveJsonToFile(obj: dict, filepath: str):
     '''
     saves a json dictionary structure to a file
     tries to beautify the output
     '''
+    # create path if it doesn't exist
+    path, filename = os.path.split(filepath)
+    if not os.path.exists(path):
+        os.makedirs(path)
+
     text = json.dumps(obj, indent=4)
-    with open(filename, 'w+') as file:
+    with open(filepath, 'w+') as file:
         file.write(text)
 

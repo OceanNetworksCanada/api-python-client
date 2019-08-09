@@ -25,7 +25,7 @@ def saveAsFile(response, filePath: str, fileName: str, overwrite: bool):
         except Exception:
             raise
     else:
-        print('   Skipping "{:s}": File already exists.'.format(fileName))
+        raise FileExistsError("exists")
 
 
 def _formatSize(size: float):

@@ -129,15 +129,19 @@ class _OncDelivery(_OncService):
     def _downloadProductFiles(self, runId: int, getMetadata: bool, maxRetries: int, overwrite: bool, fileCount: int=0):
         fileList = []
         index = 1
+        baseUrl = self._config('baseUrl')
+        token = self._config('token')
 
         # keep increasing index until fileCount or until we get 404
         doLoop = True
         timeout = self._config('timeout')
         print('\nDownloading data product files with runId {:d}...'.format(runId))
         
+        dpf = _DataProductFile(runId, str(index), baseUrl, token)
+        
+        # loop thorugh file indexes
         while doLoop:
             # stop after too many retries
-            dpf = _DataProductFile(runId, str(index), self._config('baseUrl'), self._config('token'))
             try:
                 status = dpf.download(timeout, self.pollPeriod, self._config('outPath'), maxRetries, overwrite)
             except Exception: raise
@@ -146,18 +150,22 @@ class _OncDelivery(_OncService):
                 # file was downloaded
                 fileList.append(dpf.getInfo(download=True))
                 index += 1
-            elif status == 404 or (fileCount > 0 and index >= fileCount):
+                dpf = _DataProductFile(runId, str(index), baseUrl, token)
+
+            elif status != 202 or (fileCount > 0 and index >= fileCount):
                 # no more files to download
                 doLoop = False
-            
+        
         # get metadata if required
         if getMetadata:
-            dpf = _DataProductFile(runId, 'meta', self._config('baseUrl'), self._config('token'))
+            dpf = _DataProductFile(runId, 'meta', baseUrl, token)
             try:
                 status = dpf.download(timeout, self.pollPeriod, self._config('outPath'), maxRetries, overwrite)
                 if status == 200:
                     fileList.append(dpf.getInfo(download=True))
+                    doLoop = False
             except Exception as ex:
+                print(ex)
                 print("   Metadata file was not downloaded")
                 fileList.append(dpf.getInfo(download=False))
 
