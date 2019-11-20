@@ -20,7 +20,7 @@ setuptools.setup(
     maintainer="Dany Cabrera",
     maintainer_email="dcabrera@uvic.ca",
 
-    description="Ocean 2.0 API Python Client Library.",
+    description="Ocean 2.0 API Python Client Library",
     license="Apache 2.0",
     keywords="ONC Ocean API",
     long_description=long_description,
