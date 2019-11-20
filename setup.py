@@ -32,7 +32,6 @@ setuptools.setup(
         'requests',
         'python-dateutil',
         'numpy',
-        'puremagic',
         'humanize',
         'urllib3'
     ],
