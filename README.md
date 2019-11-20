@@ -3,7 +3,11 @@
 This library facilitates access to scientific data hosted by [Ocean Networks Canada](https://oceannetworks.ca) through the
 [Oceans 2.0 API](https://wiki.oceannetworks.ca/display/O2A/Oceans+2.0+API+Home) public web services.
 
-This repository updates the onc pip package.
+This repository updates the [ONC pip package](https://pypi.org/project/onc) which can be installed with the command:
+
+```shell
+pip install onc
+```
 
 
 ## Maintainers
