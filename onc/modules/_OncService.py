@@ -10,7 +10,6 @@ class _OncService:
     """
 
     def __init__(self, parent: object):
-        # Children all have a copy of config
         self.parent = weakref.ref(parent)
         
 
@@ -42,9 +41,12 @@ class _OncService:
                 if status == 400:
                     _printErrorMessage(response)
                     raise Exception('The request failed with HTTP status {:d}.'.format(status), response.json())
-                if status == 401:
+                elif status == 401:
                     print('ERROR: Invalid user token.')
-                    raise Exception('Invalid user token (status {:d}).'.format(status), response.json())
+                    raise Exception('Invalid user token (status 401).', response.json())
+                elif status == 503:
+                    print('ERROR 503: Service unavailable. We could be down for maintenance; visit data.oceannetworks.ca for more information.')
+                    raise Exception('Service unavailable (status 503)')
                 else:
                     raise Exception('The request failed with HTTP status {:d}.'.format(status), _messageForError(status))
 

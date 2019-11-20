@@ -1,7 +1,7 @@
 *** Settings ***
 Library         OperatingSystem
 Library         String
-Documentation   Scalar Data Test Suite
+Documentation   08. Real-Time Test Suite
 Suite Setup     Inital Setup
 Resource        ../resources/general.robot
 

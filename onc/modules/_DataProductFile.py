@@ -73,7 +73,7 @@ class _DataProductFile:
                 elif self._status == 204:
                     # No data found
                     print('   No data found.')
-                
+
                 elif self._status == 400:
                     # API Error
                     _printErrorMessage(response)
@@ -107,12 +107,11 @@ class _DataProductFile:
         filename = txt.split('filename=')[1]
         return filename
 
-    
     def setComplete(self):
         self._status = 200
 
 
-    def getInfo(self, download: bool=False):
+    def getInfo(self):
         errorCodes = {
             '200': 'complete',
             '202': 'running',

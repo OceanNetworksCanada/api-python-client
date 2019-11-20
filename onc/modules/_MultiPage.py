@@ -12,7 +12,7 @@ class _MultiPage:
     def __init__(self, parent: object):
         self.parent = weakref.ref(parent)
         self.result = None
-    
+
 
     def getAllPages(self, service: str, url: str, filters: dict):
         """

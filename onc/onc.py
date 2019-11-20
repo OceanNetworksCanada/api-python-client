@@ -1,5 +1,6 @@
 import json
 import datetime
+import re
 from dateutil import parser
 from modules._OncDiscovery import _OncDiscovery
 from modules._OncDelivery  import _OncDelivery
@@ -13,7 +14,7 @@ class ONC:
     """
 
     def __init__(self, token, production: bool=True, showInfo: bool=False, outPath: str='output', timeout: int=60):
-        self.token    = token
+        self.token    = re.sub('[^a-zA-Z0-9\-]+', '', token)
         self.showInfo = showInfo
         self.timeout  = timeout
         self.baseUrl  = 'https://data.oceannetworks.ca/'
@@ -52,7 +53,7 @@ class ONC:
 
     def formatUtc(self, dateString: str='now'):
         """
-        Helper that returns an ISO8601 UTC string for the provided date string
+        Helper that returns an ISO8601 string for the provided date string
         Most date formats are supported, as explained in: http://labix.org/python-dateutil#head-c0e81a473b647dfa787dc11e8c69557ec2c3ecd2
         A value of "now" returns the current UTC date & time
         Depends on the local system clock

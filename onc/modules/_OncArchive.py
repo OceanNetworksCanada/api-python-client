@@ -44,7 +44,7 @@ class _OncArchive(_OncService):
         filters = {
             'token'   : self._config('token'),
             'method'  : 'getFile',
-            'filename': filename,
+            'filename': filename
         }
 
         try:
@@ -87,7 +87,6 @@ class _OncArchive(_OncService):
     def getDirectFiles(self, filters: dict, overwrite: bool=False, allPages: bool=False):
         '''
         Method to download files from the archivefiles service 
-        which match filter criteria defined by a dictionary of filters
         see https://wiki.oceannetworks.ca/display/help/archivefiles for usage and available filters
         '''
         # make sure we only get a simple list of files
@@ -168,7 +167,7 @@ class _OncArchive(_OncService):
         filters['token'] = self._config('token')
         filters['method'] = 'getListByLocation' if by == 'location' else 'getListByDevice'
 
-        # parse and remove the artificial paramenter extension
+        # parse and remove the artificial parameter extension
         extension = None
         filters2 = filters.copy()
         if 'extension' in filters2:
@@ -202,8 +201,9 @@ class _OncArchive(_OncService):
         
         # determine the row structure
         rowFormat = 'filename'
-        if isinstance(results['files'][0], dict):
-            rowFormat = 'dict'
+        if len(results['files']) > 0:
+            if isinstance(results['files'][0], dict):
+                rowFormat = 'dict'
 
         # filter
         for file in results['files']:

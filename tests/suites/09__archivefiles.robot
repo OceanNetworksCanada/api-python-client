@@ -3,7 +3,7 @@
 # Requires a "token" provided as an execution argument (ie --variable token:ABC123)
 
 *** Settings ***
-Documentation    Archive Files Test Suite
+Documentation    09. Archive Files Test Suite
 Resource         ../resources/general.robot
 
 
@@ -79,12 +79,12 @@ ${onc0}              Make ONC with path  output/09
 12. Get list by location, 3 pages, return archiveLocations
     ${result}=    Run method getListByLocation with &{F_LOC_RETURN1} and parameter ${True}
     List ${result}[files] has exactly 15 rows
-    First row in ${result}[files] has key archiveLocation
+    First row in ${result}[files] has key "archiveLocation"
 
 13. Get list by device, 3 pages, filter extension, return all metadata per sample
     ${result}=    Run method getListByLocation with &{F_LOC_RETURN2} and parameter ${True}
     List ${result}[files] has exactly 2 rows
-    First row in ${result}[files] has key uncompressedFileSize
+    First row in ${result}[files] has key "uncompressedFileSize"
 
 14. Save a file to current directory (empty outpath)
     Get file with name "NAXYS_HYD_007_20091231T235919.476Z-spect-small.png" and save to ""

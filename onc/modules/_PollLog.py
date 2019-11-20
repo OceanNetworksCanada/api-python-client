@@ -13,7 +13,6 @@ class _PollLog:
         @param showInfo same as in parent ONC object
         """
         self._messages = []       # unique messages returned during the product order
-        self._showInfo = False  
         self._runStart = 0.0      # {float} timestamp (seconds)
         self._runEnd   = 0.0
         self._showInfo = showInfo # flag for writing console messages

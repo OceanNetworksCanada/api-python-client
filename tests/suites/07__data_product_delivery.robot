@@ -95,7 +95,7 @@ Library         ../libraries/delivery.py
     Element ${rows}[1] with index meta was completed and downloaded
     Downloaded 2 files to output/07/08
 
-09. Manual request, run and download results only 
+09. Manual request, run and download results only
     [Tags]  run
     Prepare output directory  output/07/09
     ${reqId}=      Manual request with filters ${F_DUMMY1}
