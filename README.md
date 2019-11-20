@@ -6,8 +6,8 @@ This library facilitates access to scientific data hosted by [Ocean Networks Can
 
 ## Maintainers
 
-**Current maintainer**: [Dany Cabrera](dcabrera@oceannetworks.ca)
-**Previous maintainers**: [Allan Rempel](agrempel@uvic.ca), [Ryan Ross](ryanross@uvic.ca)
+* Current maintainer: [Dany Cabrera](dcabrera@oceannetworks.ca)
+* Previous maintainers: [Allan Rempel](agrempel@uvic.ca), [Ryan Ross](ryanross@uvic.ca)
 
 
 ## Official documentation
