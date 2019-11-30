@@ -88,3 +88,7 @@ class _OncDiscovery(_OncService):
                     row["hasDeviceData"]   = (row["hasDeviceData"] == "true")
                 if fixHasPropertyData:
                     row["hasPropertyData"] = (row["hasPropertyData"] == "true")
+                
+                # repeat for "children" if any
+                if 'children' in row:
+                    self._sanitizeBooleans(row["children"])
