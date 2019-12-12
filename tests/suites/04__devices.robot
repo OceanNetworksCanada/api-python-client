@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    Devices Test Suite
+Documentation    04. Devices Test Suite
 Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 

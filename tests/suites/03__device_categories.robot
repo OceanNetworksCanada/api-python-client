@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    DeviceCategories Test Suite
+Documentation    03. DeviceCategories Test Suite
 Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
@@ -23,7 +23,7 @@ Resource         ../resources/general.robot
     Field "deviceCategoryCode" in ${data}[0] holds the value "ADCP1200KHZ"
 
 03. Filter deviceCategoryName
-    ${data}=        Run method getDeviceCategories with filter deviceCategoryName="ADCP 1200 kHz"
+    ${data}=        Run method getDeviceCategories with filter deviceCategoryName="Current Profiler 1200"
     Elements in ${data}[0] have the expected fields for getDeviceCategories
     List ${data} has exactly 1 rows
     Field "deviceCategoryCode" in ${data}[0] holds the value "ADCP1200KHZ"

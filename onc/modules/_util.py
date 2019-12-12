@@ -7,6 +7,7 @@ def saveAsFile(response, filePath: str, fileName: str, overwrite: bool):
     """
     Saves the file downloaded in the response object, in the outPath, with filename
     If overwrite, will overwrite files with the same name
+    @returns status: int 0: Success, 1: Error, 2: Skipped: File exists
     """
     fullPath = fileName
     if len(filePath) > 0:
@@ -21,11 +22,12 @@ def saveAsFile(response, filePath: str, fileName: str, overwrite: bool):
             file = open(fullPath, 'wb+')
             file.write(response.content)
             file.close()
+            return 0
             
         except Exception:
-            raise
+            return -1
     else:
-        raise FileExistsError("exists")
+        return -2
 
 
 def _formatSize(size: float):

@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation    Deployments Test Suite
+Documentation    02. Deployments Test Suite
 Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 

@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    Data Product Discovery Test Suite
+Documentation    06. Data Product Discovery Test Suite
 Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
@@ -25,8 +25,8 @@ Resource         ../resources/general.robot
 03. Filter extension
     ${data}=        Run method getDataProducts with filter extension="cor"
     Elements in ${data}[0] have the expected fields for getDataProducts
-    List ${data} has exactly 1 rows
-    Field "dataProductCode" in ${data}[0] holds the value "CPD"
+    List ${data} has exactly 2 rows
+    Field "extension" in ${data}[0] holds the value "cor"
 
 04. Filter locationCode
     ${data}=        Run method getDataProducts with filter locationCode="SAAN"

@@ -1,6 +1,7 @@
 # Data product delivery tests.
 # Note that downloaded files for each test are output into a different folder; This avoids race conditions when running in parallel
 *** Settings ***
+Documentation    07. Data Product Delivery Test Suite
 Library         OperatingSystem
 Library         Collections
 Suite Setup     Inital Setup

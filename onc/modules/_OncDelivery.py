@@ -146,11 +146,12 @@ class _OncDelivery(_OncService):
                 status = dpf.download(timeout, self.pollPeriod, self._config('outPath'), maxRetries, overwrite)
             except Exception: raise
 
-            if status == 200:
-                # file was downloaded
-                fileList.append(dpf.getInfo(download=True))
+            if status == 200 or status == 777:
+                # file was downloaded (200), or downloaded & skipped (777)
+                fileList.append(dpf.getInfo())
                 index += 1
                 dpf = _DataProductFile(runId, str(index), baseUrl, token)
+            
 
             elif status != 202 or (fileCount > 0 and index >= fileCount):
                 # no more files to download
@@ -161,13 +162,13 @@ class _OncDelivery(_OncService):
             dpf = _DataProductFile(runId, 'meta', baseUrl, token)
             try:
                 status = dpf.download(timeout, self.pollPeriod, self._config('outPath'), maxRetries, overwrite)
-                if status == 200:
-                    fileList.append(dpf.getInfo(download=True))
+                if status == 200 or status == 777:
+                    fileList.append(dpf.getInfo())
                     doLoop = False
             except Exception as ex:
                 print(ex)
                 print("   Metadata file was not downloaded")
-                fileList.append(dpf.getInfo(download=False))
+                fileList.append(dpf.getInfo())
 
         return fileList
 

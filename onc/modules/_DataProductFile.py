@@ -39,9 +39,9 @@ class _DataProductFile:
         Return the file information
         """
         log = _PollLog(True)
-        try:
-            self._status = 202
-            while self._status == 202:
+        self._status = 202
+        while self._status == 202:
+            try:
                 # Run timed request
                 start = time()
                 response = requests.get(self._baseUrl, self._filters, timeout=timeout)
@@ -63,7 +63,16 @@ class _DataProductFile:
                     filename = self.extractNameFromHeader(response)
                     self._filePath = filename
                     self._fileSize = len(response.content)
-                    saveAsFile(response, outPath, filename, overwrite)
+                    saved = saveAsFile(response, outPath, filename, overwrite)
+                    if   saved == 0:
+                        pass
+                    elif saved == -2:
+                        if self._retries > 1:
+                            print('') # new line if required
+                        print('   Skipping "{:s}": File already exists.'.format(self._filePath))
+                        self._status = 777
+                    else:
+                        raise Exception('An error ocurred when saving the file "{:}"'.format(filename))
                 
                 elif self._status == 202:
                     # Still processing, wait and retry
@@ -88,13 +97,8 @@ class _DataProductFile:
                     # Gone
                     print('   FTP Error: File not found. If this product order is recent, retry downloading this product using the method downloadProduct with the runId: ' + runId)
                     _printErrorMessage(response)
-        
-        except FileExistsError:
-            if self._retries > 1:
-                print('') # new line if required
-            print('   Skipping "{:s}": File already exists.'.format(self._filePath))
-        except Exception as ex:
-            raise
+            except Exception as ex:
+                raise
 
         return self._status
 
@@ -120,7 +124,8 @@ class _DataProductFile:
             '401': 'unauthorized',
             '404': 'not found',
             '410': 'gone',
-            '500': 'server error'
+            '500': 'server error',
+            '777': 'skipped'
         }
 
         txtStatus = errorCodes[str(self._status)]

@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    Locations Test Suite
+Documentation    01. Locations Test Suite
 Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 

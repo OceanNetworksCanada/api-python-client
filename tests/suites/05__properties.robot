@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation    Properties Test Suite
+Documentation    05. Properties Test Suite
 Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 

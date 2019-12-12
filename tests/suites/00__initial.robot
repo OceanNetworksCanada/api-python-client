@@ -1,7 +1,7 @@
 # Generic tests outside the other test suites
 
 *** Settings ***
-Documentation    Initialization Test Suite
+Documentation    00. Initialization Test Suite
 Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
