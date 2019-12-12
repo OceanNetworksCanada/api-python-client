@@ -209,10 +209,15 @@ class _OncDelivery(_OncService):
         n = 0
         
         try:
-            while status == 200:
+            while status == 200 or status == 202:
                 response = requests.head(url, params=filters, timeout=self._config('timeout'))
                 status = response.status_code
-                if status == 200:
+
+                if status == 202:
+                    # If the file is still running, wait
+                    sleep(self.pollPeriod)
+                elif status == 200:
+                    # count successful HEAD request
                     filters['index'] += 1
                     n += 1
         except Exception: raise
