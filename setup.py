@@ -1,10 +1,10 @@
 import setuptools
 
 # Modify this version before publishing a new release
-buildVersion = "2.3.3"
+buildVersion = "2.3.5"
 
 print('setup.py has build version: ' + buildVersion + '. Make sure this is the version you want to upload.')
-.
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 

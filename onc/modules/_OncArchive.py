@@ -2,7 +2,6 @@ from ._OncService import _OncService
 from ._MultiPage import _MultiPage
 import requests
 import json
-import puremagic
 import humanize
 import os
 import time
