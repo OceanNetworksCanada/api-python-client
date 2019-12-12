@@ -14,8 +14,9 @@ ${onc0}              Make ONC with path  output/09
 &{F_LOCATION3}       locationCode=RISS    deviceCategoryCode=VIDEOCAM    dateFrom=2016-12-01T00:00:00.000Z    dateTo=2016-12-01T01:00:00.000Z    rowLimit=5
 &{F_LOCATIONFULL}    locationCode=RISS    deviceCategoryCode=VIDEOCAM    dateFrom=2016-12-01T00:00:00.000Z    dateTo=2016-12-01T01:00:00.000Z    extension=mp4
 &{F_LOC_RETURN1}     locationCode=RISS    deviceCategoryCode=VIDEOCAM    dateFrom=2016-12-01T00:00:00.000Z    dateTo=2016-12-01T01:00:00.000Z    rowLimit=5    returnOptions=archiveLocation
+&{F_DIRECT_WRONG}    locationCode=RISS    dateFrom=2016-12-01T00:00:00.000Z    dateTo=2016-12-01T01:00:00.000Z
 &{F_LOC_RETURN2}     locationCode=RISS    deviceCategoryCode=VIDEOCAM    dateFrom=2016-12-01T00:00:00.000Z    dateTo=2016-12-03T00:00:00.000Z    rowLimit=50    returnOptions=all    extension=mp4
-&{F_DEVICE1}         dateFrom=2010-01-01T00:00:00.000Z    dateTo=2010-01-01T00:02:00.000Z
+&{F_LOC_WRONG}       dateFrom=2010-01-01T00:00:00.000Z    dateTo=2010-01-01T00:02:00.000Z
 &{F_DEVICE1EXT}      deviceCode=NAXYS_HYD_007    dateFrom=2010-01-01T00:00:00.000Z    dateTo=2010-01-01T00:02:00.000Z    extension=mp3
 &{F_GETDIRECT_DEV}   dateFrom=2010-01-01T00:00:00.000Z  dateTo=2010-01-01T00:00:30.000Z  deviceCode=NAXYS_HYD_007  returnOptions=all
 &{F_GETDIRECT_LOC}   dateFrom=2016-12-01T00:00:00.000Z  dateTo=2016-12-01T01:00:00.000Z  locationCode=RISS  deviceCategoryCode=VIDEOCAM  extension=mp4
@@ -36,8 +37,7 @@ ${onc0}              Make ONC with path  output/09
     List ${result}[files] has exactly 1 rows
 
 4. Get list by location, wrong filters
-    
-    Run Keyword And Expect Error  *400*     Run method getListByLocation with filters &{F_DEVICE1}
+    Run Keyword And Expect Error  *400*     Run method getListByLocation with filters &{F_LOC_WRONG}
 
 5. Get list by device, 1 page, filter by extension
     ${result}=    Run method getListByDevice with filters &{F_DEVICE1EXT}
@@ -71,7 +71,7 @@ ${onc0}              Make ONC with path  output/09
 10. Wrong getDirectFile parameters
     [Tags]    run
     ${onc}=                 Make ONC with path      output/09/10
-    Run Keyword And Expect Error  *combination*     Call Method    ${onc}    getDirectFiles    filters=${F_LOCATION1}
+    Run Keyword And Expect Error  *combination*     Call Method    ${onc}    getDirectFiles    filters=${F_DIRECT_WRONG}
 
 11. Get list by device, wrong filters
     Run Keyword And Expect Error  *400*     Run method getListByDevice with filters &{F_LOCATION1}
