@@ -216,23 +216,3 @@ class _OncArchive(_OncService):
         results['files'] = filtered
 
         return results
-
-
-    """
-    @BUGFIX (2018/11/27): Currently the API might return a .gz file without extension
-    if this is a gzipped compressed file with the wrong extension, append the extension
-    """
-    """
-    def _fixGzFileExtension(self, filePath: str):
-        mime = puremagic.magic_file(filePath)
-        if len(mime) > 0 and mime[0][1] == 'application/x-gzip':
-            extension = filePath.split(".")[-1]
-            if extension != 'gz':
-                oldFilePath = filePath
-                filePath += '.gz'
-                try:
-                    os.rename(oldFilePath, filePath)
-                except:
-                    filePath = oldFilePath
-                    self._log('   A compressed file was downloaded to "{0}" but it was impossible to add the .gz extension. Consider doing this manually.'.format(filePath))
-    """
