@@ -9,23 +9,23 @@ Resource        ../resources/general.robot
 *** Variables ***
 
 # 1 page of temperature, by location
-&{F_SCALAR1}           locationCode=JDATF    deviceCategoryCode=ADCP600KHZ    propertyCode=seawatertemperature
-...                    dateFrom=2019-04-24T00:00:00.000Z    dateTo=2019-04-24T00:00:15.000Z
+&{F_SCALAR1}           locationCode=CRIP.C1    deviceCategoryCode=CTD    propertyCode=density
+...                    dateFrom=2018-03-24T00:00:00.000Z    dateTo=2018-03-24T00:00:15.000Z
 # 3 pages of temperature, by location
-&{F_SCALAR2}           locationCode=JDATF    deviceCategoryCode=ADCP600KHZ    propertyCode=seawatertemperature
-...                    dateFrom=2019-04-24T00:00:00.000Z    dateTo=2019-04-24T00:00:15.000Z    rowLimit=5
+&{F_SCALAR2}           locationCode=CRIP.C1    deviceCategoryCode=CTD    propertyCode=density
+...                    dateFrom=2018-03-24T00:00:00.000Z    dateTo=2018-03-24T00:00:15.000Z    rowLimit=5
 # 3 pages of temperature
 &{F_SCALAR3}           deviceCode=BARIX001    dateFrom=2017-06-08T00:00:00.000Z    dateTo=PT7M    rowLimit=5
 
-&{F_RAW1}              locationCode=JDATF    deviceCategoryCode=ADCP600KHZ
-...                    dateFrom=2019-04-24T00:00:00.000Z    dateTo=2019-04-24T00:00:10.000Z
-&{F_RAW3}              locationCode=JDATF    deviceCategoryCode=PHSENSOR
-...                    dateFrom=2019-04-24T00:00:00.000Z    dateTo=2019-04-24T00:01:30.000Z    rowLimit=5
+&{F_RAW1}              locationCode=CRIP.C1    deviceCategoryCode=CTD
+...                    dateFrom=2018-03-24T00:00:00.000Z    dateTo=2018-03-24T00:00:10.000Z
+&{F_RAW3}              locationCode=CRIP.C1    deviceCategoryCode=CTD
+...                    dateFrom=2018-03-24T00:00:00.000Z    dateTo=2018-03-24T00:01:30.000Z    rowLimit=5
 &{F_RAWDEV1}           deviceCode=BARIX001    dateFrom=2017-06-08T00:00:00.000Z    dateTo=PT5S
 &{F_WRONG_FILTERS}     locationCode=ONION    deviceCategoryCode=POTATO    propertyCode=BANANA
-...                    dateFrom=2019-04-24T00:00:00.000Z    dateTo=2019-04-24T00:00:10.000Z
-&{F_NODATA}            locationCode=JDATF    deviceCategoryCode=ADCP600KHZ
 ...                    dateFrom=2018-03-24T00:00:00.000Z    dateTo=2018-03-24T00:00:10.000Z
+&{F_NODATA}            locationCode=CRIP.C1    deviceCategoryCode=CTD
+...                    dateFrom=2015-03-24T00:00:00.000Z    dateTo=2015-03-24T00:00:10.000Z
 
 
 *** Test Cases ***
@@ -34,14 +34,14 @@ Resource        ../resources/general.robot
     ${response}=      Run method getDirectByLocation with filters ${F_SCALAR1}
     ${sensorData}=    Get From Dictionary  ${response}  sensorData
     First row in ${sensorData} has key "data"
-    First row in ${sensorData} has key "sensorCode" with value "temperature"
+    First row in ${sensorData} has key "sensorCode" with value "Sensor8_Voltage"
     No next page in ${response}
 
 2. Get scalar data by location with 3 pages
     ${response}=        Run method getDirectByLocation with ${F_SCALAR2} and parameter ${True}
     ${sensorData}=      Get From Dictionary  ${response}  sensorData
     First row in ${sensorData} has key "data"
-    First row in ${sensorData} has key "sensorCode" with value "temperature"
+    First row in ${sensorData} has key "sensorCode" with value "Sensor8_Voltage"
     List ${sensorData}[0][data][values] has exactly 15 rows
     No next page in ${response}
     #Save Json To File   ${data}     out_realtime_2.json
@@ -60,7 +60,7 @@ Resource        ../resources/general.robot
 
 6. Get raw data by location with 3 pages
     ${response}=        Run method getDirectRawByLocation with ${F_RAW3} and parameter ${True}
-    List ${response}[data][readings] has exactly 9 rows
+    List ${response}[data][readings] has exactly 90 rows
     No next page in ${response}
     #Save Json To File   ${data}     out_realtime_6.json
 
