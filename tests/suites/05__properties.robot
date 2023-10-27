@@ -1,6 +1,5 @@
 *** Settings ***
 Documentation    05. Properties Test Suite
-Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
 
@@ -53,5 +52,4 @@ Resource         ../resources/general.robot
     Run Keyword And Expect Error    *400*    Run method getProperties with filter propertyCode="XYZ321"
 
 09. No properties found
-    ${data}=        Run method getProperties with filters ${F_NO_RESULTS}
-    List ${data} is empty
+    Run Keyword And Expect Error    *404*    Run method getProperties with filters ${F_NO_RESULTS}

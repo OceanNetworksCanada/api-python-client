@@ -1,6 +1,5 @@
 *** Settings ***
 Documentation    04. Devices Test Suite
-Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
 
@@ -23,7 +22,7 @@ Resource         ../resources/general.robot
     Field "deviceCode" in ${data}[0] holds the value "NORTEKADCP9917"
 
 03. Filter deviceName
-    ${data}=        Run method getDevices with filter deviceName="Nortek Aquadopp HR-Profiler 2965"
+    ${data}=        Run method getDevices with filter deviceName="Nortek Aquadopp HR-Profiler 2 MHz 2700"
     Elements in ${data}[0] have the expected fields for getDevices
     List ${data} has exactly 1 rows
     Field "deviceCode" in ${data}[0] holds the value "BC_POD1_AD2M"
@@ -57,5 +56,4 @@ Resource         ../resources/general.robot
     Run Keyword And Expect Error    *400*    Run method getDevices with filter deviceCode="XYZ321"
 
 10. No devices found
-    ${data}=        Run method getDevices with filters ${F_NO_RESULTS}
-    List ${data} is empty
+    Run Keyword And Expect Error    *404*    Run method getDevices with filters ${F_NO_RESULTS}

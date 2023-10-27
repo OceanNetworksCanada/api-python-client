@@ -2,11 +2,10 @@ import json
 import datetime
 import re
 from dateutil import parser
-from modules._OncDiscovery import _OncDiscovery
-from modules._OncDelivery  import _OncDelivery
-from modules._OncRealTime  import _OncRealTime
-from modules._OncArchive   import _OncArchive
-
+from onc.modules._OncDiscovery import _OncDiscovery
+from onc.modules._OncDelivery  import _OncDelivery
+from onc.modules._OncRealTime  import _OncRealTime
+from onc.modules._OncArchive import _OncArchive
 class ONC:
     """
     Python ONC Api Client Library

@@ -5,9 +5,8 @@ from robot.libraries.BuiltIn import BuiltIn
 from expectedfields import expectedFields
 from pathlib import Path
 
-sys.path.append(os.path.join(Path(__file__).parents[2], 'onc'))
-from onc import ONC
 
+from onc.onc import ONC
 token = BuiltIn().get_variable_value("${TOKEN}")
 onc = ONC(token, True, True, 'output')
 

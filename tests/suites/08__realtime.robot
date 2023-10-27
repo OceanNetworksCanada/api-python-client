@@ -2,7 +2,6 @@
 Library         OperatingSystem
 Library         String
 Documentation   08. Real-Time Test Suite
-Suite Setup     Inital Setup
 Resource        ../resources/general.robot
 
 
@@ -34,21 +33,20 @@ Resource        ../resources/general.robot
     ${response}=      Run method getDirectByLocation with filters ${F_SCALAR1}
     ${sensorData}=    Get From Dictionary  ${response}  sensorData
     First row in ${sensorData} has key "data"
-    First row in ${sensorData} has key "sensorCode" with value "Sensor8_Voltage"
+    First row in ${sensorData} has key "sensorCode" with value "density"
     No next page in ${response}
 
 2. Get scalar data by location with 3 pages
     ${response}=        Run method getDirectByLocation with ${F_SCALAR2} and parameter ${True}
     ${sensorData}=      Get From Dictionary  ${response}  sensorData
     First row in ${sensorData} has key "data"
-    First row in ${sensorData} has key "sensorCode" with value "Sensor8_Voltage"
+    First row in ${sensorData} has key "sensorCode" with value "density"
     List ${sensorData}[0][data][values] has exactly 15 rows
     No next page in ${response}
     #Save Json To File   ${data}     out_realtime_2.json
 
 3. Scalar data by location not found for these filters
-    ${response}=       Run method getDirectByLocation with filters ${F_NODATA}
-    Should Be Equal    ${response}[sensorData]  ${None}
+    Run Keyword And Expect Error    *400*       Run method getDirectByLocation with filters ${F_NODATA}
 
 4. Scalar data by location with wrong filters
     Run Keyword And Expect Error    *400*       Run method getDirectByLocation with filters ${F_WRONG_FILTERS}
@@ -70,8 +68,7 @@ Resource        ../resources/general.robot
     No next page in ${response}
 
 8. Raw data not found for these filters
-    ${response}=        Run method getDirectRawByLocation with filters ${F_NODATA}
-    List ${response}[data][readings] has exactly 0 rows
+    Run Keyword And Expect Error    *400*     Run method getDirectRawByLocation with filters ${F_NODATA}
 
 9. Raw data with wrong filters
     Run Keyword And Expect Error    *400*     Run method getDirectRawByLocation with filters ${F_WRONG_FILTERS}
