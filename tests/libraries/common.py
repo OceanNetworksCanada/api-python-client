@@ -1,13 +1,9 @@
-import sys
 import os
 import json
-from robot.libraries.BuiltIn import BuiltIn
 from expectedfields import expectedFields
-from pathlib import Path
-
+from env_variable import token
 
 from onc.onc import ONC
-token = BuiltIn().get_variable_value("${TOKEN}")
 onc = ONC(token, True, True, 'output')
 
 def runMethod(name: str, filters: dict, param1=None):

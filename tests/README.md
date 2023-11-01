@@ -16,9 +16,9 @@ Test suites contain the test cases in the "Test Cases" section, and are written 
 ## Testing Requirements
 
 1. Make sure Python 3 and pip are installed properly. It is highly suggested to use a virtual environment.
-2. Install [Robot Framework](https://robotframework.org/)
+2. Install [Robot Framework](https://robotframework.org/) and [python-dotenv](https://saurabh-kumar.com/python-dotenv/)
 ```commandline
-pip install robotframework
+pip install robotframework python-dotenv
 ```
 (or use "pip3" depending on your system configuration)
 
@@ -38,29 +38,40 @@ In the terminal, go to the "tests" directory and run all tests from there.
 ```commandline
 cd tests
 ```
-After tests finish, review the summary and logs in the current directory.
+Create `.env` file under tests folder and put TOKEN variable in the file.
+```text
+TOKEN=${YOUR_TOKEN}
+```
 
 *To run all the test suites (parallelized):*
 ```commandline
-pabot --testlevelsplit --variable token:${YOUR_TOKEN} suites
+pabot --testlevelsplit suites
 ```
 
 *To run a single test suite (replace 0X with the prefix of the test file name, e.g., 01):*
 ```commandline
-robot --variable token:${YOUR_TOKEN} suites/0X*
+robot suites/01*    # robot suites/0X*
 ```
 
-*To run a single test (replace Y with the prefix of the test name, e.g., 1):*
+*To run a single test in a test suite (replace Y with the prefix of the test name, e.g., 01):*
 ```commandline
-robot --test Y* --variable token:${YOUR_TOKEN} suites/0X*
+robot --test "01*" suites/01*  # robot --test "Y*" suites/0X*
 ```
+
+*`--variable TOKEN:${YOUR_TOKEN}` can be used if no `.env` file is present*
+```commandline
+robot --variable TOKEN:${YOUR_TOKEN} suites/01*
+```
+
 Additionally, You can check the three bash files (testall, testcoverage and testsuite) for running the test suites.
+
+After tests finish, review the summary and logs in the current directory.
 
 ## Developing Tests
 
 Tests are written in "almost" plain English. This is intentional to keep tests easy to read and maintain.
 
-If its only required to modify a test parameter value, or just duplicating an existing test,
+If it's only required to modify a test parameter value, or just duplicating an existing test,
 just make the required changes, no coding knowledge is required.
 
 For anything more advanced than that, please read the Robot Framework Documentation and consider keeping
@@ -76,6 +87,8 @@ If you are an internal user of Ocean Networks Canada, please refer to the [inter
 
 ## Acknowledgements
 
-Initial author: dcabrera@uvic.ca
+Initial author: Dany Cabrera
 
 Maintainers: Kan Fu
+
+Previous maintainers: Dany Cabrera

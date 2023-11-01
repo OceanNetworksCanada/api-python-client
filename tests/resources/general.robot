@@ -2,6 +2,7 @@
 Library             ../libraries/common.py
 Library             Collections
 Library             OperatingSystem
+Variables           ../libraries/env_variable.py
 
 *** Variables ***
 ${onc}    makeOnc  ${token}  output
