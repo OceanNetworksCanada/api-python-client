@@ -34,38 +34,39 @@ pip install -e .
 
 ## Running the Tests
 
-In the terminal, go to the "tests" directory and run all tests from there.
+In the terminal, run all tests from the root directory. 
+Tests can also be run from a different folder. Just change the relative path of the test suites.
+
+Create a `.env` file under tests folder and put TOKEN variable in the file.
+If you are on Windows, make sure the encoding of `.env` file is UTF-8 after using the command below.
 ```commandline
-cd tests
-```
-Create `.env` file under tests folder and put TOKEN variable in the file.
-```text
-TOKEN=${YOUR_TOKEN}
+echo TOKEN=${YOUR_TOKEN} > tests/.env
 ```
 
 *To run all the test suites (parallelized):*
 ```commandline
-pabot --testlevelsplit suites
+pabot --testlevelsplit tests/suites
 ```
 
 *To run a single test suite (replace 0X with the prefix of the test file name, e.g., 01):*
 ```commandline
-robot suites/01*    # robot suites/0X*
+robot tests/suites/01*    # robot tests/suites/0X*
 ```
 
 *To run a single test in a test suite (replace Y with the prefix of the test name, e.g., 01):*
 ```commandline
-robot --test "01*" suites/01*  # robot --test "Y*" suites/0X*
+robot --test "01*" tests/suites/01*  # robot --test "Y*" tests/suites/0X*
 ```
 
 *`--variable TOKEN:${YOUR_TOKEN}` can be used if no `.env` file is present*
 ```commandline
-robot --variable TOKEN:${YOUR_TOKEN} suites/01*
+robot --variable TOKEN:${YOUR_TOKEN} tests/suites/01*
 ```
 
 Additionally, You can check the three bash files (testall, testcoverage and testsuite) for running the test suites.
+Robot Framework also has plugins for IDEs like VS Code and Pycharm that makes running tests easier. 
 
-After tests finish, review the summary and logs in the current directory.
+After tests finish, review the summary and logs in the root directory.
 
 ## Developing Tests
 
