@@ -1,4 +1,4 @@
-**TESTING DOCUMENTATION**
+# Testing Documentation
 
 This directory contains an automated test suite written for the Python API client using the [Robot Framework](http://robotframework.org) (RF from now on).
 
@@ -6,7 +6,6 @@ Directory structure is as follows:
 
 * libraries: Python 3 library files used in the tests
 * output:    Default output directory for methods that download files (i.e. orderDataProduct())
-* report:    Output directory for reports produced by RF
 * resources: Robot generic scripts to be reused by tests
 * suites:    Test suites
 
@@ -14,57 +13,83 @@ Read the test suites (.robot files) in "suites" to understand what exactly is be
 Test suites contain the test cases in the "Test Cases" section, and are written in a language similar to english.
 
 
-**TESTING REQUIREMENTS**
+## Testing Requirements
 
-1. Make sure Python 3 and pip are installed properly and can be run from any directory.
-2. If required, install Robot Framework:
-		pip3 install robotframework
-		(or use "pip" depending on your system configuration)
-3. Install pabot for test parallelization:
-		pip3 install -U robotframework-pabot
-4. Uninstall the onc package (pip3 uninstall onc) to make sure that the code tested is the one in this directory.
-	WARNING: Failing to do this might cause tests to pass on an older version and a buggy new version might end up deployed.
+1. Make sure Python 3 and pip are installed properly. It is highly suggested to use a virtual environment.
+2. Install [Robot Framework](https://robotframework.org/) and [python-dotenv](https://saurabh-kumar.com/python-dotenv/)
+```commandline
+pip install robotframework python-dotenv
+```
+(or use "pip3" depending on your system configuration)
+
+3. Optional: install [pabot](https://pabot.org/) for test parallelization:
+```commandline
+pip install -U robotframework-pabot
+```
+4. Install this project in editable mode (assume the current directory is the root)
+```commandline
+pip install -e .
+```
 
 
-**RUNNING THE TESTS**
+## Running the Tests
 
-In the terminal, go to the "tests" directory and run all tests from there.
-After tests finish, review the summary and logs in the "output" directory.
+In the terminal, run all tests from the root directory. 
+Tests can also be run from a different folder. Just change the relative path of the test suites.
+
+Create a `.env` file under tests folder and put TOKEN variable in the file.
+If you are on Windows, make sure the encoding of `.env` file is UTF-8 after using the command below.
+```commandline
+echo TOKEN=${YOUR_TOKEN} > tests/.env
+```
 
 *To run all the test suites (parallelized):*
+```commandline
+pabot --testlevelsplit tests/suites
+```
 
-	Execute the "runall" bash script.
+*To run a single test suite (replace 0X with the prefix of the test file name, e.g., 01):*
+```commandline
+robot tests/suites/01*    # robot tests/suites/0X*
+```
 
-*To run a single test suite:*
+*To run a single test in a test suite (replace Y with the prefix of the test name, e.g., 01):*
+```commandline
+robot --test "01*" tests/suites/01*  # robot --test "Y*" tests/suites/0X*
+```
 
-	robot --outputdir report --loglevel DEBUG suites/NAME_OF_THE_TEST_SUITE.robot
+*`--variable TOKEN:${YOUR_TOKEN}` can be used if no `.env` file is present*
+```commandline
+robot --variable TOKEN:${YOUR_TOKEN} tests/suites/01*
+```
 
-*To run a single test:*
+Additionally, You can check the three bash files (testall, testcoverage and testsuite) for running the test suites.
+Robot Framework also has plugins for IDEs like VS Code and Pycharm that makes running tests easier. 
 
-Add a placeholder tag to the test code, for example:
-	[Tags] runthis
-Then use --include to set the tag to run:
-	robot --outputdir report --loglevel DEBUG --include runthis suites/NAME_OF_THE_TEST_SUITE.robot
+After tests finish, review the summary and logs in the root directory.
 
-
-**DEVELOPING TESTS**
+## Developing Tests
 
 Tests are written in "almost" plain English. This is intentional to keep tests easy to read and maintain.
 
-If its only required to modify a test parameter value, or just duplicating an existing test,
+If it's only required to modify a test parameter value, or just duplicating an existing test,
 just make the required changes, no coding knowledge is required.
 
 For anything more advanced than that, please read the Robot Framework Documentation and consider keeping
 the directory structure relevant.
 
 
-**CODE DOCUMENTATION**
+## Code Documentation
 
 Robot Framework promotes test cases written almost in plain english (if you need to document it, you're writing it wrong).
-Still, code documentation is welcome if ever required.
+Still, code documentation is welcome if ever required. 
+If you are an internal user of Ocean Networks Canada, please refer to the [internal documentation page](https://internal.oceannetworks.ca/display/ONCData/11+-+Automated+User+Tests+for+API+Client+Libraries).
 
 
-**ACKNOWLEDGEMENTS**
+## Acknowledgements
 
-Initial author: dcabrera@uvic.ca
-Maintainers: 
+Initial author: Dany Cabrera
+
+Maintainers: Kan Fu
+
+Previous maintainers: Dany Cabrera

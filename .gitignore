@@ -13,10 +13,14 @@ legacy/
 tests/user-code/
 
 # ignore output from tests
-tests/output/
-tests/htmlcov/
-tests/report/
+output/
+htmlcov/
+report/
 .pabotsuitenames
+pabot_results/
+log.html
+output.xml
+report.html
 
 # Don't include deployment scripts
 build/
@@ -137,3 +141,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Pycharm idea folder
+.idea/

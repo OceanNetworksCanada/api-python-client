@@ -1,6 +1,5 @@
 *** Settings ***
 Documentation    03. DeviceCategories Test Suite
-Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
 
@@ -48,5 +47,4 @@ Resource         ../resources/general.robot
     Run Keyword And Expect Error    *400*    Run method getDeviceCategories with filter deviceCategoryCode="XYZ321"
 
 08. No deviceCategories found
-    ${data}=        Run method getDeviceCategories with filters ${F_NO_RESULTS}
-    List ${data} is empty
+    Run Keyword And Expect Error    *404*    Run method getDeviceCategories with filters ${F_NO_RESULTS}

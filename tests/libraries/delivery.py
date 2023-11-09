@@ -1,15 +1,9 @@
 # delivery services' tests
-from robot.libraries.BuiltIn import BuiltIn
-import sys
-import os
-import json
-from pathlib import Path
+from env_variable import token
 
-sys.path.append(os.path.join(Path(__file__).parents[2], 'onc'))
-from onc import ONC
+from onc.onc import ONC
 
 # get token from Robot variable
-token = BuiltIn().get_variable_value("${TOKEN}")
 onc = ONC(token, True, True, 'output')
 
 

@@ -1,6 +1,5 @@
 *** Settings ***
 Documentation    01. Locations Test Suite
-Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
 
@@ -71,5 +70,4 @@ Resource         ../resources/general.robot
     Run Keyword And Expect Error    *400*    Run method getLocations with filter locationCode="XYZ123"
 
 12. No locations found
-    ${data}=        Run method getLocations with filters ${F_NO_RESULTS}
-    List ${data} is empty
+    Run Keyword And Expect Error    *404*    Run method getLocations with filters ${F_NO_RESULTS}

@@ -1,7 +1,6 @@
 *** Settings ***
 
 Documentation    02. Deployments Test Suite
-Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
 
@@ -47,5 +46,4 @@ Resource         ../resources/general.robot
     Run Keyword And Expect Error    *400*    Run method getDeployments with filter locationCode="XYZ123"
 
 08. No deployments found
-    ${data}=        Run method getDeployments with filters ${F_NO_RESULTS}
-    List ${data} is empty
+    Run Keyword And Expect Error    *404*    Run method getDeployments with filters ${F_NO_RESULTS}

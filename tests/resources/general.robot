@@ -2,6 +2,7 @@
 Library             ../libraries/common.py
 Library             Collections
 Library             OperatingSystem
+Variables           ../libraries/env_variable.py
 
 *** Variables ***
 ${onc}    makeOnc  ${token}  output
@@ -101,8 +102,3 @@ Method ${methodName} with filter ${filterName}="${filterValue}" returns a row wi
 Run method ${methodName} from "${dateFrom}" to "${dateTo}"
     ${result}=          Run Method            ${methodName}    {"dateFrom": "${dateFrom}", "dateTo": "${dateTo}"}
     [return]            ${result}
-
-
-
-Inital Setup
-    evaluate           sys.path.append('${EXECDIR}')   modules=sys

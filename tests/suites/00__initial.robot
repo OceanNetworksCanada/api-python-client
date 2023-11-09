@@ -2,16 +2,15 @@
 
 *** Settings ***
 Documentation    00. Initialization Test Suite
-Suite Setup      Inital Setup
 Resource         ../resources/general.robot
 
 *** Variables ***
 &{F_LOCATIONCODE}           locationCode=CQSBG
 
 *** Test Cases ***
-01. ONC pip package is NOT installed
+01. ONC pip package is installed
     ${isInstalled}=         isOncInstalled
-    Should Not Be True      ${isInstalled}
+    Should Be True      ${isInstalled}
 
 02. Invalid token return unauthorized error
     ${onc}=                 makeOnc    FAKE_TOKEN  output

@@ -4,7 +4,6 @@
 Documentation    07. Data Product Delivery Test Suite
 Library         OperatingSystem
 Library         Collections
-Suite Setup     Inital Setup
 Resource        ../resources/general.robot
 Library         ../libraries/delivery.py
 
