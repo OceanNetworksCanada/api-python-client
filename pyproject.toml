@@ -33,3 +33,7 @@ Source = "https://github.com/OceanNetworksCanada/api-python-client"
 
 [tool.setuptools]
 packages = ["onc"]
+
+[tool.isort]
+profile = "black"
+src_paths = ["onc", "tests"]
