@@ -43,6 +43,13 @@ If you are on Windows, make sure the encoding of `.env` file is UTF-8 after usin
 echo TOKEN=${YOUR_TOKEN} > tests/.env
 ```
 
+The default testing environment is PROD. If you are an internal developer, add the following line to .env so that the tests are running against QA. 
+
+```commandline
+echo ONC_ENV=QA >> tests/.env
+```
+Change ONC_ENV value from QA to PROD if testing in PROD is needed. Removing the line also does the trick.
+
 *To run all the test suites (parallelized):*
 ```commandline
 pabot --testlevelsplit tests/suites
