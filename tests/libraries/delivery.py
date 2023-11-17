@@ -1,11 +1,6 @@
 # delivery services' tests
-from env_variable import token
 
-from onc.onc import ONC
-
-# get token from Robot variable
-onc = ONC(token, True, True, 'output')
-
+from common import onc
 
 def manualRequestProduct(filters: dict):
 	# Manually requests data product, doesn't execute or download

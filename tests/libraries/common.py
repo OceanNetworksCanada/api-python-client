@@ -1,10 +1,10 @@
 import os
 import json
 from expectedfields import expectedFields
-from env_variable import token
+from env_variable import token, is_prod
 
 from onc.onc import ONC
-onc = ONC(token, True, True, 'output')
+onc = ONC(token, is_prod, True, 'output')
 
 def runMethod(name: str, filters: dict, param1=None):
     """
@@ -29,7 +29,7 @@ def runMethod(name: str, filters: dict, param1=None):
 
 def makeOnc(token: str, outPath='output'):
     # Returns a onc instance
-    return ONC(token, True, True, outPath)
+    return ONC(token, is_prod, True, outPath)
 
 
 def dataHasExpectedFields(data, methodName):
