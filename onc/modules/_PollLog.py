@@ -1,10 +1,3 @@
-from decimal import Decimal
-from time import time
-from typing import List
-
-from requests import Response
-
-
 class _PollLog:
     """
     A helper for DataProductFile

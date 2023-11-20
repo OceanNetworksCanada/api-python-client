@@ -1,5 +1,4 @@
-import os
-from datetime import datetime, timedelta
+from datetime import timedelta
 from time import sleep, time
 
 import humanize
@@ -9,7 +8,6 @@ from ._DataProductFile import _DataProductFile
 from ._OncService import _OncService
 from ._PollLog import _PollLog
 from ._util import _formatSize, _printErrorMessage
-from .Exceptions import MaxRetriesException
 
 
 class _OncDelivery(_OncService):

@@ -12,14 +12,9 @@
 
 import json
 import math
-import os.path
-import sys
-from datetime import date, datetime, timedelta
-from xml.etree.ElementTree import ElementTree, fromstring
+from datetime import datetime, timedelta
 
-import requests
-from dateutil.relativedelta import *
-from dateutil.relativedelta import relativedelta
+from dateutil.relativedelta import SU, relativedelta
 
 datetimeFormat = "%Y-%m-%dT%H:%M:%S.%f"
 

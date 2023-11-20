@@ -1,7 +1,6 @@
 import math
 import re
 import weakref
-from datetime import timedelta
 from time import time
 
 import dateutil.parser
