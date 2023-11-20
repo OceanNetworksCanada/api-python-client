@@ -51,7 +51,6 @@ class _OncRealTime(_OncService):
         url = self._serviceUrl(service)
         filters["method"] = method
         filters["token"] = self._config("token")
-        dataKey = "sensorData" if service == "scalardata" else "data"
 
         # if sensorCategoryCodes is an array, join it into a comma-separated string
         if "sensorCategoryCodes" in filters and isinstance(

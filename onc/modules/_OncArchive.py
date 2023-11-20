@@ -57,8 +57,6 @@ class _OncArchive(_OncService):
                 # Save file to output path
                 outPath = self._config("outPath")
                 saveAsFile(response, outPath, filename, overwrite)
-                filePath = "{:s}/{:s}".format(outPath, filename)
-                # self._fixGzFileExtension(filePath) # Supposedly not needed after DMAS fix
 
             else:
                 _printErrorMessage(response)

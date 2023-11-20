@@ -35,7 +35,7 @@ class _MultiPage:
             )
             rNext = response["next"]
 
-            if rNext != None:
+            if rNext is not None:
                 print(
                     "Data quantity is greater than the row limit and will be downloaded in multiple pages."
                 )
@@ -49,7 +49,7 @@ class _MultiPage:
 
                 # keep downloading pages until next is None
                 print("")
-                while rNext != None:
+                while rNext is not None:
                     pageCount += 1
                     rowCount = self._rowCount(response, service)
 
