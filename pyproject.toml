@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "onc"
+version = "2.3.5"
+description = "Ocean 2.0 API Python Client Library"
+authors = [
+    {name="ONC Data Team", email="data@oceannetworks.ca"},
+]
+maintainers = [
+    {name="Dany Cabrera", email="dcabrera@uvic.ca"}
+]
+license = {file = "LICENSE.txt"}
+requires-python = ">=3.4"
+classifiers = [
+    "Programming Language :: Python",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: Apache Software License",
+]
+readme = "README.rst"
+dependencies = [
+    "requests",
+    "python-dateutil",
+    "numpy",
+    "humanize",
+    "urllib3"
+]
+
+[project.optional-dependencies]
+dev = [
+    "robotframework-pabot",
+    "ipython",
+    "robotframework",
+    "python-dotenv",
+    "build",
+]
+
+[project.urls]
+"Homepage" = "https://wiki.oceannetworks.ca/display/O2A/API+Guide"
+"PyPI" = "https://pypi.org/project/onc/"
+"Source Code" = "https://github.com/OceanNetworksCanada/api-python-client"
+
+[tool.setuptools]
+packages = ["onc"]
