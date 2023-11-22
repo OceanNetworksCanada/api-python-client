@@ -83,12 +83,14 @@ class _OncDelivery(_OncService):
 
     def runDataProduct(self, dpRequestId: int, waitComplete: bool):
         """
-        Run a product request and optionally wait until the product generation is complete
-        Return a dictionary with information of the run process
+        Run a product request.
+
+        Optionally wait until the product generation is complete.
+        Return a dictionary with information of the run process.
         """
         status = ""
         log = _PollLog(True)
-        url = "{:s}api/dataProductDelivery".format(self._config("baseUrl"))
+        url = f"{self._config('baseUrl')}api/dataProductDelivery"
         runResult = {"runIds": [], "fileCount": 0, "runTime": 0, "requestCount": 0}
 
         try:
@@ -150,7 +152,7 @@ class _OncDelivery(_OncService):
         overwrite: bool,
     ):
         """
-        A public wrapper for downloadProductFiles that lets a user download data products with a runId
+        Wrapper for downloadProductFiles that downloads data products with a runId.
         """
         try:
             if downloadResultsOnly:
@@ -231,13 +233,13 @@ class _OncDelivery(_OncService):
 
     def _infoForProductFiles(self, dpRunId: int, fileCount: int, getMetadata: bool):
         """
-        Returns a list of information dictionaries for each file available for download
-        Returned rows will have the same structure as those returned by _DataProductFile.getInfo()
+        Returns a list of information dictionaries for each file available for download.
+
+        Returned rows will have the same structure as those returned by
+        _DataProductFile.getInfo().
         """
         print(
-            "\nObtaining download information for data product files with runId {:d}...".format(
-                dpRunId
-            )
+            f"\nObtaining download information for data product files with runId {dpRunId}..."  # noqa: E501
         )
 
         # If we don't know the fileCount, get it from the server (takes longer)
@@ -264,10 +266,12 @@ class _OncDelivery(_OncService):
 
     def _countFilesInProduct(self, runId: int):
         """
-        Given a runId, polls the "download" method to count the number of files available for download
-        Uses HTTP HEAD to avoid downloading the files
+        Count the number of files available for download.
+
+        Given a runId, polls the "download" method to count files.
+        Uses HTTP HEAD to avoid downloading the files.
         """
-        url = "{:s}api/dataProductDelivery".format(self._config("baseUrl"))
+        url = f"{self._config('baseUrl')}api/dataProductDelivery"
         filters = {
             "method": "download",
             "token": self._config("token"),
@@ -299,11 +303,13 @@ class _OncDelivery(_OncService):
 
     def _printProductRequest(self, response):
         """
-        Prints the information from a response given after a data product request
-        The request response format might differ depending on the product source (archive or generated on the fly)
+        Prints the information after a data product request.
+
+        The request response format might differ depending on the
+        product source (archive or generated on the fly).
         """
         isGenerated = "estimatedFileSize" in response
-        print("Request Id: {:d}".format(response["dpRequestId"]))
+        print(f"Request Id: {response['dpRequestId']}")
 
         if isGenerated:
             size = response["estimatedFileSize"]  # API returns it as a formatted string
@@ -321,10 +327,15 @@ class _OncDelivery(_OncService):
 
     def _estimatePollPeriod(self, response):
         """
-        Sets a poll period adequate to the estimated processing time
-        Longer processing times require longer poll periods to avoid going over maxRetries
+        Parse estimated processing time and set polling.
+
+        Sets a poll period adequate to the estimated processing time.
+        Longer processing times require longer poll periods to
+        avoid going over maxRetries.
+
+        Does not work for archived data products because the response
+        does not include estimatedProcessingTime.
         """
-        # Parse estimated processing time (if the API returns it, which is not the case with archived data products)
         if "estimatedProcessingTime" in response:
             txtEstimated = response["estimatedProcessingTime"]
             parts = txtEstimated.split(" ")

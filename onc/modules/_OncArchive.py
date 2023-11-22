@@ -19,8 +19,9 @@ class _OncArchive(_OncService):
 
     def getListByLocation(self, filters: dict = None, allPages: bool = False):
         """
-        Get a list of files for a given location code and device category code, and filtered by others optional parameters.
-        if locationCode or deviceCategoryCode are missing, we suppose they are in the filters
+        Return a list of archived files for a device category in a location.
+
+        The filenames obtained can be used to download files using the getFile() method.
         """
         try:
             return self._getList(filters, by="location", allPages=allPages)
@@ -29,8 +30,9 @@ class _OncArchive(_OncService):
 
     def getListByDevice(self, filters: dict = None, allPages: bool = False):
         """
-        Get a list of files available in Oceans 2.0 Archiving System for a given device code. The list of filenames can be filtered by time range.
-        if deviceCode is missing, we suppose it is in the filters
+        Return a list of archived files from a specific device.
+
+        The filenames obtained can be used to download files using the getFile() method.
         """
         try:
             return self._getList(filters, by="device", allPages=allPages)
@@ -90,8 +92,13 @@ class _OncArchive(_OncService):
         self, filters: dict, overwrite: bool = False, allPages: bool = False
     ):
         """
-        Method to download files from the archivefiles service
-        see https://wiki.oceannetworks.ca/display/help/archivefiles for usage and available filters
+        Download a list of archived files that match the filters provided.
+
+        This function invokes the method getListByLocation() or getListByDevice()
+        to obtain a list of files, and the method getFile() to download all files found.
+
+        See https://wiki.oceannetworks.ca/display/O2A/archivefiles
+        for usage and available filters.
         """
         # make sure we only get a simple list of files
         if "returnOptions" in filters:
@@ -105,7 +112,9 @@ class _OncArchive(_OncService):
                 dataRows = self.getListByDevice(filters=filters, allPages=allPages)
             else:
                 raise Exception(
-                    'getDirectFiles filters require either a combination of "locationCode" and "deviceCategoryCode", or a "deviceCode" present.'
+                    "getDirectFiles filters require either a combination of "
+                    '"locationCode" and "deviceCategoryCode", '
+                    'or a "deviceCode" present.'
                 )
         except Exception:
             raise

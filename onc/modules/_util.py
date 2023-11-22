@@ -72,9 +72,10 @@ def _printErrorMessage(response):
                 )
 
     elif status == 401:
-        print("Error 401 - Unauthorized: {:s}".format(response.url))
         print(
-            "Please check that your Web Services API token is valid. Find your token in your registered profile at https://data.oceannetworks.ca."
+            f"Error 401 - Unauthorized: {response.url}\n"
+            "Please check that your Web Services API token is valid.",
+            "Find your token in your registered profile at https://data.oceannetworks.ca.",
         )
 
     else:

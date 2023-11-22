@@ -17,13 +17,31 @@ class _OncService:
 
     def _doRequest(self, url: str, filters: dict = None, getTime=False):
         """
-        Generic request wrapper for making simple web service requests
-        @param url:    String full url to request
-        @param params: Dictionary of parameters to append to the request
-        @return:       if getTime is True: A tuple (jsonResponse, responseTime), otherwise just jsonResult
-        @throws:       Exception if the HTTP request fails with status 400, as a tuple with
-                       the error description and the error JSON structure returned
-                       by the API, or a generic exception otherwise
+        Generic request wrapper for making simple web service requests.
+
+        Parameters
+        ----------
+        url : str
+            String full url to request.
+        filters : dict of {str: str} or None, optional
+            Dictionary of parameters to append to the request.
+        getTime : bool, default False
+            If True, also return response time as a tuple.
+
+        Returns
+        -------
+        jsonResult : Any
+            The json-encoded content of a response.
+        responseTime : str, optional
+            Running time of the response. Only available when getTime is True.
+
+
+        Raises
+        ------
+        Exception
+            If the HTTP request fails with status 400, as a tuple with
+            the error description and the error JSON structure returned
+            by the API, or a generic exception otherwise.
         """
         if filters is None:
             filters = {}
@@ -31,7 +49,7 @@ class _OncService:
 
         try:
             txtParams = parse.unquote(parse.urlencode(filters))
-            self._log("Requesting URL:\n{:s}?{:s}".format(url, txtParams))
+            self._log(f"Requesting URL:\n{url}?{txtParams}")
 
             start = time()
             response = requests.get(url, filters, timeout=timeout)
@@ -44,7 +62,7 @@ class _OncService:
                 if status == 400:
                     _printErrorMessage(response)
                     raise Exception(
-                        "The request failed with HTTP status {:d}.".format(status),
+                        f"The request failed with HTTP status {status}.",
                         response.json(),
                     )
                 elif status == 401:
@@ -52,22 +70,21 @@ class _OncService:
                     raise Exception("Invalid user token (status 401).", response.json())
                 elif status == 503:
                     print(
-                        "ERROR 503: Service unavailable. We could be down for maintenance; visit data.oceannetworks.ca for more information."
+                        "ERROR 503: Service unavailable. We could be down for maintenance;"  # noqa: E501
+                        "visit https://data.oceannetworks.ca for more information."
                     )
                     raise Exception("Service unavailable (status 503)")
                 else:
                     raise Exception(
-                        "The request failed with HTTP status {:d}.".format(status),
+                        f"The request failed with HTTP status {status}.",
                         _messageForError(status),
                     )
 
-            self._log(
-                "Web Service response time: {:s}".format(_formatDuration(responseTime))
-            )
+            self._log(f"Web Service response time: {_formatDuration(responseTime)}")
 
         except requests.exceptions.Timeout:
             raise Exception(
-                "The request ran out of time (timeout: {:d} s)".format(timeout)
+                f"The request ran out of time (timeout: {timeout} s)"
             ) from None
         except Exception:
             raise
@@ -92,7 +109,7 @@ class _OncService:
             "scalardata",
             "rawdata",
         ]:
-            return "{:s}api/{:s}".format(self._config("baseUrl"), service)
+            return f"{self._config('baseUrl')}api/{service}"
 
         return ""
 

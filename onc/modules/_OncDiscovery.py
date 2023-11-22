@@ -23,10 +23,6 @@ class _OncDiscovery(_OncService):
             raise
 
     def getLocations(self, filters: dict):
-        """Requests and returns a filtered list of locations. Wraps the "locations" API web service.
-        @param filters: Filters in the API request
-        @return: list of dictionaries returned by the API
-        """
         filters = filters or {}
         return self._discoveryRequest(filters, service="locations")
 
@@ -56,9 +52,15 @@ class _OncDiscovery(_OncService):
 
     def _sanitizeBooleans(self, data: list):
         """
-        For all rows in data, enforce that fields expected to have bool values have the right type
-            Will modify the data array
-        @param data:   Usually an array of dictionaries
+        Enforce json values of "true" and "false" are correctly parsed as bool.
+
+        This will traverse to child keys to modify the data array.
+        Mainly affects "hasDeviceData" and "hasPropertyData" keys.
+
+        Parameters
+        ----------
+        data : list
+            An array of dictionaries.
         """
         if not (isinstance(data, list)):
             return

@@ -18,12 +18,11 @@ from dateutil.relativedelta import SU, relativedelta
 
 datetimeFormat = "%Y-%m-%dT%H:%M:%S.%f"
 
-"""
-Method to print an error message from an ONC web service call to the console.
-"""
-
 
 def printErrorMessage(response, parameters, showUrl=False, showValue=False):
+    """
+    Print an error message from an ONC web service call to the console.
+    """
     if response.status_code == 400:
         if showUrl:
             print("Error Executing: {}".format(response.url))
@@ -38,64 +37,55 @@ def printErrorMessage(response, parameters, showUrl=False, showValue=False):
                 if len(matching) >= 1:
                     for p in matching:
                         print(
-                            "  Error {:d}: {:s}. Parameter '{:s}' with value '{:s}'".format(
-                                code, msg, p, parameters[p]
-                            )
+                            f"  Error {code}: {msg}. Parameter '{p}' with value '{parameters[p]}'"  # noqa: E501
                         )
                 else:
-                    print("  '{}' for {}".format(msg, parm))
+                    print(f"  '{msg}' for {parm}")
 
                 if showValue:
                     for p in parm.split(","):
                         parmValue = parameters[p]
-                        print("  {} for {} - value: '{}'".format(msg, p, parmValue))
+                        print(f"  {msg} for {p} - value: '{parmValue}'")
 
             return payload
 
     else:
-        msg = "Error {} - {}".format(response.status_code, response.reason)
+        msg = f"Error {response.status_code} - {response.reason}"
         print(msg)
         return msg
 
 
-"""
-Method to print a count with a name to the console.
-"""
-
-
 def printCount(count, name):
+    """
+    Print a count with a name to the console.
+    """
     if count != 1:
-        print("  {} {}".format(count, name))
-
-
-"""
-Method to print a time duration of a web service call to the console.
-"""
+        print(f"  {count} {name}")
 
 
 def printResponseTime(end, start):
+    """
+    Print a time duration of a web service call to the console.
+    """
     delta = end - start
     execTime = round(delta.seconds + delta.microseconds / 1e6, 3)
-    print("Web Service response time: {} seconds".format(execTime))
-
-
-"""
-Method to convert a time value in seconds to a string in the format Hours:Minutes:Seconds.
-"""
+    print(f"Web Service response time: {execTime} seconds")
 
 
 def getHMS(seconds):
+    """
+    Convert a time value in seconds to a string in the format Hours:Minutes:Seconds.
+    """
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
-    return "{}:{}:{}".format(int(h), int(m), round(s, 2))
-
-
-"""
-Method to print a time value in seconds as string in the format Hours:Minutes:Seconds to the console.
-"""
+    return f"{h:.0f}:{m:.0f}:{s:.2f}"
 
 
 def printHMS(seconds):
+    """
+    Print a time value in seconds as string in the format Hours:Minutes:Seconds
+    to the console.
+    """
     print(getHMS(seconds))
 
 
@@ -114,12 +104,10 @@ def convertSize(size):
     return "%s %s" % (s, sizeUnits[i])
 
 
-"""
-Method to return a size in bytes from a string representation of a file size
-"""
-
-
 def toBytes(str):
+    """
+    Return a size in bytes from a string representation of a file size
+    """
     iBytes = None
     if str:
         sizeUnits = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
@@ -135,21 +123,15 @@ def toBytes(str):
             p = math.pow(1024, indx)
             iBytes = int(p * nSize)
         else:
-            print(
-                "Unable to convert to bytes - '{}' is an unknown size unit.".format(
-                    sName
-                )
-            )
+            print(f"Unable to convert to bytes - '{sName}' is an unknown size unit.")
 
     return iBytes
 
 
-"""
-Method to return a time in seconds from a string representing a time
-"""
-
-
 def toSeconds(str):
+    """
+    Return a time in seconds from a string representing a time
+    """
     seconds = None
     if str:
         timeUnits = ("s", "min", "h")
@@ -165,33 +147,28 @@ def toSeconds(str):
             p = math.pow(60, indx)
             seconds = int(p * iSize)
         else:
-            print(
-                "Unable to convert to seconds - '{}' is an unknown time unit.".format(
-                    sName
-                )
-            )
+            print(f"Unable to convert to seconds - '{sName}' is an unknown time unit.")
 
     return seconds
 
 
-"""
-Method to print a message to the console without a line break. This allows for writing subsequent messages to the same line, such as Downloading.....
-"""
-
-
 def printWithEnd(message, separator=None):
+    """
+    Print a message to the console without a line break.
+
+    This allows for writing subsequent messages to the same line,
+    such as Downloading.....
+    """
     if separator:
         print(message, end="", sep=separator)
     else:
         print(message, end="")
 
 
-"""
-Method to read JSON from a file and return it as an object.
-"""
-
-
 def readJSONFile(filename):
+    """
+    Read JSON from a file and return it as an object.
+    """
     j = None
     with open(filename) as f:
         j = json.loads(f.read())
@@ -199,32 +176,26 @@ def readJSONFile(filename):
     return j
 
 
-"""
-Method to write an object as JSON to a file.
-"""
-
-
 def writeJSONFile(filename, obj, sort=False):
+    """
+    Write an object as JSON to a file.
+    """
     s = json.dumps(obj, sort_keys=sort, indent=4, separators=(",", ": "))
     with open(filename, "w") as f:
         f.write(s)
 
 
-"""
-Method to return the string representation of an object.
-"""
-
-
 def toString(obj):
+    """
+    Return the string representation of an object.
+    """
     return str(obj, "utf-8")
 
 
-"""
-Utility Method to determine if an object is a valid number.
-"""
-
-
 def isNumber(obj):
+    """
+    Check if an object is a valid number.
+    """
     try:
         float(obj)
         return True
@@ -232,12 +203,10 @@ def isNumber(obj):
         return False
 
 
-"""
-Utility Method to split a date range into a list of day date range objects with a begin and end values
-"""
-
-
 def daterangeByDay(startDate, endDate):
+    """
+    Split a date range into a list of day date range objects.
+    """
     dtStart = datetime(startDate.year, startDate.month, startDate.day)
     dtEnd = dtStart + timedelta(days=1)
     if dtEnd > endDate:
@@ -267,12 +236,12 @@ def daterangeByDay(startDate, endDate):
                 }
 
 
-"""
-Utility Method to split a date range into a list of week date range objects with a begin and end values, with the ranges begining on a specific day of the week
-"""
-
-
 def daterangeByWeek(startDate, endDate, dayOfWeek=SU):  # MO TU, WE, TH, FR, SA, SU
+    """
+    Split a date range into a list of week date range objects.
+
+    The method accepts a parameter to specifiy the beginning of the week.
+    """
     newStart = startDate + relativedelta(weekday=dayOfWeek(-1))
 
     dtStart = datetime(newStart.year, newStart.month, newStart.day)
@@ -304,12 +273,10 @@ def daterangeByWeek(startDate, endDate, dayOfWeek=SU):  # MO TU, WE, TH, FR, SA,
                 }
 
 
-"""
-Utility Method to split a date range into a list of month date range objects with a begin and end values
-"""
-
-
 def daterangeByMonth(startDate, endDate):
+    """
+    Split a date range into a list of month date range objects by month.
+    """
     dtStart = datetime(startDate.year, startDate.month, 1)
     dtEnd = dtStart + relativedelta(months=1)
     if dtEnd > endDate:
@@ -339,12 +306,10 @@ def daterangeByMonth(startDate, endDate):
                 }
 
 
-"""
-Utility Method to split a date range into a list of day date range objects with a begin and end values
-"""
-
-
 def daterangeByYear(startDate, endDate):
+    """
+    Split a date range into a list of year date range objects.
+    """
     dtStart = datetime(startDate.year, 1, 1)
     dtEnd = dtStart + relativedelta(years=1)
     if dtEnd > endDate:
@@ -377,6 +342,7 @@ def daterangeByYear(startDate, endDate):
 def copyFieldIfExists(fromDic, toDic, keys):
     """
     Copy the field at name from fromDic to toDic only if it exists
+
     @param fromDic: Origin Dictionary
     @param toDic: Destination Dictionary
     @param keys: Array of keys of the elements to copy

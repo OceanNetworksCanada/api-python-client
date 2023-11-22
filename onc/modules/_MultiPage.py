@@ -37,7 +37,8 @@ class _MultiPage:
 
             if rNext is not None:
                 print(
-                    "Data quantity is greater than the row limit and will be downloaded in multiple pages."
+                    "Data quantity is greater than the row limit and",
+                    "will be downloaded in multiple pages.",
                 )
 
                 pageCount = 1
@@ -123,8 +124,14 @@ class _MultiPage:
 
     def _estimatePages(self, response: object, service: str, responseTime: float):
         """
-        Estimates the number of pages this request will require, from the first page's response and its duration
-        @param responseTime: request duration in seconds
+        Estimate the number of pages the request will require.
+
+        It is calculated from the first page's response and its duration.
+
+        Parameters
+        ----------
+        responseTime : float
+            Request duration in seconds.
         """
         # timespan covered by the data in the response
         pageTimespan = self._responseTimespan(response, service)
@@ -174,7 +181,7 @@ class _MultiPage:
         elif service == "archivefiles":
             row0 = response["files"][0]
             if isinstance(row0, str):
-                regExp = "\d{8}T\d{6}\.\d{3}Z"
+                regExp = r"\d{8}T\d{6}\.\d{3}Z"
                 reFirst = re.search(regExp, response["files"][0])
                 reLast = re.search(regExp, response["files"][-1])
                 first = reFirst.group()

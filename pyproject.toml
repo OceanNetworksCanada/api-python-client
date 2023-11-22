@@ -37,3 +37,12 @@ packages = ["onc"]
 [tool.isort]
 profile = "black"
 src_paths = ["onc", "tests"]
+
+[tool.ruff]
+# Reference for the rules https://docs.astral.sh/ruff/rules/
+select = [
+    # pycodestyle
+    "E", "W",
+    # Pyflakes
+    "F",
+]

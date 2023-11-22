@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 import json
 import re
@@ -24,7 +26,7 @@ class ONC:
         outPath: str = "output",
         timeout: int = 60,
     ):
-        self.token = re.sub("[^a-zA-Z0-9\-]+", "", token)
+        self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
         self.showInfo = showInfo
         self.timeout = timeout
         self.baseUrl = "https://data.oceannetworks.ca/"
@@ -78,7 +80,56 @@ class ONC:
 
     # Discovery methods
 
-    def getLocations(self, filters: dict = None):
+    def getLocations(self, filters: dict | None = None):
+        """
+        Returns a filtered list of locations.
+
+        The API endpoint is api/locations.
+
+        See https://wiki.oceannetworks.ca/display/O2A/Discovery+methods#Discoverymethods-getLocationsgetLocations
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Filters in the API request. Return all locations available if None.
+
+        Returns
+        -------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> filters = {
+        ...     'locationCode': 'FGPD',
+        ...     "dateFrom": "2005-09-17T00:00:00.000Z",
+        ...     "dateTo": "2020-09-17T13:00:00.000Z",
+        ... }
+        >>> onc.getLocations(filters) # doctest: +SKIP
+        [
+            {
+                "deployments": 46,
+                "locationName": "Folger Deep",
+                "depth": 96.569761,
+                "bbox": {
+                    "maxDepth": 105.0,
+                    "maxLat": 48.814029,
+                    "maxLon": -125.274604,
+                    "minDepth": 94.0,
+                    "minLat": 48.813667,
+                    "minLon": -125.28195,
+                },
+                "description": " Folger Deep is a deep location in Folger Passage near a pillar-like seamount, where productivity and marine mammals are observed.",
+                "hasDeviceData": True,
+                "lon": -125.280572,
+                "locationCode": "FGPD",
+                "hasPropertyData": False,
+                "lat": 48.813795,
+                "dataSearchURL": "https://data.oceannetworks.ca/DataSearch?location=FGPD",
+            }
+        ]
+        """  # noqa: E501
         return self.discovery.getLocations(filters)
 
     def getLocationHierarchy(self, filters: dict = None):

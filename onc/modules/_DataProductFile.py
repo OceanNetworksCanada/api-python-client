@@ -70,7 +70,12 @@ class _DataProductFile:
                         )
                     )
 
-                # Status 200: file downloaded, 202: processing, 204: no data, 400: error, 404: index out of bounds, 410: gone (file deleted from FTP)
+                # Status 200: file downloaded
+                # Status 202: processing
+                # Status 204: no data
+                # Status 400: error
+                # Status 404: index out of bounds
+                # Status 410: gone (file deleted from FTP)
                 if self._status == 200:
                     # File downloaded, get filename from header and save
                     self._downloaded = True
@@ -124,8 +129,9 @@ class _DataProductFile:
                 else:
                     # Gone
                     print(
-                        "   FTP Error: File not found. If this product order is recent, retry downloading this product using the method downloadProduct with the runId: "
-                        + self._filters["dpRunId"]
+                        "   FTP Error: File not found. If the product order is recent,",
+                        "retry downloading using the method downloadProduct",
+                        f"with the runId: {self._filters['dpRunId']}",
                     )
                     _printErrorMessage(response)
             except Exception:
@@ -135,7 +141,7 @@ class _DataProductFile:
 
     def extractNameFromHeader(self, response):
         """
-        In a download request response 200, extracts and returns the file name from the response
+        Returns the file name from the response.
         """
         txt = response.headers["Content-Disposition"]
         filename = txt.split("filename=")[1]
