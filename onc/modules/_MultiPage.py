@@ -23,10 +23,9 @@ class _MultiPage:
         try:
             # pop archivefiles extension
             extension = None
-            if service == "archivefiles":
-                if "extension" in filters:
-                    extension = filters["extension"]
-                    del filters["extension"]
+            if service == "archivefiles" and "extension" in filters:
+                extension = filters["extension"]
+                del filters["extension"]
 
             # download first page
             start = time()
@@ -45,8 +44,8 @@ class _MultiPage:
                 pageEstimate = self._estimatePages(response, service, responseTime)
                 if pageEstimate > 0:
                     timeEstimate = _formatDuration(pageEstimate * responseTime)
-                    print("Estimated approx. {:d} pages".format(pageEstimate))
-                    print("Estimated approx. {:s} to complete".format(timeEstimate))
+                    print(f"Estimated approx. {pageEstimate} pages")
+                    print(f"Estimated approx. {timeEstimate} to complete")
 
                 # keep downloading pages until next is None
                 print("")
@@ -54,11 +53,7 @@ class _MultiPage:
                     pageCount += 1
                     rowCount = self._rowCount(response, service)
 
-                    print(
-                        "   ({:d} samples) Downloading page {:d}...".format(
-                            rowCount, pageCount
-                        )
-                    )
+                    print(f"   ({rowCount} samples) Downloading page {pageCount}...")
                     nextResponse, nextTime = self._doPageRequest(
                         url, rNext["parameters"], service, extension
                     )

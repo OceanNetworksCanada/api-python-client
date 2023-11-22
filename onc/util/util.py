@@ -25,7 +25,7 @@ def printErrorMessage(response, parameters, showUrl=False, showValue=False):
     """
     if response.status_code == 400:
         if showUrl:
-            print("Error Executing: {}".format(response.url))
+            print(f"Error Executing: {response.url}")
         payload = json.loads(str(response.content, "utf-8"))
         if len(payload) >= 1:
             for e in payload["errors"]:
@@ -33,7 +33,7 @@ def printErrorMessage(response, parameters, showUrl=False, showValue=False):
                 msg = e["errorMessage"]
                 parm = e["parameter"]
 
-                matching = [p for p in parm.split(",") if p in parameters.keys()]
+                matching = [p for p in parm.split(",") if p in parameters]
                 if len(matching) >= 1:
                     for p in matching:
                         print(
@@ -89,19 +89,17 @@ def printHMS(seconds):
     print(getHMS(seconds))
 
 
-"""
-Method to return a string representation of a size in bytes.
-"""
-
-
 def convertSize(size):
+    """
+    Return a string representation of a size in bytes.
+    """
     if size == 0:
         return "0 KB"
     sizeUnits = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
     i = int(math.floor(math.log(size, 1024)))
     p = math.pow(1024, i)
     s = round(size / p, 2)
-    return "%s %s" % (s, sizeUnits[i])
+    return f"{s} {sizeUnits[i]}"
 
 
 def toBytes(str):

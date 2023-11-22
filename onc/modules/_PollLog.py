@@ -29,10 +29,7 @@ class _PollLog:
         if origin == "run":
             msg = response[0]["status"]
         else:
-            if "message" in response:
-                msg = response["message"]
-            else:
-                msg = "Generating"
+            msg = response.get("message", "Generating")
 
         if not self._messages or msg != self._messages[-1]:
             # Detect and print change in the file count
@@ -40,9 +37,7 @@ class _PollLog:
                 fileCount = response[0]["fileCount"]
                 if self._doPrintFileCount and fileCount > 0:
                     self.printInfo(
-                        "\n   {:d} files generated for this data product".format(
-                            fileCount
-                        ),
+                        f"\n   {fileCount} files generated for this data product",
                         True,
                     )
                     self._doPrintFileCount = False

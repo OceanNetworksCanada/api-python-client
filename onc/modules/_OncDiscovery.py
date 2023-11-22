@@ -72,13 +72,15 @@ class _OncDiscovery(_OncService):
 
         # check hasDeviceData only if present and of the wrong type
         # for now we only check the first row
-        if "hasDeviceData" in data[0]:
-            if not isinstance(data[0]["hasDeviceData"], bool):
-                fixHasDeviceData = True
+        if "hasDeviceData" in data[0] and not isinstance(
+            data[0]["hasDeviceData"], bool
+        ):
+            fixHasDeviceData = True
 
-        if "hasPropertyData" in data[0]:
-            if not isinstance(data[0]["hasPropertyData"], bool):
-                fixHasPropertyData = True
+        if "hasPropertyData" in data[0] and not isinstance(
+            data[0]["hasPropertyData"], bool
+        ):
+            fixHasPropertyData = True
 
         # same for hasPropertyData
         if fixHasDeviceData or fixHasPropertyData:

@@ -17,7 +17,7 @@ class _DataProductFile:
         self._retries = 0
         self._status = 202
         self._downloaded = False
-        self._baseUrl = "{:s}api/dataProductDelivery".format(baseUrl)
+        self._baseUrl = f"{baseUrl}api/dataProductDelivery"
         self._filePath = ""
         self._fileSize = 0
         self._runningTime = 0
@@ -30,11 +30,7 @@ class _DataProductFile:
             "index": index,
         }
         # prepopulate download URL in case download() never happens
-        self._downloadUrl = (
-            "{:s}?method=download&token={:s}&dpRunId={:d}&index={:s}".format(
-                baseUrl, token, dpRunId, index
-            )
-        )
+        self._downloadUrl = f"{self._baseUrl}?method=download&token={token}&dpRunId={dpRunId}&index={index}"  # noqa: E501
 
     def download(
         self,
@@ -65,9 +61,7 @@ class _DataProductFile:
                 # print('request got {:d}'.format(response.status_code))
                 if maxRetries > 0 and self._retries > maxRetries:
                     raise MaxRetriesException(
-                        "   Maximum number of retries ({:d}) exceeded".format(
-                            maxRetries
-                        )
+                        f"   Maximum number of retries ({maxRetries}) exceeded"
                     )
 
                 # Status 200: file downloaded
@@ -89,17 +83,11 @@ class _DataProductFile:
                     elif saved == -2:
                         if self._retries > 1:
                             print("")  # new line if required
-                        print(
-                            '   Skipping "{:s}": File already exists.'.format(
-                                self._filePath
-                            )
-                        )
+                        print(f'   Skipping "{self._filePath}": File already exists.')
                         self._status = 777
                     else:
                         raise Exception(
-                            'An error ocurred when saving the file "{:}"'.format(
-                                filename
-                            )
+                            f'An error ocurred when saving the file "{filename}"'
                         )
 
                 elif self._status == 202:
@@ -115,9 +103,7 @@ class _DataProductFile:
                     # API Error
                     _printErrorMessage(response)
                     raise Exception(
-                        "The request failed with HTTP status {:d}.".format(
-                            self._status
-                        ),
+                        f"The request failed with HTTP status {self._status}.",
                         response.json(),
                     )
 

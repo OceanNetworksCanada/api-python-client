@@ -45,4 +45,12 @@ select = [
     "E", "W",
     # Pyflakes
     "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
 ]

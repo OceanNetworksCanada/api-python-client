@@ -68,7 +68,7 @@ class _OncArchive(_OncService):
                     )
                 else:
                     raise Exception(
-                        "   The request failed with HTTP status {:d}.".format(status),
+                        f"   The request failed with HTTP status {status}.",
                         response.text,
                     )
 
@@ -120,7 +120,7 @@ class _OncArchive(_OncService):
             raise
 
         n = len(dataRows["files"])
-        print("Obtained a list of {:d} files to download.".format(n))
+        print(f"Obtained a list of {n} files to download.")
 
         # Download the files obtained
         tries = 1
@@ -131,15 +131,11 @@ class _OncArchive(_OncService):
         for filename in dataRows["files"]:
             # only download if file doesn't exist (or overwrite is True)
             outPath = self._config("outPath")
-            filePath = "{:s}/{:s}".format(outPath, filename)
+            filePath = f"{outPath}/{filename}"
             fileExists = os.path.exists(filePath)
 
             if (not fileExists) or (fileExists and overwrite):
-                print(
-                    '   ({:d} of {:d}) Downloading file: "{:s}"'.format(
-                        tries, n, filename
-                    )
-                )
+                print(f'   ({tries} of {n}) Downloading file: "{filename}"')
                 try:
                     downInfo = self.getFile(filename, overwrite)
                     size += downInfo["size"]
@@ -150,7 +146,7 @@ class _OncArchive(_OncService):
                     raise
                 tries += 1
             else:
-                print('   Skipping "{:s}": File already exists.'.format(filename))
+                print(f'   Skipping "{filename}": File already exists.')
                 downInfo = {
                     "url": self._getDownloadUrl(filename),
                     "status": "skipped",
@@ -160,10 +156,8 @@ class _OncArchive(_OncService):
                 }
                 downInfos.append(downInfo)
 
-        print(
-            "{:d} files ({:s}) downloaded".format(successes, humanize.naturalsize(size))
-        )
-        print("Total Download Time: {:s}".format(_formatDuration(time)))
+        print(f"{successes} files ({humanize.naturalsize(size)}) downloaded")
+        print(f"Total Download Time: {_formatDuration(time)}")
 
         return {
             "downloadResults": downInfos,
@@ -223,9 +217,8 @@ class _OncArchive(_OncService):
 
         # determine the row structure
         rowFormat = "filename"
-        if len(results["files"]) > 0:
-            if isinstance(results["files"][0], dict):
-                rowFormat = "dict"
+        if len(results["files"]) > 0 and isinstance(results["files"][0], dict):
+            rowFormat = "dict"
 
         # filter
         for file in results["files"]:

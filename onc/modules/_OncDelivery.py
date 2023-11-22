@@ -113,7 +113,7 @@ class _OncDelivery(_OncService):
                 else:
                     _printErrorMessage(response)
                     raise Exception(
-                        "The server request failed with HTTP status {:d}.".format(code),
+                        f"The server request failed with HTTP status {code}.",
                         code,
                     )
 
@@ -182,7 +182,7 @@ class _OncDelivery(_OncService):
         # keep increasing index until fileCount or until we get 404
         doLoop = True
         timeout = self._config("timeout")
-        print("\nDownloading data product files with runId {:d}...".format(runId))
+        print(f"\nDownloading data product files with runId {runId}...")
 
         dpf = _DataProductFile(runId, str(index), baseUrl, token)
 
@@ -298,7 +298,7 @@ class _OncDelivery(_OncService):
         except Exception:
             raise
 
-        print("   {:d} files available for download".format(n))
+        print(f"   {n} files available for download")
         return n
 
     def _printProductRequest(self, response):
@@ -313,16 +313,14 @@ class _OncDelivery(_OncService):
 
         if isGenerated:
             size = response["estimatedFileSize"]  # API returns it as a formatted string
-            print("Estimated File Size: {:s}".format(size))
+            print(f"Estimated File Size: {size}")
             if "estimatedProcessingTime" in response:
                 print(
-                    "Estimated Processing Time: {:s}".format(
-                        response["estimatedProcessingTime"]
-                    )
+                    f"Estimated Processing Time: {response['estimatedProcessingTime']}"
                 )
         else:
             size = _formatSize(response["fileSize"])
-            print("File Size: {:s}".format(size))
+            print(f"File Size: {size}")
             print("Data product is ready for download.")
 
     def _estimatePollPeriod(self, response):
@@ -369,22 +367,18 @@ class _OncDelivery(_OncService):
 
         # Print run time
         runTime = timedelta(seconds=runInfo["runTime"])
-        print("Total run time: {:s}".format(humanize.naturaldelta(runTime)))
+        print(f"Total run time: {humanize.naturaldelta(runTime)}")
 
         if downloadCount > 0:
             # Print download time
             if downloadTime < 1.0:
-                txtDownTime = "{:.3f} seconds".format(downloadTime)
+                txtDownTime = f"{downloadTime:.3f} seconds"
             else:
                 txtDownTime = humanize.naturaldelta(downloadTime)
-            print("Total download Time: {:s}".format(txtDownTime))
+            print(f"Total download Time: {txtDownTime}")
 
             # Print size and count of files
-            print(
-                "{:d} files ({:s}) downloaded".format(
-                    downloadCount, humanize.naturalsize(size)
-                )
-            )
+            print(f"{downloadCount} files ({humanize.naturalsize(size)}) downloaded")
         else:
             print("No files downloaded.")
 

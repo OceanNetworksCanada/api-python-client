@@ -20,9 +20,8 @@ def saveAsFile(response, filePath: str, fileName: str, overwrite: bool):
     # Save file in outPath if it doesn't exist yet
     if overwrite or (not os.path.exists(fullPath)):
         try:
-            file = open(fullPath, "wb+")
-            file.write(response.content)
-            file.close()
+            with open(fullPath, "wb+") as file:
+                file.write(response.content)
             return 0
 
         except Exception:
@@ -45,7 +44,7 @@ def _formatDuration(secs: float):
     @param seconds: float
     """
     if secs < 1.0:
-        txtDownTime = "{:.3f} seconds".format(secs)
+        txtDownTime = f"{secs:.3f} seconds"
     else:
         d = timedelta(seconds=secs)
         txtDownTime = humanize.naturaldelta(d)
@@ -60,16 +59,14 @@ def _printErrorMessage(response):
     """
     status = response.status_code
     if status == 400:
-        print("\nError 400 - Bad Request: {:s}".format(response.url))
+        print(f"\nError 400 - Bad Request: {response.url}")
         payload = response.json()
         if len(payload) >= 1:
             for e in payload["errors"]:
                 code = e["errorCode"]
                 msg = e["errorMessage"]
                 parameters = e["parameter"]
-                print(
-                    "   Error {:d}: {:s} (parameter: {})".format(code, msg, parameters)
-                )
+                print(f"   Error {code}: {msg} (parameter: {parameters})")
 
     elif status == 401:
         print(
@@ -79,7 +76,7 @@ def _printErrorMessage(response):
         )
 
     else:
-        msg = "\nError {:d} - {:s}\n".format(status, response.reason)
+        msg = f"\nError {status} - {response.reason}\n"
         print(msg)
 
 
