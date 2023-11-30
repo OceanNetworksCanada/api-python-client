@@ -56,5 +56,7 @@ select = [
     "UP",  # pyupgrade
     "B",  # flake8-bugbear
     "SIM",  # flake8-simplify
-    "I",  # isort
+]
+exclude = [
+    "tests/robot",
 ]
