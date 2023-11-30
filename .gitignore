@@ -144,3 +144,6 @@ dmypy.json
 
 # Pycharm idea folder
 .idea/
+
+# ruff
+.ruff_cache
