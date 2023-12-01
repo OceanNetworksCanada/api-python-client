@@ -70,12 +70,9 @@ class _OncRealTime(_OncService):
         ):
             filters["sensorCategoryCodes"] = ",".join(filters["sensorCategoryCodes"])
 
-        try:
-            if allPages:
-                mp = _MultiPage(self)
-                result = mp.getAllPages(service, url, filters)
-            else:
-                result = self._doRequest(url, filters)
-            return result
-        except Exception:
-            raise
+        if allPages:
+            mp = _MultiPage(self)
+            result = mp.getAllPages(service, url, filters)
+        else:
+            result = self._doRequest(url, filters)
+        return result

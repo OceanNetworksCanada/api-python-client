@@ -2,13 +2,14 @@ import os
 from datetime import timedelta
 
 import humanize
+import requests
 
-
-def saveAsFile(response, filePath: str, fileName: str, overwrite: bool):
+def saveAsFile(
+    response: requests.Response, filePath: str, fileName: str, overwrite: bool
+) -> None:
     """
     Saves the file downloaded in the response object, in the outPath, with filename
     If overwrite, will overwrite files with the same name
-    @returns status: int 0: Success, 1: Error, 2: Skipped: File exists
     """
     fullPath = fileName
     if len(filePath) > 0:
@@ -18,19 +19,13 @@ def saveAsFile(response, filePath: str, fileName: str, overwrite: bool):
             os.makedirs(filePath)
 
     # Save file in outPath if it doesn't exist yet
-    if overwrite or (not os.path.exists(fullPath)):
-        try:
-            with open(fullPath, "wb+") as file:
-                file.write(response.content)
-            return 0
-
-        except Exception:
-            return -1
-    else:
-        return -2
+    if os.path.exists(fullPath) and not overwrite:
+        raise FileExistsError(str(fullPath))
+    with open(fullPath, "wb+") as file:
+        file.write(response.content)
 
 
-def _formatSize(size: float):
+def _formatSize(size: float) -> str:
     """
     Returns a formatted file size string representation
     @param size: {float} Size in bytes
@@ -38,7 +33,7 @@ def _formatSize(size: float):
     return humanize.naturalsize(size)
 
 
-def _formatDuration(secs: float):
+def _formatDuration(secs: float) -> str:
     """
     Returns a formatted time duration string representation of a duration in seconds
     @param seconds: float
@@ -52,7 +47,7 @@ def _formatDuration(secs: float):
     return txtDownTime
 
 
-def _printErrorMessage(response):
+def _createErrorMessage(response: requests.Response) -> str:
     """
     Method to print infromation of an error returned by the API to the console
     Builds the error description from the response object
@@ -66,18 +61,16 @@ def _printErrorMessage(response):
                 code = e["errorCode"]
                 msg = e["errorMessage"]
                 parameters = e["parameter"]
-                print(f"   Error {code}: {msg} (parameter: {parameters})")
+                return f"   Error {code}: {msg} (parameter: {parameters})"
 
     elif status == 401:
-        print(
+        return (
             f"Error 401 - Unauthorized: {response.url}\n"
             "Please check that your Web Services API token is valid.",
             "Find your token in your registered profile at https://data.oceannetworks.ca.",
         )
-
     else:
-        msg = f"\nError {status} - {response.reason}\n"
-        print(msg)
+        return f"The server request failed with HTTP status {status}."
 
 
 def _messageForError(status: int):

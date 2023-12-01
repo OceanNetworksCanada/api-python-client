@@ -4,7 +4,7 @@ from urllib import parse
 
 import requests
 
-from ._util import _formatDuration, _messageForError, _printErrorMessage
+from ._util import _formatDuration, _messageForError, _createErrorMessage
 
 
 class _OncService:
@@ -15,7 +15,7 @@ class _OncService:
     def __init__(self, parent: object):
         self.parent = weakref.ref(parent)
 
-    def _doRequest(self, url: str, filters: dict = None, getTime=False):
+    def _doRequest(self, url: str, filters: dict | None = None, getTime: bool=False):
         """
         Generic request wrapper for making simple web service requests.
 
@@ -34,60 +34,30 @@ class _OncService:
             The json-encoded content of a response.
         responseTime : str, optional
             Running time of the response. Only available when getTime is True.
-
-
-        Raises
-        ------
-        Exception
-            If the HTTP request fails with status 400, as a tuple with
-            the error description and the error JSON structure returned
-            by the API, or a generic exception otherwise.
         """
         if filters is None:
             filters = {}
         timeout = self._config("timeout")
 
-        try:
-            txtParams = parse.unquote(parse.urlencode(filters))
-            self._log(f"Requesting URL:\n{url}?{txtParams}")
+        txtParams = parse.unquote(parse.urlencode(filters))
+        self._log(f"Requesting URL:\n{url}?{txtParams}")
 
-            start = time()
-            response = requests.get(url, filters, timeout=timeout)
-            responseTime = time() - start
+        start = time()
+        response = requests.get(url, filters, timeout=timeout)
+        responseTime = time() - start
 
-            if response.ok:
-                jsonResult = response.json()
+        if response.ok:
+            jsonResult = response.json()
+        else:
+            status = response.status_code
+            msg = _createErrorMessage(response)
+            if status == 400:
+                raise requests.HTTPError(msg)
+            elif status == 401:
+                raise requests.HTTPError(msg)
             else:
-                status = response.status_code
-                if status == 400:
-                    _printErrorMessage(response)
-                    raise Exception(
-                        f"The request failed with HTTP status {status}.",
-                        response.json(),
-                    )
-                elif status == 401:
-                    print("ERROR: Invalid user token.")
-                    raise Exception("Invalid user token (status 401).", response.json())
-                elif status == 503:
-                    print(
-                        "ERROR 503: Service unavailable. We could be down for maintenance;"  # noqa: E501
-                        "visit https://data.oceannetworks.ca for more information."
-                    )
-                    raise Exception("Service unavailable (status 503)")
-                else:
-                    raise Exception(
-                        f"The request failed with HTTP status {status}.",
-                        _messageForError(status),
-                    )
-
-            self._log(f"Web Service response time: {_formatDuration(responseTime)}")
-
-        except requests.exceptions.Timeout:
-            raise Exception(
-                f"The request ran out of time (timeout: {timeout} s)"
-            ) from None
-        except Exception:
-            raise
+                response.raise_for_status()
+        self._log(f"Web Service response time: {_formatDuration(responseTime)}")
 
         if getTime:
             return jsonResult, responseTime

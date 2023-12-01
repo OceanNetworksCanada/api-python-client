@@ -1,5 +1,6 @@
 from datetime import timedelta
 from time import sleep, time
+from warnings import warn
 
 import humanize
 import requests
@@ -7,7 +8,7 @@ import requests
 from ._DataProductFile import _DataProductFile
 from ._OncService import _OncService
 from ._PollLog import _PollLog
-from ._util import _formatSize, _printErrorMessage
+from ._util import _formatSize, _createErrorMessage
 
 
 class _OncDelivery(_OncService):
@@ -31,37 +32,34 @@ class _OncDelivery(_OncService):
         overwrite: bool,
     ):
         fileList = []
-        try:
-            # Request the product
-            requestData = self.requestDataProduct(filters)
+        # Request the product
+        requestData = self.requestDataProduct(filters)
 
-            if downloadResultsOnly:
-                # Only run and return links
-                runData = self.runDataProduct(
-                    requestData["dpRequestId"], waitComplete=True
-                )
-                for runId in runData["runIds"]:
-                    fileList.extend(
-                        self._infoForProductFiles(
-                            runId, runData["fileCount"], includeMetadataFile
-                        )
+        if downloadResultsOnly:
+            # Only run and return links
+            runData = self.runDataProduct(
+                requestData["dpRequestId"], waitComplete=True
+            )
+            for runId in runData["runIds"]:
+                fileList.extend(
+                    self._infoForProductFiles(
+                        runId, runData["fileCount"], includeMetadataFile
                     )
-            else:
-                # Run and download files
-                runData = self.runDataProduct(
-                    requestData["dpRequestId"], waitComplete=False
                 )
-                for runId in runData["runIds"]:
-                    fileList.extend(
-                        self._downloadProductFiles(
-                            runId, includeMetadataFile, maxRetries, overwrite
-                        )
+        else:
+            # Run and download files
+            runData = self.runDataProduct(
+                requestData["dpRequestId"], waitComplete=False
+            )
+            for runId in runData["runIds"]:
+                fileList.extend(
+                    self._downloadProductFiles(
+                        runId, includeMetadataFile, maxRetries, overwrite
                     )
+                )
 
             print("")
             self._printProductOrderStats(fileList, runData)
-        except Exception:
-            raise
 
         return self._formatResult(fileList, runData)
 
@@ -71,11 +69,8 @@ class _OncDelivery(_OncService):
         """
         filters["method"] = "request"
         filters["token"] = self._config("token")
-        try:
-            url = "{:s}api/dataProductDelivery".format(self._config("baseUrl"))
-            response = self._doRequest(url, filters)
-        except Exception:
-            raise
+        url = "{:s}api/dataProductDelivery".format(self._config("baseUrl"))
+        response = self._doRequest(url, filters)
 
         self._estimatePollPeriod(response)
         self._printProductRequest(response)
@@ -93,49 +88,41 @@ class _OncDelivery(_OncService):
         url = f"{self._config('baseUrl')}api/dataProductDelivery"
         runResult = {"runIds": [], "fileCount": 0, "runTime": 0, "requestCount": 0}
 
-        try:
-            start = time()
-            while status != "complete":
-                response = requests.get(
-                    url,
-                    {
-                        "method": "run",
-                        "token": self._config("token"),
-                        "dpRequestId": dpRequestId,
-                    },
-                    timeout=self._config("timeout"),
-                )
-                code = response.status_code
-                runResult["requestCount"] += 1
+        start = time()
+        while status != "complete":
+            response = requests.get(
+                url,
+                {
+                    "method": "run",
+                    "token": self._config("token"),
+                    "dpRequestId": dpRequestId,
+                },
+                timeout=self._config("timeout"),
+            )
+            code = response.status_code
+            runResult["requestCount"] += 1
 
-                if response.ok:
-                    data = response.json()
-                else:
-                    _printErrorMessage(response)
-                    raise Exception(
-                        f"The server request failed with HTTP status {code}.",
-                        code,
-                    )
+            if response.ok:
+                data = response.json()
+            else:
+                raise requests.HTTPError(_createErrorMessage(response))
 
-                if waitComplete:
-                    status = data[0]["status"]
-                    log.logMessage(data)
-                    if code != 200:
-                        sleep(self.pollPeriod)
-                else:
-                    status = "complete"
-
-            # self.print(data)
-            # print('got filecount {}'.format(data[0]['fileCount']))
-            runResult["fileCount"] = data[0]["fileCount"]
-            runResult["runTime"] = time() - start
-
-            # print a new line after the process finishes
             if waitComplete:
-                print("")
+                status = data[0]["status"]
+                log.logMessage(data)
+                if code != 200:
+                    sleep(self.pollPeriod)
+            else:
+                status = "complete"
 
-        except Exception:
-            raise
+        # self.print(data)
+        # print('got filecount {}'.format(data[0]['fileCount']))
+        runResult["fileCount"] = data[0]["fileCount"]
+        runResult["runTime"] = time() - start
+
+        # print a new line after the process finishes
+        if waitComplete:
+            print("")
 
         # gather a list of runIds
         for run in data:
@@ -154,15 +141,12 @@ class _OncDelivery(_OncService):
         """
         Wrapper for downloadProductFiles that downloads data products with a runId.
         """
-        try:
-            if downloadResultsOnly:
-                fileData = self._infoForProductFiles(runId, 0, includeMetadataFile)
-            else:
-                fileData = self._downloadProductFiles(
-                    runId, includeMetadataFile, maxRetries, overwrite
-                )
-        except Exception:
-            raise
+        if downloadResultsOnly:
+            fileData = self._infoForProductFiles(runId, 0, includeMetadataFile)
+        else:
+            fileData = self._downloadProductFiles(
+                runId, includeMetadataFile, maxRetries, overwrite
+            )
 
         return fileData
 
@@ -189,16 +173,13 @@ class _OncDelivery(_OncService):
         # loop thorugh file indexes
         while doLoop:
             # stop after too many retries
-            try:
-                status = dpf.download(
-                    timeout,
-                    self.pollPeriod,
-                    self._config("outPath"),
-                    maxRetries,
-                    overwrite,
-                )
-            except Exception:
-                raise
+            status = dpf.download(
+                timeout,
+                self.pollPeriod,
+                self._config("outPath"),
+                maxRetries,
+                overwrite,
+            )
 
             if status == 200 or status == 777:
                 # file was downloaded (200), or downloaded & skipped (777)
@@ -225,8 +206,7 @@ class _OncDelivery(_OncService):
                     fileList.append(dpf.getInfo())
                     doLoop = False
             except Exception as ex:
-                print(ex)
-                print("   Metadata file was not downloaded")
+                warn("Metadata file not downloaded.  Reason: ",str(ex))
                 fileList.append(dpf.getInfo())
 
         return fileList
@@ -281,22 +261,19 @@ class _OncDelivery(_OncService):
         status = 200
         n = 0
 
-        try:
-            while status == 200 or status == 202:
-                response = requests.head(
-                    url, params=filters, timeout=self._config("timeout")
-                )
-                status = response.status_code
+        while status == 200 or status == 202:
+            response = requests.head(
+                url, params=filters, timeout=self._config("timeout")
+            )
+            status = response.status_code
 
-                if status == 202:
-                    # If the file is still running, wait
-                    sleep(self.pollPeriod)
-                elif status == 200:
-                    # count successful HEAD request
-                    filters["index"] += 1
-                    n += 1
-        except Exception:
-            raise
+            if status == 202:
+                # If the file is still running, wait
+                sleep(self.pollPeriod)
+            elif status == 200:
+                # count successful HEAD request
+                filters["index"] += 1
+                n += 1
 
         print(f"   {n} files available for download")
         return n
