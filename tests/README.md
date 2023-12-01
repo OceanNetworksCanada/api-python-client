@@ -1,11 +1,13 @@
 # Testing Documentation
 
-This directory contains an automated test suite written for the Python API client using the [Robot Framework](http://robotframework.org) (RF from now on).
+This directory contains an automated test suite written for the Python API client using 
+the [Robot Framework](http://robotframework.org) (RF from now on) as well as pytest.
 
 Directory structure is as follows:
 
 * libraries: Python 3 library files used in the tests
 * output:    Default output directory for methods that download files (i.e. orderDataProduct())
+* pytests:   Tests converted from RF to pytest format
 * resources: Robot generic scripts to be reused by tests
 * suites:    Test suites
 
@@ -50,19 +52,24 @@ echo ONC_ENV=QA >> tests/.env
 ```
 Change ONC_ENV value from QA to PROD if testing in PROD is needed. Removing the line also does the trick.
 
-*To run all the test suites (parallelized):*
+*To run all the RF test suites (parallelized):*
 ```commandline
 pabot --testlevelsplit tests/suites
 ```
 
-*To run a single test suite (replace 0X with the prefix of the test file name, e.g., 01):*
+*To run a single RF test suite (replace 0X with the prefix of the test file name, e.g., 01):*
 ```commandline
 robot tests/suites/01*    # robot tests/suites/0X*
 ```
 
-*To run a single test in a test suite (replace Y with the prefix of the test name, e.g., 01):*
+*To run a single RF test in a test suite (replace Y with the prefix of the test name, e.g., 01):*
 ```commandline
 robot --test "01*" tests/suites/01*  # robot --test "Y*" tests/suites/0X*
+```
+
+*To run pytest*
+```commandline
+pytest
 ```
 
 *`--variable TOKEN:${YOUR_TOKEN}` can be used if no `.env` file is present*

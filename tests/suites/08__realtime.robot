@@ -45,12 +45,6 @@ Resource        ../resources/general.robot
     No next page in ${response}
     #Save Json To File   ${data}     out_realtime_2.json
 
-3. Scalar data by location not found for these filters
-    Run Keyword And Expect Error    *400*       Run method getDirectByLocation with filters ${F_NODATA}
-
-4. Scalar data by location with wrong filters
-    Run Keyword And Expect Error    *400*       Run method getDirectByLocation with filters ${F_WRONG_FILTERS}
-
 5. Get raw data by location with 1 page
     ${response}=          Run method getDirectRawByLocation with filters ${F_RAW1}
     List ${response}[data][readings] has exactly 10 rows
@@ -66,12 +60,6 @@ Resource        ../resources/general.robot
     ${response}=          Run method getDirectRawByDevice with filters ${F_RAWDEV1}
     List ${response}[data][readings] has exactly 47 rows
     No next page in ${response}
-
-8. Raw data not found for these filters
-    Run Keyword And Expect Error    *400*     Run method getDirectRawByLocation with filters ${F_NODATA}
-
-9. Raw data with wrong filters
-    Run Keyword And Expect Error    *400*     Run method getDirectRawByLocation with filters ${F_WRONG_FILTERS}
 
 10. Get scalar data by device with 6 pages
     [Tags]  run

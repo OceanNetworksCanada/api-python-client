@@ -106,12 +106,6 @@ Library         ../libraries/delivery.py
     Element ${rows}[1] with index meta was completed and not downloaded
     Downloaded 0 files to output/07/09
 
-10. Manual run with wrong argument
-    Run Keyword And Expect Error    *400*       Manual run with request id=${1234568790}
-
-11. Manual download with wrong argument
-    Run Keyword And Expect Error    *400*       Manual download with runId=${1234567890}, resultOnly=${False}, save to "output/07/11"
-
 
 *** Keywords ***
 

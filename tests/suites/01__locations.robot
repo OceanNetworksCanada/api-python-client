@@ -66,8 +66,5 @@ Resource         ../resources/general.robot
     Elements in ${data}[0] have the expected fields for getLocations
     List ${data} has at least 100 rows
 
-11. Wrong locationCode
-    Run Keyword And Expect Error    *400*    Run method getLocations with filter locationCode="XYZ123"
-
 12. No locations found
     Run Keyword And Expect Error    *404*    Run method getLocations with filters ${F_NO_RESULTS}

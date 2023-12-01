@@ -36,9 +36,6 @@ ${onc0}              Make ONC with path  output/09
     ${result}=    Run method getListByLocation with filters &{F_LOCATIONFULL}
     List ${result}[files] has exactly 1 rows
 
-4. Get list by location, wrong filters
-    Run Keyword And Expect Error  *400*     Run method getListByLocation with filters &{F_LOC_WRONG}
-
 5. Get list by device, 1 page, filter by extension
     ${result}=    Run method getListByDevice with filters &{F_DEVICE1EXT}
     List ${result}[files] has exactly 4 rows
@@ -65,16 +62,10 @@ ${onc0}              Make ONC with path  output/09
     First row in ${result}[downloadResults] has key "status" with value "skipped"
     Downloaded 1 files to output/09/08
 
-9. Wrong getFile filename
-    Run Keyword And Expect Error  *400*     Get file with name "FAKEFILE.XYZ" and save to "output/09/09"
-
 10. Wrong getDirectFile parameters
     [Tags]    run
     ${onc}=                 Make ONC with path      output/09/10
     Run Keyword And Expect Error  *combination*     Call Method    ${onc}    getDirectFiles    filters=${F_DIRECT_WRONG}
-
-11. Get list by device, wrong filters
-    Run Keyword And Expect Error  *400*     Run method getListByDevice with filters &{F_LOCATION1}
 
 12. Get list by location, 3 pages, return archiveLocations
     ${result}=    Run method getListByLocation with &{F_LOC_RETURN1} and parameter ${True}

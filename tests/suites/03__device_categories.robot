@@ -43,8 +43,5 @@ Resource         ../resources/general.robot
     Elements in ${data}[0] have the expected fields for getDeviceCategories
     List ${data} has at least 1 rows
 
-07. Wrong deviceCategoryCode
-    Run Keyword And Expect Error    *400*    Run method getDeviceCategories with filter deviceCategoryCode="XYZ321"
-
 08. No deviceCategories found
     Run Keyword And Expect Error    *404*    Run method getDeviceCategories with filters ${F_NO_RESULTS}

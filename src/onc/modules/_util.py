@@ -58,10 +58,11 @@ def _createErrorMessage(response: requests.Response) -> str:
         payload = response.json()
         if len(payload) >= 1:
             for e in payload["errors"]:
+                # see https://wiki.oceannetworks.ca/display/O2A for error codes
                 code = e["errorCode"]
                 msg = e["errorMessage"]
                 parameters = e["parameter"]
-                return f"   Error {code}: {msg} (parameter: {parameters})"
+                return f"Error {code}: {msg} (parameter: {parameters})"
 
     elif status == 401:
         return (

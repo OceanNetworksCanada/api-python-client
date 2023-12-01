@@ -5,6 +5,7 @@ import json
 import re
 
 from dateutil import parser
+from pathlib import Path
 
 from onc.modules._OncArchive import _OncArchive
 from onc.modules._OncDelivery import _OncDelivery
@@ -23,7 +24,7 @@ class ONC:
         token,
         production: bool = True,
         showInfo: bool = False,
-        outPath: str = "output",
+        outPath: str | Path = "output",
         timeout: int = 60,
     ):
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
@@ -32,6 +33,7 @@ class ONC:
         self.baseUrl = "https://data.oceannetworks.ca/"
         self.outPath = ""
 
+        outPath = str(outPath)
         # sanitize outPath
         if len(outPath) > 0:
             outPath = outPath.replace("\\", "/")
