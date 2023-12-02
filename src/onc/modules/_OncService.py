@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import weakref
 from time import time
 from urllib import parse
