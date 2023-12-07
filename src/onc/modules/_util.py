@@ -54,19 +54,19 @@ def _createErrorMessage(response: requests.Response) -> str:
     """
     status = response.status_code
     if status == 400:
-        print(f"\nError 400 - Bad Request: {response.url}")
+        prefix = f"\nStatus 400 - Bad Request: {response.url}"
         payload = response.json()
-        if len(payload) >= 1:
-            for e in payload["errors"]:
-                # see https://wiki.oceannetworks.ca/display/O2A for error codes
-                code = e["errorCode"]
-                msg = e["errorMessage"]
-                parameters = e["parameter"]
-                return f"Error {code}: {msg} (parameter: {parameters})"
+        # see https://wiki.oceannetworks.ca/display/O2A for error codes
+        msg = f"{prefix}\n" + "\n".join([
+            f"API Error {e['errorCode']}: {e['errorMessage']} "
+            f"(parameter: {e['parameter']})"
+            for e in payload["errors"]
+        ])
+        return msg
 
     elif status == 401:
         return (
-            f"Error 401 - Unauthorized: {response.url}\n"
+            f"Status 401 - Unauthorized: {response.url}\n"
             "Please check that your Web Services API token is valid. "
             "Find your token in your registered profile at "
             "https://data.oceannetworks.ca."
