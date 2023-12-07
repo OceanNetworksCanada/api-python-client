@@ -42,13 +42,13 @@ Tests can also be run from a different folder. Just change the relative path of 
 Create a `.env` file under tests folder and put TOKEN variable in the file.
 If you are on Windows, make sure the encoding of `.env` file is UTF-8 after using the command below.
 ```shell
-echo TOKEN=${YOUR_TOKEN} > tests/.env
+echo TOKEN=${YOUR_TOKEN} > .env
 ```
 
 The default testing environment is PROD. If you are an internal developer, add the following line to .env so that the tests are running against QA. 
 
 ```shell
-echo ONC_ENV=QA >> tests/.env
+echo ONC_ENV=QA >> .env
 ```
 Change ONC_ENV value from QA to PROD if testing in PROD is needed. Removing the line also does the trick.
 
