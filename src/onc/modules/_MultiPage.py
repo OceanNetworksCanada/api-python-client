@@ -63,9 +63,8 @@ class _MultiPage:
 
             totalTime = _formatDuration(time() - start)
             print(
-                "   ({:d} samples) Completed in {:s}.".format(
-                    self._rowCount(response, service), totalTime
-                )
+                f"   ({self._rowCount(response, service):d} samples)"
+                f" Completed in {totalTime}."
             )
             response["next"] = None
 

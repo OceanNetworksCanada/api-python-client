@@ -206,7 +206,11 @@ class _OncDelivery(_OncService):
                     fileList.append(dpf.getInfo())
                     doLoop = False
             except Exception as ex:
-                warn("Metadata file not downloaded.  Reason: ",str(ex))
+                warn(
+                    f"Metadata file not downloaded.  Reason: {type(ex)}"
+                    + str(ex),
+                    RuntimeWarning
+                )
                 fileList.append(dpf.getInfo())
 
         return fileList

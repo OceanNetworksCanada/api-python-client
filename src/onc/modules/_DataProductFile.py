@@ -95,9 +95,9 @@ class _DataProductFile:
 
             elif self._status == 410:  # Status 410: gone (file deleted from FTP)
                 warn(
-                    "   FTP Error: File not found. If the product order is recent,",
-                    "retry downloading using the method downloadProduct",
-                    f"with the runId: {self._filters['dpRunId']}",
+                    "   FTP Error: File not found. If the product order is recent,"
+                    "retry downloading using the method downloadProduct"
+                    f"with the runId: {self._filters['dpRunId']}"
                 )
 
         return self._status
