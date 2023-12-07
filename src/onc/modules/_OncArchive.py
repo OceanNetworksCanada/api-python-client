@@ -6,7 +6,7 @@ import requests
 
 from ._MultiPage import _MultiPage
 from ._OncService import _OncService
-from ._util import _formatDuration, _createErrorMessage, saveAsFile
+from ._util import _createErrorMessage, _formatDuration, saveAsFile
 
 
 class _OncArchive(_OncService):

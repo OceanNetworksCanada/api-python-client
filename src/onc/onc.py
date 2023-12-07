@@ -3,9 +3,9 @@ from __future__ import annotations
 import datetime
 import json
 import re
+from pathlib import Path
 
 from dateutil import parser
-from pathlib import Path
 
 from onc.modules._OncArchive import _OncArchive
 from onc.modules._OncDelivery import _OncDelivery

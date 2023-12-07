@@ -76,15 +76,3 @@ def _createErrorMessage(response: requests.Response) -> str:
         )
     else:
         return f"The server request failed with HTTP status {status}."
-
-
-def _messageForError(status: int):
-    """
-    Return a description string for an HTTP error code
-    """
-    errors = {
-        500: "Internal server error",
-        503: "Service temporarily unavailable",
-        598: "Network read timeout error",
-    }
-    return errors[status]

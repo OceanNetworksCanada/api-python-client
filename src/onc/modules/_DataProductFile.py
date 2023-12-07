@@ -97,7 +97,8 @@ class _DataProductFile:
                 warn(
                     "   FTP Error: File not found. If the product order is recent,"
                     "retry downloading using the method downloadProduct"
-                    f"with the runId: {self._filters['dpRunId']}"
+                    f"with the runId: {self._filters['dpRunId']}",
+                    stacklevel=2,
                 )
 
         return self._status

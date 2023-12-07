@@ -8,7 +8,7 @@ import requests
 from ._DataProductFile import _DataProductFile
 from ._OncService import _OncService
 from ._PollLog import _PollLog
-from ._util import _formatSize, _createErrorMessage
+from ._util import _createErrorMessage, _formatSize
 
 
 class _OncDelivery(_OncService):
@@ -207,6 +207,7 @@ class _OncDelivery(_OncService):
                 warn(
                     f"Metadata file not downloaded.  Reason: {type(ex)}" + str(ex),
                     RuntimeWarning,
+                    stacklevel=2,
                 )
                 fileList.append(dpf.getInfo())
 

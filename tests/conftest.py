@@ -2,7 +2,6 @@ import os
 
 import pytest
 from dotenv import load_dotenv
-
 from onc import ONC
 
 load_dotenv(override=True)

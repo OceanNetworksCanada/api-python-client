@@ -4,7 +4,7 @@ from urllib import parse
 
 import requests
 
-from ._util import _formatDuration, _messageForError, _createErrorMessage
+from ._util import _createErrorMessage, _formatDuration
 
 
 class _OncService:
@@ -50,10 +50,8 @@ class _OncService:
             jsonResult = response.json()
         else:
             status = response.status_code
-            msg = _createErrorMessage(response)
-            if status == 400:
-                raise requests.HTTPError(msg)
-            elif status == 401:
+            if status in [400, 401]:
+                msg = _createErrorMessage(response)
                 raise requests.HTTPError(msg)
             else:
                 response.raise_for_status()

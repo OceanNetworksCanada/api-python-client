@@ -1,8 +1,8 @@
 import os
 
 from dotenv import load_dotenv
-from robot.libraries.BuiltIn import BuiltIn
-from robot.libraries.BuiltIn import RobotNotRunningError
+
+from robot.libraries.BuiltIn import BuiltIn, RobotNotRunningError
 
 load_dotenv(override=True)
 try:

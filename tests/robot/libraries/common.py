@@ -3,7 +3,6 @@ import os
 
 from env_variable import is_prod, token
 from expectedfields import expectedFields
-
 from onc.onc import ONC
 
 onc = ONC(token, is_prod, True, "output")
