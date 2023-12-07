@@ -28,9 +28,7 @@ class _MultiPage:
 
         # download first page
         start = time()
-        response, responseTime = self._doPageRequest(
-            url, filters, service, extension
-        )
+        response, responseTime = self._doPageRequest(url, filters, service, extension)
         rNext = response["next"]
 
         if rNext is not None:

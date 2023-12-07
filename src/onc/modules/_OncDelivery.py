@@ -37,9 +37,7 @@ class _OncDelivery(_OncService):
 
         if downloadResultsOnly:
             # Only run and return links
-            runData = self.runDataProduct(
-                requestData["dpRequestId"], waitComplete=True
-            )
+            runData = self.runDataProduct(requestData["dpRequestId"], waitComplete=True)
             for runId in runData["runIds"]:
                 fileList.extend(
                     self._infoForProductFiles(
@@ -207,9 +205,8 @@ class _OncDelivery(_OncService):
                     doLoop = False
             except Exception as ex:
                 warn(
-                    f"Metadata file not downloaded.  Reason: {type(ex)}"
-                    + str(ex),
-                    RuntimeWarning
+                    f"Metadata file not downloaded.  Reason: {type(ex)}" + str(ex),
+                    RuntimeWarning,
                 )
                 fileList.append(dpf.getInfo())
 

@@ -71,7 +71,7 @@ class _DataProductFile:
                 filename = self.extractNameFromHeader(response)
                 self._filePath = filename
                 self._fileSize = len(response.content)
-                try: 
+                try:
                     saveAsFile(response, outPath, filename, overwrite)
                 except FileExistsError:
                     if self._retries > 1:

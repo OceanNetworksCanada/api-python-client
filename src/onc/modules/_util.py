@@ -4,6 +4,7 @@ from datetime import timedelta
 import humanize
 import requests
 
+
 def saveAsFile(
     response: requests.Response, filePath: str, fileName: str, overwrite: bool
 ) -> None:
@@ -57,11 +58,13 @@ def _createErrorMessage(response: requests.Response) -> str:
         prefix = f"\nStatus 400 - Bad Request: {response.url}"
         payload = response.json()
         # see https://wiki.oceannetworks.ca/display/O2A for error codes
-        msg = f"{prefix}\n" + "\n".join([
-            f"API Error {e['errorCode']}: {e['errorMessage']} "
-            f"(parameter: {e['parameter']})"
-            for e in payload["errors"]
-        ])
+        msg = f"{prefix}\n" + "\n".join(
+            [
+                f"API Error {e['errorCode']}: {e['errorMessage']} "
+                f"(parameter: {e['parameter']})"
+                for e in payload["errors"]
+            ]
+        )
         return msg
 
     elif status == 401:

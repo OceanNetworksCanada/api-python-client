@@ -15,7 +15,7 @@ class _OncService:
     def __init__(self, parent: object):
         self.parent = weakref.ref(parent)
 
-    def _doRequest(self, url: str, filters: dict | None = None, getTime: bool=False):
+    def _doRequest(self, url: str, filters: dict | None = None, getTime: bool = False):
         """
         Generic request wrapper for making simple web service requests.
 
