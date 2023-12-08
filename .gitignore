@@ -147,3 +147,6 @@ dmypy.json
 
 # ruff
 .ruff_cache
+
+# commit-msg hook
+commit-msg
