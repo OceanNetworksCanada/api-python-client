@@ -20,59 +20,53 @@ class _MultiPage:
         Multiple pages will be downloaded until completed
         @return: Service response with concatenated data for all pages obtained
         """
-        try:
-            # pop archivefiles extension
-            extension = None
-            if service == "archivefiles" and "extension" in filters:
-                extension = filters["extension"]
-                del filters["extension"]
+        # pop archivefiles extension
+        extension = None
+        if service == "archivefiles" and "extension" in filters:
+            extension = filters["extension"]
+            del filters["extension"]
 
-            # download first page
-            start = time()
-            response, responseTime = self._doPageRequest(
-                url, filters, service, extension
+        # download first page
+        start = time()
+        response, responseTime = self._doPageRequest(url, filters, service, extension)
+        rNext = response["next"]
+
+        if rNext is not None:
+            print(
+                "Data quantity is greater than the row limit and",
+                "will be downloaded in multiple pages.",
             )
-            rNext = response["next"]
 
-            if rNext is not None:
-                print(
-                    "Data quantity is greater than the row limit and",
-                    "will be downloaded in multiple pages.",
+            pageCount = 1
+            pageEstimate = self._estimatePages(response, service, responseTime)
+            if pageEstimate > 0:
+                timeEstimate = _formatDuration(pageEstimate * responseTime)
+                print(f"Estimated approx. {pageEstimate} pages")
+                print(f"Estimated approx. {timeEstimate} to complete")
+
+            # keep downloading pages until next is None
+            print("")
+            while rNext is not None:
+                pageCount += 1
+                rowCount = self._rowCount(response, service)
+
+                print(f"   ({rowCount} samples) Downloading page {pageCount}...")
+                nextResponse, nextTime = self._doPageRequest(
+                    url, rNext["parameters"], service, extension
                 )
+                rNext = nextResponse["next"]
 
-                pageCount = 1
-                pageEstimate = self._estimatePages(response, service, responseTime)
-                if pageEstimate > 0:
-                    timeEstimate = _formatDuration(pageEstimate * responseTime)
-                    print(f"Estimated approx. {pageEstimate} pages")
-                    print(f"Estimated approx. {timeEstimate} to complete")
+                # concatenate new data obtained
+                self._catenateData(response, nextResponse, service)
 
-                # keep downloading pages until next is None
-                print("")
-                while rNext is not None:
-                    pageCount += 1
-                    rowCount = self._rowCount(response, service)
+            totalTime = _formatDuration(time() - start)
+            print(
+                f"   ({self._rowCount(response, service):d} samples)"
+                f" Completed in {totalTime}."
+            )
+            response["next"] = None
 
-                    print(f"   ({rowCount} samples) Downloading page {pageCount}...")
-                    nextResponse, nextTime = self._doPageRequest(
-                        url, rNext["parameters"], service, extension
-                    )
-                    rNext = nextResponse["next"]
-
-                    # concatenate new data obtained
-                    self._catenateData(response, nextResponse, service)
-
-                totalTime = _formatDuration(time() - start)
-                print(
-                    "   ({:d} samples) Completed in {:s}.".format(
-                        self._rowCount(response, service), totalTime
-                    )
-                )
-                response["next"] = None
-
-            return response
-        except Exception:
-            raise
+        return response
 
     def _doPageRequest(
         self, url: str, filters: dict, service: str, extension: str = None

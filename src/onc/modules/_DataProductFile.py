@@ -1,10 +1,15 @@
 from time import sleep, time
+from warnings import warn
 
 import requests
 
 from ._PollLog import _PollLog
-from ._util import _printErrorMessage, saveAsFile
-from .Exceptions import MaxRetriesException
+from ._util import _createErrorMessage, saveAsFile
+
+
+class MaxRetriesException(RuntimeError):
+    def __init__(self, max_retries):
+        super().__init__(f"Maximum number of retries ({max_retries}) exceeded")
 
 
 class _DataProductFile:
@@ -48,80 +53,53 @@ class _DataProductFile:
         log = _PollLog(True)
         self._status = 202
         while self._status == 202:
-            try:
-                # Run timed request
-                start = time()
-                response = requests.get(self._baseUrl, self._filters, timeout=timeout)
-                duration = time() - start
+            # Run timed request
+            start = time()
+            response = requests.get(self._baseUrl, self._filters, timeout=timeout)
+            duration = time() - start
 
-                self._downloadUrl = response.url
-                self._status = response.status_code
-                self._retries += 1
+            self._downloadUrl = response.url
+            self._status = response.status_code
+            self._retries += 1
 
-                # print('request got {:d}'.format(response.status_code))
-                if maxRetries > 0 and self._retries > maxRetries:
-                    raise MaxRetriesException(
-                        f"   Maximum number of retries ({maxRetries}) exceeded"
-                    )
+            if maxRetries > 0 and self._retries > maxRetries:
+                raise MaxRetriesException(maxRetries)
 
-                # Status 200: file downloaded
-                # Status 202: processing
-                # Status 204: no data
-                # Status 400: error
-                # Status 404: index out of bounds
-                # Status 410: gone (file deleted from FTP)
-                if self._status == 200:
-                    # File downloaded, get filename from header and save
-                    self._downloaded = True
-                    self._downloadingTime = round(duration, 3)
-                    filename = self.extractNameFromHeader(response)
-                    self._filePath = filename
-                    self._fileSize = len(response.content)
-                    saved = saveAsFile(response, outPath, filename, overwrite)
-                    if saved == 0:
-                        pass
-                    elif saved == -2:
-                        if self._retries > 1:
-                            print("")  # new line if required
-                        print(f'   Skipping "{self._filePath}": File already exists.')
-                        self._status = 777
-                    else:
-                        raise Exception(
-                            f'An error ocurred when saving the file "{filename}"'
-                        )
+            if self._status == 200:
+                self._downloaded = True
+                self._downloadingTime = round(duration, 3)
+                filename = self.extractNameFromHeader(response)
+                self._filePath = filename
+                self._fileSize = len(response.content)
+                try:
+                    saveAsFile(response, outPath, filename, overwrite)
+                except FileExistsError:
+                    if self._retries > 1:
+                        print("")
+                    print(f'   Skipping "{self._filePath}": File already exists.')
+                    self._status = 777
 
-                elif self._status == 202:
-                    # Still processing, wait and retry
-                    log.logMessage(response.json())
-                    sleep(pollPeriod)
+            elif self._status == 202:  # Still processing, wait and retry
+                log.logMessage(response.json())
+                sleep(pollPeriod)
 
-                elif self._status == 204:
-                    # No data found
-                    print("   No data found.")
+            elif self._status == 204:  # No data found
+                print("   No data found.")
 
-                elif self._status == 400:
-                    # API Error
-                    _printErrorMessage(response)
-                    raise Exception(
-                        f"The request failed with HTTP status {self._status}.",
-                        response.json(),
-                    )
+            elif self._status == 400:
+                raise requests.HTTPError(_createErrorMessage(response))
 
-                elif self._status == 404:
-                    # Index too high, no more files to download
-                    log.printNewLine()
-                    pass
+            elif self._status == 404:  # Index too high, no more files to download
+                log.printNewLine()
+                pass
 
-                else:
-                    # Gone
-                    print(
-                        "   FTP Error: File not found. If the product order is recent,",
-                        "retry downloading using the method downloadProduct",
-                        f"with the runId: {self._filters['dpRunId']}",
-                    )
-                    _printErrorMessage(response)
-            except Exception:
-                raise
+            elif self._status == 410:  # Status 410: gone (file deleted from FTP)
+                warn(
+                    "   FTP Error: File not found. If the product order is recent,"
+                    "retry downloading using the method downloadProduct"
+                    f"with the runId: {self._filters['dpRunId']}",
+                    stacklevel=2,
+                )
 
         return self._status
 

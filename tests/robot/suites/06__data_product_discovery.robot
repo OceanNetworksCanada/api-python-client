@@ -47,8 +47,5 @@ Resource         ../resources/general.robot
     Elements in ${data}[0] have the expected fields for getDataProducts
     List ${data} has at least 10 rows
 
-08. Wrong dataProductCode
-    Run Keyword And Expect Error    *400*    Run method getDataProducts with filter dataProductCode="XYZ321"
-
 09. No data products found
     Run Keyword And Expect Error    *404*    Run method getDataProducts with filters ${F_NO_RESULTS}

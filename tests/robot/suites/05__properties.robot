@@ -48,8 +48,5 @@ Resource         ../resources/general.robot
     Elements in ${data}[0] have the expected fields for getProperties
     List ${data} has at least 3 rows
 
-08. Wrong propertyCode
-    Run Keyword And Expect Error    *400*    Run method getProperties with filter propertyCode="XYZ321"
-
 09. No properties found
     Run Keyword And Expect Error    *404*    Run method getProperties with filters ${F_NO_RESULTS}

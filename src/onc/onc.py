@@ -3,6 +3,7 @@ from __future__ import annotations
 import datetime
 import json
 import re
+from pathlib import Path
 
 from dateutil import parser
 
@@ -23,7 +24,7 @@ class ONC:
         token,
         production: bool = True,
         showInfo: bool = False,
-        outPath: str = "output",
+        outPath: str | Path = "output",
         timeout: int = 60,
     ):
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
@@ -32,6 +33,7 @@ class ONC:
         self.baseUrl = "https://data.oceannetworks.ca/"
         self.outPath = ""
 
+        outPath = str(outPath)
         # sanitize outPath
         if len(outPath) > 0:
             outPath = outPath.replace("\\", "/")

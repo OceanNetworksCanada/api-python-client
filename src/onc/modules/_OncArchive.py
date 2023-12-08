@@ -6,7 +6,7 @@ import requests
 
 from ._MultiPage import _MultiPage
 from ._OncService import _OncService
-from ._util import _formatDuration, _printErrorMessage, saveAsFile
+from ._util import _createErrorMessage, _formatDuration, saveAsFile
 
 
 class _OncArchive(_OncService):
@@ -23,10 +23,7 @@ class _OncArchive(_OncService):
 
         The filenames obtained can be used to download files using the getFile() method.
         """
-        try:
-            return self._getList(filters, by="location", allPages=allPages)
-        except Exception:
-            raise
+        return self._getList(filters, by="location", allPages=allPages)
 
     def getListByDevice(self, filters: dict = None, allPages: bool = False):
         """
@@ -34,10 +31,7 @@ class _OncArchive(_OncService):
 
         The filenames obtained can be used to download files using the getFile() method.
         """
-        try:
-            return self._getList(filters, by="device", allPages=allPages)
-        except Exception:
-            raise
+        return self._getList(filters, by="device", allPages=allPages)
 
     def getFile(self, filename: str = "", overwrite: bool = False):
         url = self._serviceUrl("archivefiles")
@@ -48,32 +42,20 @@ class _OncArchive(_OncService):
             "filename": filename,
         }
 
-        try:
-            # Download the archived file with filename (response contents is binary)
-            start = time.time()
-            response = requests.get(url, filters, timeout=self._config("timeout"))
-            status = response.status_code
-            elapsed = time.time() - start
+        # Download the archived file with filename (response contents is binary)
+        start = time.time()
+        response = requests.get(url, filters, timeout=self._config("timeout"))
+        status = response.status_code
+        elapsed = time.time() - start
 
-            if response.ok:
-                # Save file to output path
-                outPath = self._config("outPath")
-                saveAsFile(response, outPath, filename, overwrite)
+        if response.ok:
+            # Save file to output path
+            outPath = self._config("outPath")
+            saveAsFile(response, outPath, filename, overwrite)
 
-            else:
-                _printErrorMessage(response)
-                if status == 400:
-                    raise Exception(
-                        "   The request failed with HTTP status 400.", response.json()
-                    )
-                else:
-                    raise Exception(
-                        f"   The request failed with HTTP status {status}.",
-                        response.text,
-                    )
-
-        except Exception:
-            raise
+        else:
+            msg = _createErrorMessage(response)
+            raise requests.HTTPError(msg)
 
         # Prepare a readable status
         txtStatus = "error"
@@ -105,19 +87,16 @@ class _OncArchive(_OncService):
             del filters["returnOptions"]
 
         # Get a list of files
-        try:
-            if "locationCode" in filters and "deviceCategoryCode" in filters:
-                dataRows = self.getListByLocation(filters=filters, allPages=allPages)
-            elif "deviceCode" in filters:
-                dataRows = self.getListByDevice(filters=filters, allPages=allPages)
-            else:
-                raise Exception(
-                    "getDirectFiles filters require either a combination of "
-                    '"locationCode" and "deviceCategoryCode", '
-                    'or a "deviceCode" present.'
-                )
-        except Exception:
-            raise
+        if "locationCode" in filters and "deviceCategoryCode" in filters:
+            dataRows = self.getListByLocation(filters=filters, allPages=allPages)
+        elif "deviceCode" in filters:
+            dataRows = self.getListByDevice(filters=filters, allPages=allPages)
+        else:
+            raise ValueError(
+                "getDirectFiles filters require either a combination of "
+                '"locationCode" and "deviceCategoryCode", '
+                'or a "deviceCode" present.'
+            )
 
         n = len(dataRows["files"])
         print(f"Obtained a list of {n} files to download.")
@@ -136,14 +115,11 @@ class _OncArchive(_OncService):
 
             if (not fileExists) or (fileExists and overwrite):
                 print(f'   ({tries} of {n}) Downloading file: "{filename}"')
-                try:
-                    downInfo = self.getFile(filename, overwrite)
-                    size += downInfo["size"]
-                    time += downInfo["downloadTime"]
-                    downInfos.append(downInfo)
-                    successes += 1
-                except Exception:
-                    raise
+                downInfo = self.getFile(filename, overwrite)
+                size += downInfo["size"]
+                time += downInfo["downloadTime"]
+                downInfos.append(downInfo)
+                successes += 1
                 tries += 1
             else:
                 print(f'   Skipping "{filename}": File already exists.')
@@ -189,18 +165,15 @@ class _OncArchive(_OncService):
         if "extension" in filters2:
             extension = filters2["extension"]
 
-        try:
-            if allPages:
-                mp = _MultiPage(self)
-                result = mp.getAllPages("archivefiles", url, filters2)
-            else:
-                if "extension" in filters2:
-                    del filters2["extension"]
-                result = self._doRequest(url, filters2)
-                result = self._filterByExtension(result, extension)
-            return result
-        except Exception:
-            raise
+        if allPages:
+            mp = _MultiPage(self)
+            result = mp.getAllPages("archivefiles", url, filters2)
+        else:
+            if "extension" in filters2:
+                del filters2["extension"]
+            result = self._doRequest(url, filters2)
+            result = self._filterByExtension(result, extension)
+        return result
 
     def _filterByExtension(self, results: dict, extension: str):
         """

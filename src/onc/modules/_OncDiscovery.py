@@ -15,12 +15,9 @@ class _OncDiscovery(_OncService):
         filters["method"] = method
         filters["token"] = self._config("token")
 
-        try:
-            result = self._doRequest(url, filters)
-            self._sanitizeBooleans(result)
-            return result
-        except Exception:
-            raise
+        result = self._doRequest(url, filters)
+        self._sanitizeBooleans(result)
+        return result
 
     def getLocations(self, filters: dict):
         filters = filters or {}

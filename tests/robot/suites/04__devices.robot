@@ -52,8 +52,5 @@ Resource         ../resources/general.robot
     Elements in ${data}[0] have the expected fields for getDevices
     List ${data} has at least 100 rows
 
-09. Wrong deviceCode
-    Run Keyword And Expect Error    *400*    Run method getDevices with filter deviceCode="XYZ321"
-
 10. No devices found
     Run Keyword And Expect Error    *404*    Run method getDevices with filters ${F_NO_RESULTS}

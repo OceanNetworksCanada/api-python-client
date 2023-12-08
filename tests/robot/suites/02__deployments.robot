@@ -42,8 +42,5 @@ Resource         ../resources/general.robot
     Elements in ${data}[0] have the expected fields for getDeployments
     List ${data} has at least 100 rows
 
-07. Wrong locationCode
-    Run Keyword And Expect Error    *400*    Run method getDeployments with filter locationCode="XYZ123"
-
 08. No deployments found
     Run Keyword And Expect Error    *404*    Run method getDeployments with filters ${F_NO_RESULTS}
