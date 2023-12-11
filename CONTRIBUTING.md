@@ -125,7 +125,9 @@ WIP.
 
 ## Make a pull request
 
-The GitHub Actions services will automatically run formatter, linter and test suite (_ci.yml_) after you make a pull request. The actual tox environments to run are specified in _tox.ini_.
+The GitHub Actions services will automatically run formatter, linter and test suite (_ci.yml_) after you make a pull request. If you are an outside contributor, a maintainer will review and approve the GitHub checks.
+
+The actual tox environments to run are specified in the [[gh]](https://github.com/tox-dev/tox-gh#basic-example) section of _tox.ini_.
 
 ```
 [gh]
@@ -137,7 +139,13 @@ python =
     3.12 = py312
 ```
 
-In the config above, tox will use 5 python versions from 3.8 to 3.12 to run the command. For python 3.10, tox will additionally run format-check and lint.
+In the config above, tox will run different set of tox environments on different python versions.
+
+- on Python 3.8 job, tox runs `py38` environment,
+- on Python 3.9 job, tox runs `py39` environment,
+- on Python 3.10 job, tox runs `py310`, `format-check` and `lint` environments,
+- on Python 3.11 job, tox runs `py311` environment,
+- on Python 3.12 job, tox runs `py312` environment.
 
 _ci.yml_ uses a matrix strategy for operating systems, so for each python version, it will run three times for Windows, Ubuntu and Mac OS.
 
@@ -145,15 +153,7 @@ _ci.yml_ uses a matrix strategy for operating systems, so for each python versio
 
 It is recommended to
 
-1. Run tox using the minimum python version.
-
-```shell
-$ tox -e format-check
-$ tox -e lint
-$ tox -e py38
-```
-
-2. Incorporate other people's changes from main.
+1. Incorporate other people's changes from main.
 
 ```shell
 # Sync the main first if you are on a fork.
@@ -161,8 +161,14 @@ $ git fetch
 $ git rebase origin/main
 ```
 
+2. Install the minimum python version specified in _pyproject.toml_ and run `tox`. This will run environments defined in `env_list` in _tox.ini_.
+
+```shell
+$ tox
+```
+
 ### After making the pull request
 
 If you find that some GitHub checks failed, you can check the log in the Actions tab to see what went wrong.
 
-Since a successful test run relies on both the backend and the client library, if your local test run (`tox -e py38`) passed, it's probably because some temporary issues has happened to our backend server. You can have confidence in your commit and rerun the failed jobs.
+Since a successful test run relies on both the backend and the client library, if your local `tox` run passed but GitHub Action checks failed, it's probably because some temporary issues have happened to our backend server. You can have confidence in your commit and rerun the failed jobs.
