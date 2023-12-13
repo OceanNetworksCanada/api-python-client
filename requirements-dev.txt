@@ -1,8 +1,0 @@
-robotframework
-python-dotenv
-robotframework-pabot
-tox
-black
-isort
-pytest
-ruff

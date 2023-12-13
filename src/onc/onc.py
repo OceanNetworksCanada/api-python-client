@@ -6,7 +6,6 @@ import re
 from pathlib import Path
 
 from dateutil import parser
-
 from onc.modules._OncArchive import _OncArchive
 from onc.modules._OncDelivery import _OncDelivery
 from onc.modules._OncDiscovery import _OncDiscovery

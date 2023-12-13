@@ -31,6 +31,19 @@ Homepage = "https://wiki.oceannetworks.ca/display/O2A/Oceans+3.0+API+Home"
 Documentation = "https://wiki.oceannetworks.ca/display/O2A/Client+Libraries"
 Source = "https://github.com/OceanNetworksCanada/api-python-client"
 
+[project.optional-dependencies]
+dev = [
+    "robotframework-pabot",
+    "ipykernel",
+    "robotframework",
+    "python-dotenv",
+    "tox",
+    "black",
+    "isort",
+    "pytest",
+    "ruff",
+]
+
 [tool.isort]
 profile = "black"
 src_paths = ["onc", "tests"]
@@ -43,5 +56,15 @@ select = [
     "UP",  # pyupgrade
     "B",  # flake8-bugbear
     "SIM",  # flake8-simplify
-    "I",  # isort
+]
+exclude = [
+    "tests/robot",
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+addopts = [
+    "--import-mode=importlib",
 ]

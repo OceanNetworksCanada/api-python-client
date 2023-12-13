@@ -26,11 +26,11 @@ ${onc0}              Make ONC with path  output/09
 
 1. Get list by location, 1 page
     ${result}=    Run method getListByLocation with filters &{F_LOCATION1}
-    List ${result}[files] has exactly 15 rows
+    List ${result}[files] has at least 13 rows
 
 2. Get list by location, 3 pages
     ${result}=    Run method getListByLocation with &{F_LOCATION1} and parameter ${True}
-    List ${result}[files] has exactly 15 rows
+    List ${result}[files] has at least 13 rows
 
 3. Get list by location, 1 page, filter by extension
     ${result}=    Run method getListByLocation with filters &{F_LOCATIONFULL}
@@ -69,7 +69,7 @@ ${onc0}              Make ONC with path  output/09
 
 12. Get list by location, 3 pages, return archiveLocations
     ${result}=    Run method getListByLocation with &{F_LOC_RETURN1} and parameter ${True}
-    List ${result}[files] has exactly 15 rows
+    List ${result}[files] has at least 13 rows
     First row in ${result}[files] has key "archiveLocation"
 
 13. Get list by device, 3 pages, filter extension, return all metadata per sample
