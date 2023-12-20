@@ -133,22 +133,283 @@ class ONC:
         """  # noqa: E501
         return self.discovery.getLocations(filters)
 
-    def getLocationHierarchy(self, filters: dict = None):
+    def getLocationHierarchy(self, filters: dict | None = None):
+        """
+        Returns a filtered tree of locations with their children.
+
+        The API endpoint is api/locations/tree.
+
+        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getLocationHierarchy
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Filters in the API request. Return a tree of all available locations if None.
+
+        Returns
+        ------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> filters = { 'locationCode': 'STR01' }
+        >>> onc.getLocationHierarchy(filters) # doctest: +SKIP
+        [
+            {
+                "locationName": "Neutrino Project Mooring 01 (Yellow)",
+                "description": "TBD",
+                "hasDeviceData": true,
+                "locationCode": "STR01",
+                "hasPropertyData": false,
+                "children": [
+                    {
+                        "locationName": "POCAM 110 mab",
+                        "children": null,
+                        "description": "",
+                        "hasDeviceData": true,
+                        "locationCode": "STR01.PO1",
+                        "hasPropertyData": false
+                    },
+                    {
+                        "locationName": "POCAM 50 mab",
+                        "children": null,
+                        "description": "",
+                        "hasDeviceData": true,
+                        "locationCode": "STR01.PO2",
+                        "hasPropertyData": false
+                    }
+                ]
+            }
+        ]
+        """  # noqa: E501
         return self.discovery.getLocationHierarchy(filters)
 
-    def getDeployments(self, filters: dict = None):
+    def getDeployments(self, filters: dict | None = None):
+        """
+        Returns a filtered list of deployments.
+
+        The API endpoint is api/deployments.
+
+        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDeployments
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Filters in the API request. Return all device deployment if None.
+
+        Returns
+        -------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> filters = { 'deviceCode': 'NORTEKADCP9917' }
+        >>> onc.getDeployments(filters) # doctest: +SKIP
+        [
+            {
+                "deviceCode": "NORTEKADCP9917",
+                "locationCode": "BACWL",
+                "begin": "2012-05-31T20:46:05.000Z",
+                "end": "2014-05-10T01:40:00.000Z",
+                "hasDeviceData": true,
+                "lat": 48.311743,
+                "lon": -126.065378,
+                "depth": 860.0,
+                "heading": null,
+                "pitch": null,
+                "roll": null
+            }
+        ]
+        """  # noqa: E501
         return self.discovery.getDeployments(filters)
 
-    def getDevices(self, filters: dict = None):
+    def getDevices(self, filters: dict | None = None):
+        """
+        Returns a filtered list of devices.
+
+        The API endpoint is api/devices.
+
+        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDevices
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Filters in the API request. Return all devices available if None.
+
+        Returns
+        -------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> filters = {
+                'deviceCode': 'BPR-Folger-59',
+                'dateFrom': '2005-09-17T00:00:00.000Z',
+                'dateTo': '2020-09-17T13:00:00.000Z'
+            }
+        >>> onc.getDevices(filters) # doctest: +SKIP
+        [
+            {
+                "deviceCode": "BPR-Folger-59",
+                "deviceId": 21503,
+                "deviceCategoryCode": "BPR",
+                "deviceName": "NRCan Bottom Pressure Recorder 59",
+                "deviceLink": "https://data.oceannetworks.ca/DeviceListing?DeviceId=21503",
+                "hasDeviceData": true,
+                "dataRating": [
+                    {
+                    "dateFrom": "2007-01-01T00:00:00.000Z",
+                    "dateTo": null,
+                    "samplePeriod": 1,
+                    "sampleSize": 1
+                    }
+                ],
+                "cvTerm": {
+                    "device": [
+                        {
+                            "vocabulary": "SeaVoX Device Catalogue",
+                            "uri": "http://vocab.nerc.ac.uk/collection/L22/current/TOOL1652/"
+                        }
+                    ]
+                }
+            }
+        ]
+        """  # noqa: E501
         return self.discovery.getDevices(filters)
 
-    def getDeviceCategories(self, filters: dict = None):
+    def getDeviceCategories(self, filters: dict | None = None):
+        """
+        Returns a filtered list of device categories.
+
+        The API endpoint is api/deviceCategories.
+
+        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDeviceCategories
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Filters in the API request. Return all device categories available if None.
+
+        Returns
+        -------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> filters = { 'locationCode': 'NCBC' }
+        >>> onc.getDeviceCategories(filters) # doctest: +SKIP
+        [
+            {
+                "deviceCategoryCode": "CTD",
+                "deviceCategoryName": "CTD",
+                "description": "Conductivity Temperature (and Depth Sensor)",
+                "longDescription": " Conductivity Temperature Depth (CTD) is (...)",
+                "hasDeviceData": "true",
+                "cvTerm": {
+                    "deviceCategory": [
+                        {
+                           "uri": "http://vocab.nerc.ac.uk/collection/L05/current/130/",
+                           "vocabulary": "SeaDataNet device categories"
+                        }
+                    ]
+                }
+            }
+        ]
+        """  # noqa: E501
         return self.discovery.getDeviceCategories(filters)
 
-    def getProperties(self, filters: dict = None):
+    def getProperties(self, filters: dict | None = None):
+        """
+        Returns a filtered list of properties.
+
+        The API endpoint is api/properties.
+
+        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getProperties
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Filters in the API request. Return all properties available if None.
+
+        Returns
+        -------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> filters = { 'deviceCode': 'BC_POD1_AD2M' }
+        >>> onc.getProperties(filters) # doctest: +SKIP
+        [
+            {
+                "propertyCode": "soundspeed",
+                "propertyName": "Sound Speed",
+                "description": "Sound Speed: sound velocity sensor",
+                "uom": "m/s",
+                "hasDeviceData": true,
+                "hasPropertyData": false,
+                "cvTerm": {
+                    "property": [],
+                    "uom": [
+                        {
+                            "uri": "http://vocab.nerc.ac.uk/collection/P06/current/UVAA/",
+                            "vocabulary": "BODC data storage units"
+                        }
+                    ]
+                }
+            },
+            (...)
+        ]
+        """  # noqa: E501
         return self.discovery.getProperties(filters)
 
-    def getDataProducts(self, filters: dict = None):
+    def getDataProducts(self, filters: dict | None = None):
+        """
+        Returns a filtered list of data products.
+
+        The API endpoint is api/dataProducts.
+
+        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDataProducts
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Filters in the API request. Return all data products available if None.
+
+        Returns
+        -------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> filters = {
+        ...     'locationCode': 'PHYD',
+        ...     'extension': 'mat'
+        ... }
+        >>> onc.getDataProducts(filters) # doctest: +SKIP
+        [
+            {
+                "dataProductCode": "TSSD",
+                "dataProductName": "Time Series Scalar Data",
+                "extension": "json",
+                "hasDeviceData": true,
+                "hasPropertyData": true,
+                "helpDocument": "https://wiki.oceannetworks.ca/display/DP/1"
+            },
+            (...)
+        ]
+        """  # noqa: E501
         return self.discovery.getDataProducts(filters)
 
     # Delivery methods
