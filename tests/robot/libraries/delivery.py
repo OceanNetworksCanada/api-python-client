@@ -1,5 +1,7 @@
 # delivery services' tests
 
+from pathlib import Path
+
 from common import onc
 
 
@@ -15,7 +17,7 @@ def manualRunProduct(dpRequestId: int):
 
 def manualDownloadProduct(dpRunId: int, outPath: str = "", resultsOnly: bool = False):
     # Manually downloads runId
-    onc.outPath = outPath
+    onc.outPath = Path(outPath)
     return onc.downloadDataProduct(dpRunId, downloadResultsOnly=resultsOnly)
 
 

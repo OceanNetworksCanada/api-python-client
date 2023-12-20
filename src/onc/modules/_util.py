@@ -1,28 +1,24 @@
-import os
 from datetime import timedelta
+from pathlib import Path
 
 import humanize
 import requests
 
 
 def saveAsFile(
-    response: requests.Response, filePath: str, fileName: str, overwrite: bool
+    response: requests.Response, outPath: Path, fileName: str, overwrite: bool
 ) -> None:
     """
     Saves the file downloaded in the response object, in the outPath, with filename
     If overwrite, will overwrite files with the same name
     """
-    fullPath = fileName
-    if len(filePath) > 0:
-        fullPath = filePath + "/" + fileName
-        # Create outPath directory if not exists
-        if not os.path.exists(filePath):
-            os.makedirs(filePath)
+    filePath = outPath / fileName
+    outPath.mkdir(parents=True, exist_ok=True)
 
     # Save file in outPath if it doesn't exist yet
-    if os.path.exists(fullPath) and not overwrite:
-        raise FileExistsError(str(fullPath))
-    with open(fullPath, "wb+") as file:
+    if Path.exists(filePath) and not overwrite:
+        raise FileExistsError(str(filePath))
+    with open(filePath, "wb+") as file:
         file.write(response.content)
 
 

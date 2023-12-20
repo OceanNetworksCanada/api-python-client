@@ -20,5 +20,5 @@ Resource         ../resources/general.robot
     Prepare output directory  output/00/03
     ${onc3}=                Make ONC with path         output/00/03
     ${result}=              Call Method     ${onc3}  getLocations  ${F_LOCATIONCODE}
-    Call Method             ${onc3}         print    ${result}     output/00/03/03.json
+    Call Method             ${onc3}         print    ${result}     03.json
     File Should Exist       output/00/03/03.json

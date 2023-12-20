@@ -1,3 +1,4 @@
+from pathlib import Path
 from time import sleep, time
 from warnings import warn
 
@@ -41,7 +42,7 @@ class _DataProductFile:
         self,
         timeout: int,
         pollPeriod: float,
-        outPath: str,
+        outPath: Path,
         maxRetries: int,
         overwrite: bool,
     ):
