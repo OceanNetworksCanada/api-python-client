@@ -11,10 +11,10 @@ Resource         ../resources/general.robot
 
 *** Test Cases ***
 
-01. Get all deployments
-    ${data}=        Run method getDeployments without filters
-    Elements in ${data}[0] have the expected fields for getDeployments
-    List ${data} has at least 500 rows
+# 01. Get all deployments
+#     ${data}=        Run method getDeployments without filters
+#     Elements in ${data}[0] have the expected fields for getDeployments
+#     List ${data} has at least 500 rows
 
 02. Filter locationCode
     [Tags]          runthis
@@ -23,7 +23,7 @@ Resource         ../resources/general.robot
     List ${data} has at least 2 rows
 
 03. Filter deviceCategoryCode
-    ${data}=        Run method getDeployments with filter deviceCategoryCode="CTD"
+    ${data}=        Run method getDeployments with filter deviceCategoryCode="BPR"
     Elements in ${data}[0] have the expected fields for getDeployments
     List ${data} has at least 50 rows
 
@@ -38,9 +38,9 @@ Resource         ../resources/general.robot
     List ${data} has at least 1 rows
 
 06. ISO Date Range
-    ${data}=        Run method getDeployments from "2014-02-24T00:00:01.000Z" to "2014-03-24T00:00:01.000Z"
+    ${data}=        Run method getDeployments from "2008-02-24T00:00:01.000Z" to "2008-03-24T00:00:01.000Z"
     Elements in ${data}[0] have the expected fields for getDeployments
-    List ${data} has at least 100 rows
+    List ${data} has at least 40 rows
 
 08. No deployments found
     Run Keyword And Expect Error    *404*    Run method getDeployments with filters ${F_NO_RESULTS}

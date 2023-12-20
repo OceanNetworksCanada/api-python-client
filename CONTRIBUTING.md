@@ -125,7 +125,10 @@ WIP.
 
 ## Make a pull request
 
-The GitHub Actions services will automatically run formatter, linter and test suite (_ci.yml_) after you make a pull request. If you are an outside contributor, a maintainer will review and approve the GitHub checks.
+The GitHub Actions services will automatically run formatter, linter and test suite (_ci.yml_) after you make a pull request.
+
+Our test uses an Actions secret called TOKEN. For security reasons, GitHub will not pass Actions secrets to workflows that are triggered by a pull request from a fork.
+If you are an outside contributor working on a fork, this means all you checks will fail on the upstream. It will be helpful if you could add an Action secret called TOKEN on your fork, and manually trigger the "Formatting, Linting and Testing" workflow for your feature branch, so we can check the test results on your fork instead of the upstream.
 
 The actual tox environments to run are specified in the [[gh]](https://github.com/tox-dev/tox-gh#basic-example) section of _tox.ini_.
 
@@ -167,8 +170,10 @@ $ git rebase origin/main
 $ tox
 ```
 
+3. If you are working on a fork, add an Actions secret called TOKEN, and manually trigger the the "Formatting, Linting and Testing" workflow for your feature branch after pushing your commits.
+
 ### After making the pull request
 
 If you find that some GitHub checks failed, you can check the log in the Actions tab to see what went wrong.
 
-Since a successful test run relies on both the backend and the client library, if your local `tox` run passed but GitHub Action checks failed, it's probably because some temporary issues have happened to our backend server. You can have confidence in your commit and rerun the failed jobs.
+Since a successful test run relies on both the backend and the client library, if your local `tox` run passed but GitHub Action checks failed, it's probably because some temporary issues have happened to our backend server (especially with 500 server error). You can have confidence in your commit and rerun the failed jobs.
