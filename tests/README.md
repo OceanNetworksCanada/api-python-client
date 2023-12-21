@@ -66,13 +66,13 @@ pabot --testlevelsplit tests/robot/suites
 _To run a single RF test suite (replace 0X with the prefix of the test file name, e.g., 01):_
 
 ```shell
-robot tests/suites/01*    # robot tests/suites/0X*
+robot tests/robot/suites/01*    # robot tests/robot/suites/0X*
 ```
 
 _To run a single RF test in a test suite (replace Y with the prefix of the test name, e.g., 01):_
 
 ```shell
-robot --test "01*" tests/suites/01*  # robot --test "Y*" tests/suites/0X*
+robot --test "01*" tests/robot/suites/01*  # robot --test "Y*" tests/robot/suites/0X*
 ```
 
 _To run pytest_
@@ -84,7 +84,7 @@ pytest
 _`--variable TOKEN:${YOUR_TOKEN}` can be used if no `.env` file is present_
 
 ```shell
-robot --variable TOKEN:${YOUR_TOKEN} tests/suites/01*
+robot --variable TOKEN:${YOUR_TOKEN} tests/robot/suites/01*
 ```
 
 Additionally, You can check the three bash files (testall, testcoverage and testsuite) for running the test suites.

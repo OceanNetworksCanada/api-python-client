@@ -30,9 +30,9 @@ class ONC:
         self.showInfo = showInfo
         self.timeout = timeout
         self.baseUrl = "https://data.oceannetworks.ca/"
-        self.outPath = Path(outPath)
+        self._out_path = Path(outPath)
 
-        # switch to qa if needed
+        # Switch to qa if needed
         if not production:
             self.baseUrl = "https://qa.oceannetworks.ca/"
 
@@ -42,18 +42,27 @@ class ONC:
         self.realTime = _OncRealTime(self)
         self.archive = _OncArchive(self)
 
+    # Add getter and setter for self._out_path
+    @property
+    def outPath(self):
+        return self._out_path
+
+    @outPath.setter
+    def outPath(self, outPath):
+        self._out_path = Path(outPath)
+
     def print(self, obj, filename: str = ""):
         """
         Helper for printing a JSON dictionary to the console or to a file
         @filename: if present, creates a file with a ".json" extension
-            in "self.outPath" directory, and writes the output to the file.
+            in "self._out_path" directory, and writes the output to the file.
             if not present, prints the output to the console.
         """
         text = json.dumps(obj, indent=4)
         if filename == "":
             print(text)
         else:
-            filePath = self.outPath / filename
+            filePath = self._out_path / filename
             filePath = filePath.with_suffix(".json")
 
             with open(filePath, "w+") as file:

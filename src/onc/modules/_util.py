@@ -17,7 +17,7 @@ def saveAsFile(
 
     # Save file in outPath if it doesn't exist yet
     if Path.exists(filePath) and not overwrite:
-        raise FileExistsError(str(filePath))
+        raise FileExistsError(filePath.resolve())
     with open(filePath, "wb+") as file:
         file.write(response.content)
 

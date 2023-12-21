@@ -17,7 +17,7 @@ def manualRunProduct(dpRequestId: int):
 
 def manualDownloadProduct(dpRunId: int, outPath: str = "", resultsOnly: bool = False):
     # Manually downloads runId
-    onc.outPath = Path(outPath)
+    onc.outPath = outPath
     return onc.downloadDataProduct(dpRunId, downloadResultsOnly=resultsOnly)
 
 
