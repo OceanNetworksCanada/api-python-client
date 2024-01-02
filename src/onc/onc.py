@@ -30,7 +30,7 @@ class ONC:
         self.showInfo = showInfo
         self.timeout = timeout
         self.baseUrl = "https://data.oceannetworks.ca/"
-        self._out_path = Path(outPath)
+        self._out_path = Path(outPath).resolve()
 
         # Switch to qa if needed
         if not production:
@@ -49,7 +49,7 @@ class ONC:
 
     @outPath.setter
     def outPath(self, outPath):
-        self._out_path = Path(outPath)
+        self._out_path = Path(outPath).resolve()
 
     def print(self, obj, filename: str = ""):
         """
