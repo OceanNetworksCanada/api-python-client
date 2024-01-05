@@ -30,17 +30,9 @@ class ONC:
         self.showInfo = showInfo
         self.timeout = timeout
         self.baseUrl = "https://data.oceannetworks.ca/"
-        self.outPath = ""
+        self._out_path = Path(outPath).resolve()
 
-        outPath = str(outPath)
-        # sanitize outPath
-        if len(outPath) > 0:
-            outPath = outPath.replace("\\", "/")
-            if outPath[-1] == "/":
-                outPath = outPath[:-1]
-            self.outPath = outPath
-
-        # switch to qa if needed
+        # Switch to qa if needed
         if not production:
             self.baseUrl = "https://qa.oceannetworks.ca/"
 
@@ -50,16 +42,30 @@ class ONC:
         self.realTime = _OncRealTime(self)
         self.archive = _OncArchive(self)
 
+    # Add getter and setter for self._out_path
+    @property
+    def outPath(self):
+        return self._out_path
+
+    @outPath.setter
+    def outPath(self, outPath):
+        self._out_path = Path(outPath).resolve()
+
     def print(self, obj, filename: str = ""):
         """
         Helper for printing a JSON dictionary to the console or to a file
-        @filename: if present, creates the file and writes the output in it
+        @filename: if present, creates a file with a ".json" extension
+            in "self._out_path" directory, and writes the output to the file.
+            if not present, prints the output to the console.
         """
         text = json.dumps(obj, indent=4)
         if filename == "":
             print(text)
         else:
-            with open(filename, "w+") as file:
+            filePath = self._out_path / filename
+            filePath = filePath.with_suffix(".json")
+
+            with open(filePath, "w+") as file:
                 file.write(text)
 
     def formatUtc(self, dateString: str = "now"):

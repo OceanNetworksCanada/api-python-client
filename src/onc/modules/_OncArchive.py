@@ -1,5 +1,6 @@
 import os
 import time
+from pathlib import Path
 
 import humanize
 import requests
@@ -50,7 +51,7 @@ class _OncArchive(_OncService):
 
         if response.ok:
             # Save file to output path
-            outPath = self._config("outPath")
+            outPath: Path = self._config("outPath")
             saveAsFile(response, outPath, filename, overwrite)
 
         else:
@@ -109,8 +110,8 @@ class _OncArchive(_OncService):
         downInfos = []
         for filename in dataRows["files"]:
             # only download if file doesn't exist (or overwrite is True)
-            outPath = self._config("outPath")
-            filePath = f"{outPath}/{filename}"
+            outPath: Path = self._config("outPath")
+            filePath = outPath / filename
             fileExists = os.path.exists(filePath)
 
             if (not fileExists) or (fileExists and overwrite):
