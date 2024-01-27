@@ -28,8 +28,7 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
           sed -i '/nb_execution_mode = "off"/d' doc/source/conf.py # enable executing jupyter notebook
-          cd doc
-          make html
+          sphinx-build -W doc/source doc/build/html
 
       - name: Remove ampersand encoding and token in the generated html
         run: |

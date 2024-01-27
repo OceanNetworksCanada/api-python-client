@@ -180,24 +180,18 @@ $ pip install -e .[doc]
 ### Building doc
 
 ```shell
-$ cd doc
-$ make html
-# For Windows, use ".\make html" or "doc\make html" without cd
+$ sphinx-build -W doc/source doc/build/html
 ```
 
-Sometimes you need to clean the build folder to force a rebuild.
-
-```shell
-$ make clean
-# For Windows, use ".\make clean" or "doc\make html" without cd
-```
+`-W` makes the build stop at the first warning.
+Another useful flag is `-E`, which forces rebuilding the structure caching all references completely.
 
 There is a Sphinx extension called [sphinx-autobuild](https://github.com/executablebooks/sphinx-autobuild)
 to watch a Sphinx directory and rebuild the documentation when a change is detected.
 It also includes a live-reload web server.
 
 ```shell
-$ sphinx-autobuild doc/source doc/build/html --watch "*.md" --watch src
+$ sphinx-autobuild -W doc/source doc/build/html --watch "*.md" --watch src
 ```
 
 Or use tox
