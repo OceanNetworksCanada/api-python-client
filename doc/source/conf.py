@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "onc"
-copyright = "2023, ONC Data Team"
+copyright = "2024, ONC Data Team"
 author = "ONC Data Team"
 release = "2.3.5"
 

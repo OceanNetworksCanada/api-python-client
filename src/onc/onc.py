@@ -263,7 +263,6 @@ class ONC:
             - dateTo
             - locationName
             - deviceCode
-            - includeChildren
 
         Returns
         ------
@@ -351,7 +350,7 @@ class ONC:
             API response. Each deployment returned in the list is a dict with the following structure.
 
             - begin: str
-            - citation: str
+            - citation: dict
             - depth: float
             - deviceCategoryCode: str
             - deviceCode: str
@@ -378,7 +377,12 @@ class ONC:
         [
             {
                 "begin": "2014-05-09T15:50:42.000Z",
-                "citation": "Ocean Networks Canada Society. 2014. Barkley Canyon Axis  Conductivity Temperature Depth Deployed 2014-05-09. Ocean Networks Canada Society. https://doi.org/10.34943/99b92f1a-3af6-4826-88d9-31e74082028d.",
+                "citation": {
+                    "citation": "Ocean Networks Canada Society. 2015. Barkley Canyon Axis Conductivity Temperature Depth Deployed 2014-05-09. Ocean Networks Canada Society. https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517.",
+                    "doi": "10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517",
+                    "landingPageUrl": "https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517",
+                    "queryPid": None,
+                },
                 "depth": 982.0,
                 "deviceCategoryCode": "CTD",
                 "deviceCode": "SBECTD16p6002",
@@ -616,10 +620,10 @@ class ONC:
         Examples
         --------
         >>> params = {
-        >>>     "propertyCode": "conductivity",
-        >>>     "locationCode": "BACAX",
-        >>>     "deviceCategoryCode": "CTD",
-        >>> }  # doctest: +SKIP
+        ...     "propertyCode": "conductivity",
+        ...     "locationCode": "BACAX",
+        ...     "deviceCategoryCode": "CTD",
+        ... }  # doctest: +SKIP
         >>> onc.getProperties(params)  # doctest: +SKIP
         [
             {
@@ -689,7 +693,8 @@ class ONC:
                     - dataProductOptions[].allowableRange.unitOfMeasure: str | None
                     - dataProductOptions[].allowableRange.upperBound: str
                 - dataProductOptions[].allowableValues: list of str
-                - dataProductOptions[].documentation: str
+                - dataProductOptions[].defaultValues: str
+                - dataProductOptions[].documentation: list of str
                 - dataProductOptions[].option: str
                 - dataProductOptions[].suboptions: list of dict | None
             - extension: str
@@ -718,6 +723,7 @@ class ONC:
                             "upperBound": "140",
                         },
                         "allowableValues": ["-1000"],
+                        "defaultValue": "-1000",
                         "documentation": [
                             "https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options"
                         ],
@@ -727,6 +733,7 @@ class ONC:
                     {
                         "allowableRange": None,
                         "allowableValues": ["0", "1", "2", "3", "4", "5"],
+                        "defaultValue": "0",
                         "documentation": [
                             "https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options"
                         ],
@@ -741,6 +748,7 @@ class ONC:
                             "upperBound": "140",
                         },
                         "allowableValues": ["-1000"],
+                        "defaultValue": "-1000",
                         "documentation": [
                             "https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options"
                         ],

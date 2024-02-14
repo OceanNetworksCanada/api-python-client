@@ -12,7 +12,7 @@ Discover_Deployments.ipynb
 Discover_Device_Categories.ipynb
 Discover_Properties.ipynb
 Discover_Data_Products.ipynb
-Download_Data_Product.ipynb
+Download_Data_Products.ipynb
 Request_Real_Time_Data.ipynb
 Download_Archived_Files.ipynb
 ```
