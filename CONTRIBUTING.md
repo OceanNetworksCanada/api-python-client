@@ -68,15 +68,43 @@ $ source .venv/bin/activate
 $ pip install -e .[dev]
 ```
 
-### Running the test
+### About the tests
 
-See README.md in the tests folder.
+Tests are organized based on the structure of the [OpenAPI](https://data.oceannetworks.ca/OpenAPI) page.
+Test files are named based on the API end point.
+For example, `/location/tree` is tested in the test_location_tree.py file under discover_locations directory.
+
+Before running the tests, create a `.env` file under the root directory and put TOKEN variable in the file.
+If you are on Windows, make sure the encoding of `.env` file is UTF-8 after using the command below.
+
+```shell
+echo TOKEN=${YOUR_TOKEN} > .env
+```
+
+The default testing environment is PROD. If you are an internal developer,
+add the following line to `.env` so that the tests are running against QA environment.
+
+```shell
+echo ONC_ENV=QA >> .env
+```
+
+If testing in PROD is desired, change ONC_ENV value from QA to PROD, or simply removing the line.
+
+To run all tests, run
+
+```shell
+$ pytest  # or pytest --cov=onc to get a coverage report
+```
 
 Or use tox
 
 ```shell
 $ tox -e py310 # py38, py39, py311, py312. Make sure the specified python version is installed.
 ```
+
+To run specific tests, refer to [how to invoke pytest](https://docs.pytest.org/en/stable/how-to/usage.html#specifying-which-tests-to-run).
+You can also use the built-in testing support of IDEs like [VS Code](https://code.visualstudio.com/docs/python/testing#_run-tests)
+or [PyCharm](https://www.jetbrains.com/help/pycharm/pytest.html#run-pytest-test).
 
 ### Formatter
 
