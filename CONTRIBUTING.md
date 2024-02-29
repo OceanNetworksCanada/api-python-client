@@ -99,7 +99,7 @@ $ pytest  # or pytest --cov=onc to get a coverage report
 Or use tox
 
 ```shell
-$ tox -e py310 # py38, py39, py311, py312. Make sure the specified python version is installed.
+$ tox -e py310  # py39, py311, py312. Make sure the specified python version is installed.
 ```
 
 To run specific tests, refer to [how to invoke pytest](https://docs.pytest.org/en/stable/how-to/usage.html#specifying-which-tests-to-run).
@@ -163,7 +163,6 @@ The actual tox environments to run are specified in the [[gh]](https://github.co
 ```
 [gh]
 python =
-    3.8 = py38
     3.9 = py39
     3.10 = py310, format-check, lint
     3.11 = py311
@@ -172,7 +171,6 @@ python =
 
 In the config above, tox will run different set of tox environments on different python versions.
 
-- on Python 3.8 job, tox runs `py38` environment,
 - on Python 3.9 job, tox runs `py39` environment,
 - on Python 3.10 job, tox runs `py310`, `format-check` and `lint` environments,
 - on Python 3.11 job, tox runs `py311` environment,
