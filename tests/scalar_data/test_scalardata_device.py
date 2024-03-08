@@ -3,42 +3,32 @@ import requests
 
 
 @pytest.fixture
-def params():
-    return {
-        "deviceCode": "BPR-Folger-59",
-        "dateFrom": "2019-11-23T00:00:00.000Z",
-        "dateTo": "2019-11-23T00:01:00.000Z",
-        "rowLimit": 80000,
-    }
-
-
-@pytest.fixture
-def params_multiple_pages(params):
+def params_multiple_pages(params_device):
     # rowLimit should be less than the total number of rows.
-    return params | {"rowLimit": 25}
+    return params_device | {"rowLimit": 25}
 
 
-def test_invalid_param_value(requester, params):
-    params_invalid_param_value = params | {"deviceCode": "XYZ123"}
+def test_invalid_param_value(requester, params_device):
+    params_invalid_param_value = params_device | {"deviceCode": "XYZ123"}
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
         requester.getDirectByDevice(params_invalid_param_value)
 
 
-def test_invalid_param_name(requester, params):
-    params_invalid_param_name = params | {"deviceCodes": "BPR-Folger-59"}
+def test_invalid_param_name(requester, params_device):
+    params_invalid_param_name = params_device | {"deviceCodes": "BPR-Folger-59"}
     with pytest.raises(requests.HTTPError, match=r"API Error 129"):
         requester.getDirectByDevice(params_invalid_param_name)
 
 
-def test_no_data(requester, params):
-    params_no_data = params | {"dateFrom": "2000-01-01", "dateTo": "2000-01-02"}
+def test_no_data(requester, params_device):
+    params_no_data = params_device | {"dateFrom": "2000-01-01", "dateTo": "2000-01-02"}
     data = requester.getDirectByDevice(params_no_data)
 
     assert data["sensorData"] is None
 
 
-def test_valid_params_one_page(requester, params, params_multiple_pages):
-    data = requester.getDirectByDevice(params)
+def test_valid_params_one_page(requester, params_device, params_multiple_pages):
+    data = requester.getDirectByDevice(params_device)
     data_all_pages = requester.getDirectByDevice(params_multiple_pages, allPages=True)
 
     assert (
