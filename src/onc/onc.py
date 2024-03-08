@@ -782,8 +782,17 @@ class ONC:
     def requestDataProduct(self, filters: dict):
         return self.delivery.requestDataProduct(filters)
 
+    def checkDataProduct(self, dpRequestId: int):
+        return self.delivery.checkDataProduct(dpRequestId)
+
     def runDataProduct(self, dpRequestId: int, waitComplete: bool = True):
         return self.delivery.runDataProduct(dpRequestId, waitComplete)
+
+    def cancelDataProduct(self, dpRequestId: int):
+        return self.delivery.cancelDataProduct(dpRequestId)
+
+    def restartDataProduct(self, dpRequestId: int, waitComplete: bool = True):
+        return self.delivery.restartDataProduct(dpRequestId, waitComplete)
 
     def downloadDataProduct(
         self,
@@ -814,6 +823,9 @@ class ONC:
 
     def getDirectRawByDevice(self, filters: dict = None, allPages: bool = False):
         return self.realTime.getDirectRawByDevice(filters, allPages)
+
+    def getSensorCategoryCodes(self, filters: dict):
+        return self.realTime.getSensorCategoryCodes(filters)
 
     # Archive file methods
 
