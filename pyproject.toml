@@ -8,10 +8,10 @@ version = "2.3.5"
 description = "Ocean 3.0 API Python Client Library"
 readme = "README.md"
 authors = [
-  { name="ONC Data Team", email="data@oceannetworks.ca" },
+    { name = "ONC Data Team", email = "data@oceannetworks.ca" },
 ]
-license = {file = 'LICENSE.txt'}
-requires-python = ">=3.8"
+license = { file = 'LICENSE.txt' }
+requires-python = ">=3.9"
 dependencies = [
     "requests",
     'python-dateutil',
@@ -33,14 +33,13 @@ Source = "https://github.com/OceanNetworksCanada/api-python-client"
 
 [project.optional-dependencies]
 dev = [
-    "robotframework-pabot",
     "ipykernel",
-    "robotframework",
     "python-dotenv",
     "tox",
     "black",
     "isort",
     "pytest",
+    "pytest-cov",
     "ruff",
 ]
 
@@ -51,14 +50,11 @@ src_paths = ["onc", "tests"]
 [tool.ruff]
 # Reference for the rules https://docs.astral.sh/ruff/rules/
 select = [
-    "E", "W",  # pycodestyle
-    "F",  # pyflakes
-    "UP",  # pyupgrade
-    "B",  # flake8-bugbear
-    "SIM",  # flake8-simplify
-]
-exclude = [
-    "tests/robot",
+    "E", "W", # pycodestyle
+    "F", # pyflakes
+    "UP", # pyupgrade
+    "B", # flake8-bugbear
+    "SIM", # flake8-simplify
 ]
 
 [tool.pytest.ini_options]
