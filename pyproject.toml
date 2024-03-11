@@ -27,8 +27,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://wiki.oceannetworks.ca/display/O2A/Oceans+3.0+API+Home"
-Documentation = "https://wiki.oceannetworks.ca/display/O2A/Client+Libraries"
+Homepage = "https://data.oceannetworks.ca/OpenAPI"
+Documentation = "https://oceannetworkscanada.github.io/api-python-client/"
 Source = "https://github.com/OceanNetworksCanada/api-python-client"
 
 [project.optional-dependencies]
@@ -41,6 +41,19 @@ dev = [
     "pytest",
     "pytest-cov",
     "ruff",
+]
+
+doc = [
+    "myst-nb",
+    "sphinx-autoapi",
+    "sphinx-rtd-theme",
+    "sphinx-autobuild",
+    "sphinx_copybutton",
+    "pandas",
+    "python-dotenv",
+    "black[jupyter]",
+    "ipykernel",
+    "tox",
 ]
 
 [tool.isort]

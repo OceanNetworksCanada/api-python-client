@@ -14,9 +14,36 @@ from onc.modules._OncRealTime import _OncRealTime
 
 class ONC:
     """
-    Python ONC Api Client Library
-    Common library wrapper
-    """
+    A wrapper class for Oceans 3.0 API requests.
+
+    All the client library's functionality is provided as methods of this class.
+
+    Parameters
+    ----------
+    token : str
+        The ONC API token, which could be retrieved at https://data.oceannetworks.ca/Profile once logged in.
+    production : boolean, default True
+        Whether the ONC Production server URL is used for service requests.
+
+        - True: Use the production server.
+        - False: Use the internal ONC test server (reserved for ONC staff IP addresses).
+    showInfo : boolean, default False
+        Whether verbose script messages are displayed, such as request url and processing time information.
+
+        - True: Print all information and debug messages (intended for debugging).
+        - False: Only print information messages.
+    outPath : str | Path, default "output"
+        The directory that files are saved to (relative to the current directory) when downloading files.
+        The directory will be created if it does not exist during the download.
+    timeout : int, default 60
+        Number of seconds before a request to the API is canceled due to a timeout.
+
+    Examples
+    --------
+    >>> from onc import ONC
+    >>> onc = ONC("YOUR_TOKEN_HERE")  # doctest: +SKIP
+    >>> onc = ONC("YOUR_TOKEN_HERE", showInfo=True, outPath="onc-files")  # doctest: +SKIP
+    """  # noqa: E501
 
     def __init__(
         self,
@@ -44,20 +71,39 @@ class ONC:
 
     # Add getter and setter for self._out_path
     @property
-    def outPath(self):
+    def outPath(self) -> Path:
+        """
+        Return the resolved directory path that files are saved to.
+
+        The setter method can take either `str` or `Path` as the parameter.
+        """
         return self._out_path
 
     @outPath.setter
-    def outPath(self, outPath):
+    def outPath(self, outPath: str | Path) -> None:
         self._out_path = Path(outPath).resolve()
 
-    def print(self, obj, filename: str = ""):
+    def print(self, obj, filename: str = "") -> None:
         """
-        Helper for printing a JSON dictionary to the console or to a file
-        @filename: if present, creates a file with a ".json" extension
-            in "self._out_path" directory, and writes the output to the file.
-            if not present, prints the output to the console.
-        """
+        Pretty print a collection to the console or a file.
+
+        Mainly used to print the results returned by other class methods.
+
+        Parameters
+        ----------
+        obj: Any
+            Any collection, including scalar values, dictionaries and lists (i.e. those returned by other class methods)
+        filename : str, default ""
+            The filename that is used when saving the json file. It is relative to ``self._out_path``.
+            The ``.json`` extension could be omitted.
+
+            - if not empty, save the output to the file.
+            - if empty, print the output to the console.
+        Examples
+        --------
+        >>> result = onc.getLocations()  # doctest: +SKIP
+        >>> onc.print(result)  # doctest: +SKIP
+        """  # noqa: E501
         text = json.dumps(obj, indent=4)
         if filename == "":
             print(text)
@@ -68,12 +114,27 @@ class ONC:
             with open(filePath, "w+") as file:
                 file.write(text)
 
-    def formatUtc(self, dateString: str = "now"):
+    def formatUtc(self, dateString: str = "now") -> str:
         """
-        Helper that returns an ISO8601 string for the provided date string
-        Most date formats are supported, as explained in: http://labix.org/python-dateutil#head-c0e81a473b647dfa787dc11e8c69557ec2c3ecd2
-        A value of "now" returns the current UTC date & time
-        Depends on the local system clock
+        Format the provided date string as an ISO8601 UTC date string.
+
+        The ISO8601 UTC date format is required by the API.
+
+        Parameters
+        ----------
+        dateString: str, default "now"
+            A string that represents a date & time in any of the formats
+            described in http://labix.org/python-dateutil#head-c0e81a473b647dfa787dc11e8c69557ec2c3ecd2.
+            Examples are:
+
+            - "2016-12-04"
+            - "2016-Dec-04, 12:00:00"
+            - "2016 Dec 04 03:00 PM"
+            - "now" (returns current UTC date & time)
+        Examples
+        --------
+        >>> onc.formatUtc("2019-Sept-09 03:00 PM")
+        '2019-09-09T15:00:00.000Z'
         """
         if dateString == "now":
             return (
@@ -89,31 +150,65 @@ class ONC:
 
     def getLocations(self, filters: dict | None = None):
         """
-        Returns a filtered list of locations.
+        Return locations.
 
-        The API endpoint is api/locations.
+        The API endpoint is ``/locations``.
 
-        See https://wiki.oceannetworks.ca/display/O2A/Discovery+methods#Discoverymethods-getLocationsgetLocations
-        for usage and available filters.
+        Return a list of location names and location codes.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/locations
+        for usage and available query string parameters.
 
         Parameters
         ----------
         filters : dict, optional
-            Filters in the API request. Return all locations available if None.
+            Query string parameters in the API request. Return all locations available if None.
+
+            Supported parameters are:
+
+            - locationCode
+            - deviceCategoryCode
+            - propertyCode
+            - dataProductCode
+            - dateFrom
+            - dateTo
+            - locationName
+            - deviceCode
+            - includeChildren
 
         Returns
         -------
         list of dict
-            API response.
+            API response. Each location returned in the list is a dict with the following structure.
+
+            - deployments: int
+            - locationName: str
+            - depth: float
+            - bbox: dict
+                - bbox.maxDepth: float
+                - bbox.maxLat: float
+                - bbox.maxLon: float
+                - bbox.minDepth: float
+                - bbox.minLat: float
+                - bbox.minLon: float
+            - description: str
+            - hasDeviceData: bool
+            - lon: float
+            - locationCode: str
+            - hasPropertyData: bool
+            - lat: float
+            - dataSearchURL: str
+
+            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.
 
         Examples
         --------
-        >>> filters = {
-        ...     'locationCode': 'FGPD',
+        >>> params = {
+        ...     "locationCode": "FGPD",
         ...     "dateFrom": "2005-09-17T00:00:00.000Z",
         ...     "dateTo": "2020-09-17T13:00:00.000Z",
-        ... }
-        >>> onc.getLocations(filters) # doctest: +SKIP
+        ... }  # doctest: +SKIP
+        >>> onc.getLocations(params)  # doctest: +SKIP
         [
             {
                 "deployments": 46,
@@ -141,52 +236,79 @@ class ONC:
 
     def getLocationHierarchy(self, filters: dict | None = None):
         """
-        Returns a filtered tree of locations with their children.
+        Return a location tree.
 
-        The API endpoint is api/locations/tree.
+        The API endpoint is ``/locations/tree``.
 
-        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getLocationHierarchy
-        for usage and available filters.
+        Return a hierarchical representation of the ONC Search Tree Nodes.
+        The Search Tree is used in Oceans 3.0 to organize instruments and variables by location
+        so that users can easily drill down by place name or mobile platform name
+        to find the instruments or properties they are interested in.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/locations/tree
+        for usage and available query string parameters.
 
         Parameters
         ----------
         filters : dict, optional
-            Filters in the API request. Return a tree of all available locations if None.
+            Query string parameters in the API request. Return a tree of all available locations if None.
+
+            Supported parameters are:
+
+            - locationCode
+            - deviceCategoryCode
+            - propertyCode
+            - dataProductCode
+            - dateFrom
+            - dateTo
+            - locationName
+            - deviceCode
 
         Returns
         ------
         list of dict
-            API response.
+            API response. Each location returned in the list is a dict with the following structure.
+
+            - locationName: str
+            - children: list of dict | None
+            - description: string
+            - hasDeviceData: bool
+            - locationCode: str
+            - hasPropertyData: bool
+
+            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.
 
         Examples
         --------
-        >>> filters = { 'locationCode': 'STR01' }
-        >>> onc.getLocationHierarchy(filters) # doctest: +SKIP
+        >>> params = {
+        ...     "locationCode": "BACCC",
+        ... }  # doctest: +SKIP
+        >>> onc.getLocationHierarchy(params)  # doctest: +SKIP
         [
             {
-                "locationName": "Neutrino Project Mooring 01 (Yellow)",
-                "description": "TBD",
-                "hasDeviceData": true,
-                "locationCode": "STR01",
-                "hasPropertyData": false,
+                "locationName": "Coral Cliff",
                 "children": [
                     {
-                        "locationName": "POCAM 110 mab",
-                        "children": null,
+                        "locationName": "ADCP 2 MHz East",
+                        "children": None,
                         "description": "",
-                        "hasDeviceData": true,
-                        "locationCode": "STR01.PO1",
-                        "hasPropertyData": false
+                        "hasDeviceData": True,
+                        "locationCode": "BACCC.A1",
+                        "hasPropertyData": False,
                     },
                     {
-                        "locationName": "POCAM 50 mab",
-                        "children": null,
+                        "locationName": "ADCP 2 MHz West",
+                        "children": None,
                         "description": "",
-                        "hasDeviceData": true,
-                        "locationCode": "STR01.PO2",
-                        "hasPropertyData": false
-                    }
-                ]
+                        "hasDeviceData": True,
+                        "locationCode": "BACCC.A2",
+                        "hasPropertyData": False,
+                    },
+                ],
+                "description": " The Coral Cliffs are located within Barkley Canyon. At this location, boundary layer flow near steep bathymetry, interaction of currents, and deep-sea corals are observed.",
+                "hasDeviceData": False,
+                "locationCode": "BACCC",
+                "hasPropertyData": True,
             }
         ]
         """  # noqa: E501
@@ -194,40 +316,84 @@ class ONC:
 
     def getDeployments(self, filters: dict | None = None):
         """
-        Returns a filtered list of deployments.
+        Return a list of device deployments.
 
-        The API endpoint is api/deployments.
+        The API endpoint is ``/deployments``.
 
-        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDeployments
+        Return all deployments defined in Oceans 3.0 which meet the filter criteria,
+        where a deployment is the installation of a device at a location.
+        The deployments service assists in knowing when and where specific types of data are available.
+
+        The primary purpose for the deployments service is to find the dates and locations of deployments
+        and use the dateFrom and dateTo datetimes when requesting a data product using the ``dataProductDelivery`` web service.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/deployments
         for usage and available filters.
 
         Parameters
         ----------
         filters : dict, optional
-            Filters in the API request. Return all device deployment if None.
+            Query string parameters in the API request. Return all device deployment if None.
+
+            Supported parameters are:
+
+            - locationCode
+            - deviceCategoryCode
+            - deviceCode
+            - propertyCode
+            - dateFrom
+            - dateTo
 
         Returns
         -------
         list of dict
-            API response.
+            API response. Each deployment returned in the list is a dict with the following structure.
+
+            - begin: str
+            - citation: dict
+            - depth: float
+            - deviceCategoryCode: str
+            - deviceCode: str
+            - end: str | None
+            - hasDeviceData: bool
+            - heading: float | None
+            - lat: float
+            - locationCode: str
+            - lon: float
+            - pitch: float | None
+            - roll: float | None
+
+            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.
 
         Examples
         --------
-        >>> filters = { 'deviceCode': 'NORTEKADCP9917' }
-        >>> onc.getDeployments(filters) # doctest: +SKIP
+        >>> params = {
+        ...     "locationCode": "BACAX",
+        ...     "deviceCategoryCode": "CTD",
+        ...     "dateFrom": "2015-09-17",
+        ...     "dateTo": "2015-09-17T13:00:00.000Z",
+        ... }  # doctest: +SKIP
+        >>> onc.getDeployments(params)  # doctest: +SKIP
         [
             {
-                "deviceCode": "NORTEKADCP9917",
-                "locationCode": "BACWL",
-                "begin": "2012-05-31T20:46:05.000Z",
-                "end": "2014-05-10T01:40:00.000Z",
-                "hasDeviceData": true,
-                "lat": 48.311743,
-                "lon": -126.065378,
-                "depth": 860.0,
-                "heading": null,
-                "pitch": null,
-                "roll": null
+                "begin": "2014-05-09T15:50:42.000Z",
+                "citation": {
+                    "citation": "Ocean Networks Canada Society. 2015. Barkley Canyon Axis Conductivity Temperature Depth Deployed 2014-05-09. Ocean Networks Canada Society. https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517.",
+                    "doi": "10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517",
+                    "landingPageUrl": "https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517",
+                    "queryPid": None,
+                },
+                "depth": 982.0,
+                "deviceCategoryCode": "CTD",
+                "deviceCode": "SBECTD16p6002",
+                "end": "2015-09-17T12:59:52.000Z",
+                "hasDeviceData": True,
+                "heading": None,
+                "lat": 48.316583,
+                "locationCode": "BACAX",
+                "lon": -126.050796,
+                "pitch": None,
+                "roll": None,
             }
         ]
         """  # noqa: E501
@@ -235,55 +401,90 @@ class ONC:
 
     def getDevices(self, filters: dict | None = None):
         """
-        Returns a filtered list of devices.
+        Return a list of devices.
 
-        The API endpoint is api/devices.
+        The API endpoint is ``/devices``.
 
-        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDevices
+        Return all the devices defined in Oceans 3.0 that meet a set of filter criteria.
+        Devices are instruments that have one or more sensors that observe a property or phenomenon
+        with a goal of producing an estimate of the value of a property.
+        Devices are uniquely identified by a device code and can be deployed at multiple locations during their lifespan.
+
+        The primary purpose of the devices service is to find devices that have the data you are interested in
+        and use the deviceCode when requesting a data product using the ``dataProductDelivery`` web service.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/devices
         for usage and available filters.
 
         Parameters
         ----------
         filters : dict, optional
-            Filters in the API request. Return all devices available if None.
+            Query string parameters in the API request. Return all devices available if None.
+
+            Supported parameters are:
+
+            - locationCode
+            - deviceCategoryCode
+            - deviceCode
+            - propertyCode
+            - dateFrom
+            - dateTo
 
         Returns
         -------
         list of dict
-            API response.
+            API response. Each device returned in the list is a dict with the following structure.
+
+            - cvTerm: dict
+                - cvTerm.device: list of dict
+                    - cvTerm.device[].uri: str
+                    - cvTerm.device[].vocabulary: str
+            - dataRating: list of dict
+                - dataRating[].dateFrom: str
+                - dataRating[].dateTo: str | None
+                - dataRating[].samplePeriod: float
+                - dataRating[].sampleSize: int
+            - deviceCategoryCode: str
+            - deviceCode: str
+            - deviceId: int
+            - deviceLink: str
+            - deviceName: str
+            - hasDeviceData: bool
+
+            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.
 
         Examples
         --------
-        >>> filters = {
-                'deviceCode': 'BPR-Folger-59',
-                'dateFrom': '2005-09-17T00:00:00.000Z',
-                'dateTo': '2020-09-17T13:00:00.000Z'
-            }
-        >>> onc.getDevices(filters) # doctest: +SKIP
+        >>> params = {
+        ...     "deviceCode": "BPR-Folger-59",
+        ...     "dateFrom": "2005-09-17T00:00:00.000Z",
+        ...     "dateTo": "2020-09-17T13:00:00.000Z",
+        ... }  # doctest: +SKIP
+        >>> onc.getDevices(params)  # doctest: +SKIP
         [
             {
-                "deviceCode": "BPR-Folger-59",
-                "deviceId": 21503,
-                "deviceCategoryCode": "BPR",
-                "deviceName": "NRCan Bottom Pressure Recorder 59",
-                "deviceLink": "https://data.oceannetworks.ca/DeviceListing?DeviceId=21503",
-                "hasDeviceData": true,
-                "dataRating": [
-                    {
-                    "dateFrom": "2007-01-01T00:00:00.000Z",
-                    "dateTo": null,
-                    "samplePeriod": 1,
-                    "sampleSize": 1
-                    }
-                ],
                 "cvTerm": {
                     "device": [
                         {
+                            "uri": "http://vocab.nerc.ac.uk/collection/L22/current/TOOL1652/",
                             "vocabulary": "SeaVoX Device Catalogue",
-                            "uri": "http://vocab.nerc.ac.uk/collection/L22/current/TOOL1652/"
                         }
                     ]
-                }
+                },
+                "dataRating": [
+                    {
+                        "dateFrom": "2007-01-01T00:00:00.000Z",
+                        "dateTo": None,
+                        "samplePeriod": 1.0,
+                        "sampleSize": 1,
+                    }
+                ],
+                "deviceCategoryCode": "BPR",
+                "deviceCode": "BPR-Folger-59",
+                "deviceId": 21503,
+                "deviceLink": "https://data.oceannetworks.ca/DeviceListing?DeviceId=21503",
+                "deviceName": "NRCan Bottom Pressure Recorder 59",
+                "hasDeviceData": True,
             }
         ]
         """  # noqa: E501
@@ -291,42 +492,75 @@ class ONC:
 
     def getDeviceCategories(self, filters: dict | None = None):
         """
-        Returns a filtered list of device categories.
+        Return a list of device categories
 
-        The API endpoint is api/deviceCategories.
+        The API endpoint is ``/deviceCategories``.
 
-        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDeviceCategories
+        Return all device categories defined in Oceans 3.0 that meet a filter criteria.
+        A Device Category represents an instrument type classification such as
+        CTD (Conductivity, Temperature & Depth Instrument) or BPR (Bottom Pressure Recorder).
+        Devices from a category can record data for one or more properties (variables).
+
+        The primary purpose of this service is to find device categories that have the data you want to access;
+        the service provides the deviceCategoryCode you can use
+        when requesting a data product via the ``dataProductDelivery`` web service.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/deviceCategories
         for usage and available filters.
 
         Parameters
         ----------
         filters : dict, optional
-            Filters in the API request. Return all device categories available if None.
+            Query string parameters in the API request. Return all device categories available if None.
+
+            Supported parameters are:
+
+            - deviceCategoryCode
+            - deviceCategoryName
+            - description
+            - locationCode
+            - propertyCode
 
         Returns
         -------
         list of dict
-            API response.
+            API response. Each device category returned in the list is a dict with the following structure.
+
+            - cvTerm: dict
+                - cvTerm.deviceCategory: list of dict
+                    - cvTerm.deviceCategory[].uri: str
+                    - cvTerm.deviceCategory[].vocabulary: str
+            - description: str
+            - deviceCategoryCode: str
+            - deviceCategoryName: str
+            - hasDeviceData: bool
+            - longDescription: str
+
+            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.
 
         Examples
         --------
-        >>> filters = { 'locationCode': 'NCBC' }
-        >>> onc.getDeviceCategories(filters) # doctest: +SKIP
+        >>> params = {
+        ...     "deviceCategoryCode": "CTD",
+        ...     "deviceCategoryName": "Conductivity",
+        ...     "description": "Temperature",
+        ... }  # doctest: +SKIP
+        >>> onc.getDeviceCategories(params)  # doctest: +SKIP
         [
             {
-                "deviceCategoryCode": "CTD",
-                "deviceCategoryName": "CTD",
-                "description": "Conductivity Temperature (and Depth Sensor)",
-                "longDescription": " Conductivity Temperature Depth (CTD) is (...)",
-                "hasDeviceData": "true",
                 "cvTerm": {
                     "deviceCategory": [
                         {
-                           "uri": "http://vocab.nerc.ac.uk/collection/L05/current/130/",
-                           "vocabulary": "SeaDataNet device categories"
+                            "uri": "http://vocab.nerc.ac.uk/collection/L05/current/130/",
+                            "vocabulary": "SeaDataNet device categories",
                         }
                     ]
-                }
+                },
+                "description": "Conductivity Temperature (and Depth Sensor)",
+                "deviceCategoryCode": "CTD",
+                "deviceCategoryName": "Conductivity Temperature Depth",
+                "hasDeviceData": True,
+                "longDescription": " Conductivity Temperature Depth (CTD) is an instrument package that contains sensors for measuring the conductivity, temperature, and pressure of seawater. Salinity, sound velocity, depth and density are variables that can be derived from sensor measurements. CTDs can carry additional instruments and sensors such as oxygen sensors, turbidity sensors and fluorometers.",
             }
         ]
         """  # noqa: E501
@@ -334,86 +568,199 @@ class ONC:
 
     def getProperties(self, filters: dict | None = None):
         """
-        Returns a filtered list of properties.
+        Return a list of properties.
 
-        The API endpoint is api/properties.
+        The API endpoint is ``/properties``.
 
-        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getProperties
+        Return all properties defined in Oceans 3.0 that meet a filter criteria.
+        Properties are observable phenomena (aka, variables) and are the common names given to sensor types
+        (i.e., oxygen, pressure, temperature, etc).
+
+        The primary purpose of this service is to find the available properties of the data you want to access;
+        the service provides the propertyCode that you can use to request a data product via the ``dataProductDelivery`` web service.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/properties
         for usage and available filters.
 
         Parameters
         ----------
         filters : dict, optional
-            Filters in the API request. Return all properties available if None.
+            Query string parameters in the API request. Return all properties available if None.
+
+            Supported parameters are:
+
+            - propertyCode
+            - propertyName
+            - description
+            - locationCode
+            - deviceCategoryCode
+            - deviceCode
 
         Returns
         -------
         list of dict
-            API response.
+            API response. Each property returned in the list is a dict with the following structure.
+
+            - cvTerm: dict
+                - cvTerm.property: list of dict
+                    - cvTerm.property[].uri: str
+                    - cvTerm.property[].vocabulary: str
+                - cvTerm.uom: list of dict
+                    - cvTerm.uom[].uri: str
+                    - cvTerm.uom[].vocabulary: str
+            - description: str
+            - hasDeviceData: bool
+            - hasPropertyData: bool
+            - propertyCode: str
+            - propertyName: str
+            - uom: str
+
+            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.
 
         Examples
         --------
-        >>> filters = { 'deviceCode': 'BC_POD1_AD2M' }
-        >>> onc.getProperties(filters) # doctest: +SKIP
+        >>> params = {
+        ...     "propertyCode": "conductivity",
+        ...     "locationCode": "BACAX",
+        ...     "deviceCategoryCode": "CTD",
+        ... }  # doctest: +SKIP
+        >>> onc.getProperties(params)  # doctest: +SKIP
         [
             {
-                "propertyCode": "soundspeed",
-                "propertyName": "Sound Speed",
-                "description": "Sound Speed: sound velocity sensor",
-                "uom": "m/s",
-                "hasDeviceData": true,
-                "hasPropertyData": false,
                 "cvTerm": {
                     "property": [],
                     "uom": [
                         {
-                            "uri": "http://vocab.nerc.ac.uk/collection/P06/current/UVAA/",
-                            "vocabulary": "BODC data storage units"
+                            "uri": "http://vocab.nerc.ac.uk/collection/P06/current/UECA/",
+                            "vocabulary": "BODC data storage units",
                         }
-                    ]
-                }
-            },
-            (...)
+                    ],
+                },
+                "description": "Conductivity: siemens per metre",
+                "hasDeviceData": True,
+                "hasPropertyData": True,
+                "propertyCode": "conductivity",
+                "propertyName": "Conductivity",
+                "uom": "S/m",
+            }
         ]
         """  # noqa: E501
         return self.discovery.getProperties(filters)
 
     def getDataProducts(self, filters: dict | None = None):
         """
-        Returns a filtered list of data products.
+        Return a list of data products.
 
-        The API endpoint is api/dataProducts.
+        The API endpoint is ``/dataProducts``.
 
-        See https://wiki.oceannetworks.ca/pages/viewpage.action?pageId=75170317#Discoverymethods-getDataProducts
+        Return all data products defined in Oceans 3.0 that meet a filter criteria.
+        Data Products are downloadable representations of ONC observational data,
+        provided in formats that can be easily ingested by analytical or visualization software.
+
+        The primary purpose of this service is to identify which data products and formats (file extensions)
+        are available for the locations, devices, device categories or properties of interest.
+        Use the `dataProductCode` and `extension` when requesting a data product via the ``dataProductDelivery`` web service.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/dataProducts
         for usage and available filters.
 
         Parameters
         ----------
         filters : dict, optional
-            Filters in the API request. Return all data products available if None.
+            Query string parameters in the API request. Return all data products available if None.
+
+            Supported parameters are:
+
+            - dataProductCode
+            - extension
+            - dataProductName
+            - propertyCode
+            - locationCode
+            - deviceCategoryCode
+            - deviceCode
 
         Returns
         -------
         list of dict
-            API response.
+            API response. Each data product returned in the list is a dict with the following structure.
+
+            - dataProductCode: str
+            - dataProductName: str
+            - dataProductOptions: list of dict
+                - dataProductOptions[].allowableRange: list of dict | None
+                    - dataProductOptions[].allowableRange.lowerBound: str
+                    - dataProductOptions[].allowableRange.onlyIntegers: bool
+                    - dataProductOptions[].allowableRange.unitOfMeasure: str | None
+                    - dataProductOptions[].allowableRange.upperBound: str
+                - dataProductOptions[].allowableValues: list of str
+                - dataProductOptions[].defaultValues: str
+                - dataProductOptions[].documentation: list of str
+                - dataProductOptions[].option: str
+                - dataProductOptions[].suboptions: list of dict | None
+            - extension: str
+            - hasDeviceData: bool
+            - hasPropertyData: bool
+            - helpDocument: str
+
+            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.
 
         Examples
         --------
-        >>> filters = {
-        ...     'locationCode': 'PHYD',
-        ...     'extension': 'mat'
-        ... }
-        >>> onc.getDataProducts(filters) # doctest: +SKIP
+        >>> params = {
+        ...     "dataProductCode": "SHV",
+        ... }  # doctest: +SKIP
+        >>> onc.getDataProducts(params)  # doctest: +SKIP
         [
             {
-                "dataProductCode": "TSSD",
-                "dataProductName": "Time Series Scalar Data",
-                "extension": "json",
-                "hasDeviceData": true,
-                "hasPropertyData": true,
-                "helpDocument": "https://wiki.oceannetworks.ca/display/DP/1"
-            },
-            (...)
+                "dataProductCode": "SHV",
+                "dataProductName": "Spectrogram For Hydrophone Viewer",
+                "dataProductOptions": [
+                    {
+                        "allowableRange": {
+                            "lowerBound": "-160",
+                            "onlyIntegers": False,
+                            "unitOfMeasure": None,
+                            "upperBound": "140",
+                        },
+                        "allowableValues": ["-1000"],
+                        "defaultValue": "-1000",
+                        "documentation": [
+                            "https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options"
+                        ],
+                        "option": "dpo_lowerColourLimit",
+                        "suboptions": None,
+                    },
+                    {
+                        "allowableRange": None,
+                        "allowableValues": ["0", "1", "2", "3", "4", "5"],
+                        "defaultValue": "0",
+                        "documentation": [
+                            "https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options"
+                        ],
+                        "option": "dpo_spectrogramColourPalette",
+                        "suboptions": None,
+                    },
+                    {
+                        "allowableRange": {
+                            "lowerBound": "-160",
+                            "onlyIntegers": False,
+                            "unitOfMeasure": None,
+                            "upperBound": "140",
+                        },
+                        "allowableValues": ["-1000"],
+                        "defaultValue": "-1000",
+                        "documentation": [
+                            "https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options"
+                        ],
+                        "option": "dpo_upperColourLimit",
+                        "suboptions": None,
+                    },
+                ],
+                "extension": "png",
+                "hasDeviceData": True,
+                "hasPropertyData": False,
+                "helpDocument": "https://wiki.oceannetworks.ca/display/DP/146",
+            }
         ]
         """  # noqa: E501
         return self.discovery.getDataProducts(filters)

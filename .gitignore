@@ -150,3 +150,6 @@ dmypy.json
 
 # commit-msg hook
 commit-msg
+
+# Mac OS specfic
+.DS_Store
