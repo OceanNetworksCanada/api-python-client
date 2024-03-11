@@ -1,0 +1,183 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Request (Near) Real-Time Data\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Get the token from your Oceans 3.0 profile page\n",
+    "# Put \"TOKEN=[YOUR_TOKEN]\" in a .env file.\n",
+    "\n",
+    "from dotenv import load_dotenv\n",
+    "import os\n",
+    "from onc import ONC\n",
+    "\n",
+    "load_dotenv(override=True)\n",
+    "token = os.getenv(\n",
+    "    \"TOKEN\", \"\"\n",
+    ")  # You can also replace the empty string (second argument) with your token.\n",
+    "\n",
+    "onc = ONC(token)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## [/scalardata/location](https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Get the last scalar data reading available from a device in a location\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "params = {\n",
+    "    \"locationCode\": \"SEVIP\",\n",
+    "    \"deviceCategoryCode\": \"CTD\",\n",
+    "    \"rowLimit\": \"1\",\n",
+    "    \"getLatest\": \"true\",\n",
+    "}\n",
+    "\n",
+    "onc.getDirectByLocation(params)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Get 1 minute of time-series scalar data readings from a a device in a location\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "params = {\n",
+    "    \"locationCode\": \"SEVIP\",\n",
+    "    \"deviceCategoryCode\": \"CTD\",\n",
+    "    \"dateFrom\": \"2016-09-01T00:00:00.000Z\",\n",
+    "    \"dateTo\": \"2016-09-01T00:01:00.000Z\",\n",
+    "}\n",
+    "\n",
+    "onc.getDirectByLocation(params)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Get 10 seconds of raw CTD data readings from a location\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "params = {\n",
+    "    \"locationCode\": \"BACAX\",\n",
+    "    \"deviceCategoryCode\": \"CTD\",\n",
+    "    \"dateFrom\": \"2017-05-23T00:00:00.000Z\",\n",
+    "    \"dateTo\": \"2017-05-23T00:00:10.000Z\",\n",
+    "}\n",
+    "\n",
+    "onc.getDirectRawByLocation(params)[\"data\"][\"readings\"]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## [/scalardata/device](https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Get 10 seconds of raw data readings from a specific device\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "params = {\n",
+    "    \"deviceCode\": \"AMLMETRECX50348\",\n",
+    "    \"dateFrom\": \"2019-06-01T00:00:00.000Z\",\n",
+    "    \"dateTo\": \"2019-06-01T00:00:10.000Z\",\n",
+    "}\n",
+    "\n",
+    "onc.getDirectByDevice(params)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Get 1 minute of time-series scalar data readings from a specific device\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "params = {\n",
+    "    \"deviceCode\": \"SBECTD19p4686\",\n",
+    "    \"dateFrom\": \"2016-09-01T00:00:00.000Z\",\n",
+    "    \"dateTo\": \"2016-09-01T00:01:00.000Z\",\n",
+    "}\n",
+    "\n",
+    "onc.getDirectByDevice(params)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": ".venv",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.12"
+  },
+  "mystnb": {
+   "remove_code_outputs": true
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

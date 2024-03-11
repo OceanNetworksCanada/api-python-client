@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onc.util.util &mdash; onc 2.3.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=9bc130e6"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">onc.util.util</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for onc.util.util</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Name:        util</span>
+<span class="c1"># Purpose:     This is a collection of utility functions used the ONC library</span>
+<span class="c1">#</span>
+<span class="c1"># Author:      ryanross</span>
+<span class="c1">#</span>
+<span class="c1"># Created:     31/10/2016</span>
+<span class="c1"># Copyright:   (c) Ocean Networks Canada 2016-2018</span>
+<span class="c1"># Licence:     None</span>
+<span class="c1"># Requires:    requests library - [Python Install]\scripts\pip install requests</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="kn">import</span> <span class="n">SU</span><span class="p">,</span> <span class="n">relativedelta</span>
+
+<span class="n">datetimeFormat</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span>
+
+
+<div class="viewcode-block" id="printErrorMessage">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.printErrorMessage">[docs]</a>
+<span class="k">def</span> <span class="nf">printErrorMessage</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">showUrl</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showValue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print an error message from an ONC web service call to the console.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">showUrl</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error Executing: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;errors&quot;</span><span class="p">]:</span>
+                <span class="n">code</span> <span class="o">=</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;errorCode&quot;</span><span class="p">]</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;errorMessage&quot;</span><span class="p">]</span>
+                <span class="n">parm</span> <span class="o">=</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;parameter&quot;</span><span class="p">]</span>
+
+                <span class="n">matching</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parm</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matching</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">matching</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;  Error </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">. Parameter &#39;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&#39; with value &#39;</span><span class="si">{</span><span class="n">parameters</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;&quot;</span>  <span class="c1"># noqa: E501</span>
+                        <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  &#39;</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&#39; for </span><span class="si">{</span><span class="n">parm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">showValue</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parm</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+                        <span class="n">parmValue</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> - value: &#39;</span><span class="si">{</span><span class="n">parmValue</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">payload</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Error </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">msg</span></div>
+
+
+
+<div class="viewcode-block" id="printCount">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.printCount">[docs]</a>
+<span class="k">def</span> <span class="nf">printCount</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print a count with a name to the console.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="printResponseTime">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.printResponseTime">[docs]</a>
+<span class="k">def</span> <span class="nf">printResponseTime</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print a time duration of a web service call to the console.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+    <span class="n">execTime</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">delta</span><span class="o">.</span><span class="n">seconds</span> <span class="o">+</span> <span class="n">delta</span><span class="o">.</span><span class="n">microseconds</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Web Service response time: </span><span class="si">{</span><span class="n">execTime</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="getHMS">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.getHMS">[docs]</a>
+<span class="k">def</span> <span class="nf">getHMS</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a time value in seconds to a string in the format Hours:Minutes:Seconds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">h</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">m</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="printHMS">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.printHMS">[docs]</a>
+<span class="k">def</span> <span class="nf">printHMS</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print a time value in seconds as string in the format Hours:Minutes:Seconds</span>
+<span class="sd">    to the console.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">getHMS</span><span class="p">(</span><span class="n">seconds</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="convertSize">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.convertSize">[docs]</a>
+<span class="k">def</span> <span class="nf">convertSize</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a string representation of a size in bytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;0 KB&quot;</span>
+    <span class="n">sizeUnits</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;KB&quot;</span><span class="p">,</span> <span class="s2">&quot;MB&quot;</span><span class="p">,</span> <span class="s2">&quot;GB&quot;</span><span class="p">,</span> <span class="s2">&quot;TB&quot;</span><span class="p">,</span> <span class="s2">&quot;PB&quot;</span><span class="p">,</span> <span class="s2">&quot;EB&quot;</span><span class="p">,</span> <span class="s2">&quot;ZB&quot;</span><span class="p">,</span> <span class="s2">&quot;YB&quot;</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)))</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">size</span> <span class="o">/</span> <span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">sizeUnits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="toBytes">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.toBytes">[docs]</a>
+<span class="k">def</span> <span class="nf">toBytes</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a size in bytes from a string representation of a file size</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">iBytes</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">sizeUnits</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;KB&quot;</span><span class="p">,</span> <span class="s2">&quot;MB&quot;</span><span class="p">,</span> <span class="s2">&quot;GB&quot;</span><span class="p">,</span> <span class="s2">&quot;TB&quot;</span><span class="p">,</span> <span class="s2">&quot;PB&quot;</span><span class="p">,</span> <span class="s2">&quot;EB&quot;</span><span class="p">,</span> <span class="s2">&quot;ZB&quot;</span><span class="p">,</span> <span class="s2">&quot;YB&quot;</span><span class="p">)</span>
+        <span class="n">sSize</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">isNumber</span><span class="p">(</span><span class="n">sSize</span><span class="p">):</span>
+            <span class="n">nSize</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sSize</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">sName</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sName</span> <span class="ow">in</span> <span class="n">sizeUnits</span><span class="p">:</span>
+            <span class="n">indx</span> <span class="o">=</span> <span class="n">sizeUnits</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sName</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">indx</span><span class="p">)</span>
+            <span class="n">iBytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">nSize</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to convert to bytes - &#39;</span><span class="si">{</span><span class="n">sName</span><span class="si">}</span><span class="s2">&#39; is an unknown size unit.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">iBytes</span></div>
+
+
+
+<div class="viewcode-block" id="toSeconds">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.toSeconds">[docs]</a>
+<span class="k">def</span> <span class="nf">toSeconds</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a time in seconds from a string representing a time</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">timeUnits</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">)</span>
+        <span class="n">sSize</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">isNumber</span><span class="p">(</span><span class="n">sSize</span><span class="p">):</span>
+            <span class="n">iSize</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sSize</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">sName</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sName</span> <span class="ow">in</span> <span class="n">timeUnits</span><span class="p">:</span>
+            <span class="n">indx</span> <span class="o">=</span> <span class="n">timeUnits</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sName</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">indx</span><span class="p">)</span>
+            <span class="n">seconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">iSize</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to convert to seconds - &#39;</span><span class="si">{</span><span class="n">sName</span><span class="si">}</span><span class="s2">&#39; is an unknown time unit.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">seconds</span></div>
+
+
+
+<div class="viewcode-block" id="printWithEnd">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.printWithEnd">[docs]</a>
+<span class="k">def</span> <span class="nf">printWithEnd</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print a message to the console without a line break.</span>
+
+<span class="sd">    This allows for writing subsequent messages to the same line,</span>
+<span class="sd">    such as Downloading.....</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">separator</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="readJSONFile">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.readJSONFile">[docs]</a>
+<span class="k">def</span> <span class="nf">readJSONFile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read JSON from a file and return it as an object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">j</span></div>
+
+
+
+<div class="viewcode-block" id="writeJSONFile">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.writeJSONFile">[docs]</a>
+<span class="k">def</span> <span class="nf">writeJSONFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write an object as JSON to a file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;: &quot;</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="toString">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.toString">[docs]</a>
+<span class="k">def</span> <span class="nf">toString</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the string representation of an object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="isNumber">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.isNumber">[docs]</a>
+<span class="k">def</span> <span class="nf">isNumber</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if an object is a valid number.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="daterangeByDay">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.daterangeByDay">[docs]</a>
+<span class="k">def</span> <span class="nf">daterangeByDay</span><span class="p">(</span><span class="n">startDate</span><span class="p">,</span> <span class="n">endDate</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Split a date range into a list of day date range objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtStart</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">startDate</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">startDate</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">startDate</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+    <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">dtStart</span> <span class="o">=</span> <span class="n">dtEnd</span>
+            <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="daterangeByWeek">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.daterangeByWeek">[docs]</a>
+<span class="k">def</span> <span class="nf">daterangeByWeek</span><span class="p">(</span><span class="n">startDate</span><span class="p">,</span> <span class="n">endDate</span><span class="p">,</span> <span class="n">dayOfWeek</span><span class="o">=</span><span class="n">SU</span><span class="p">):</span>  <span class="c1"># MO TU, WE, TH, FR, SA, SU</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Split a date range into a list of week date range objects.</span>
+
+<span class="sd">    The method accepts a parameter to specifiy the beginning of the week.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">newStart</span> <span class="o">=</span> <span class="n">startDate</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">weekday</span><span class="o">=</span><span class="n">dayOfWeek</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">dtStart</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">newStart</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">newStart</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">newStart</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+    <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">dtStart</span> <span class="o">=</span> <span class="n">dtEnd</span>
+            <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="daterangeByMonth">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.daterangeByMonth">[docs]</a>
+<span class="k">def</span> <span class="nf">daterangeByMonth</span><span class="p">(</span><span class="n">startDate</span><span class="p">,</span> <span class="n">endDate</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Split a date range into a list of month date range objects by month.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtStart</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">startDate</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">startDate</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">dtStart</span> <span class="o">=</span> <span class="n">dtEnd</span>
+            <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="daterangeByYear">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.daterangeByYear">[docs]</a>
+<span class="k">def</span> <span class="nf">daterangeByYear</span><span class="p">(</span><span class="n">startDate</span><span class="p">,</span> <span class="n">endDate</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Split a date range into a list of year date range objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtStart</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">startDate</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">startDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">dtStart</span> <span class="o">=</span> <span class="n">dtEnd</span>
+            <span class="n">dtEnd</span> <span class="o">=</span> <span class="n">dtStart</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dtEnd</span> <span class="o">&gt;</span> <span class="n">endDate</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">endDate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span>
+                    <span class="s2">&quot;begin&quot;</span><span class="p">:</span> <span class="n">dtStart</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">dtEnd</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetimeFormat</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+                <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="copyFieldIfExists">
+<a class="viewcode-back" href="../../../autoapi/onc/util/util/index.html#onc.util.util.copyFieldIfExists">[docs]</a>
+<span class="k">def</span> <span class="nf">copyFieldIfExists</span><span class="p">(</span><span class="n">fromDic</span><span class="p">,</span> <span class="n">toDic</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Copy the field at name from fromDic to toDic only if it exists</span>
+
+<span class="sd">    @param fromDic: Origin Dictionary</span>
+<span class="sd">    @param toDic: Destination Dictionary</span>
+<span class="sd">    @param keys: Array of keys of the elements to copy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">fromDic</span><span class="p">:</span>
+            <span class="n">toDic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fromDic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

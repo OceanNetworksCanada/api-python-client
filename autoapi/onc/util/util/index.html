@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onc.util.util &mdash; onc 2.3.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=9bc130e6"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="onc.onc" href="../../onc/index.html" />
+    <link rel="prev" title="onc.util" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">onc</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">onc.util</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">onc</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">onc.util</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">onc.util.util</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/onc/util/util/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-onc.util.util">
+<span id="onc-util-util"></span><h1><a class="reference internal" href="#module-onc.util.util" title="onc.util.util"><code class="xref py py-mod docutils literal notranslate"><span class="pre">onc.util.util</span></code></a><a class="headerlink" href="#module-onc.util.util" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.printErrorMessage" title="onc.util.util.printErrorMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printErrorMessage</span></code></a>(response, parameters[, showUrl, ...])</p></td>
+<td><p>Print an error message from an ONC web service call to the console.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.printCount" title="onc.util.util.printCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printCount</span></code></a>(count, name)</p></td>
+<td><p>Print a count with a name to the console.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.printResponseTime" title="onc.util.util.printResponseTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printResponseTime</span></code></a>(end, start)</p></td>
+<td><p>Print a time duration of a web service call to the console.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.getHMS" title="onc.util.util.getHMS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getHMS</span></code></a>(seconds)</p></td>
+<td><p>Convert a time value in seconds to a string in the format Hours:Minutes:Seconds.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.printHMS" title="onc.util.util.printHMS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printHMS</span></code></a>(seconds)</p></td>
+<td><p>Print a time value in seconds as string in the format Hours:Minutes:Seconds</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.convertSize" title="onc.util.util.convertSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convertSize</span></code></a>(size)</p></td>
+<td><p>Return a string representation of a size in bytes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.toBytes" title="onc.util.util.toBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toBytes</span></code></a>(str)</p></td>
+<td><p>Return a size in bytes from a string representation of a file size</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.toSeconds" title="onc.util.util.toSeconds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toSeconds</span></code></a>(str)</p></td>
+<td><p>Return a time in seconds from a string representing a time</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.printWithEnd" title="onc.util.util.printWithEnd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">printWithEnd</span></code></a>(message[, separator])</p></td>
+<td><p>Print a message to the console without a line break.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.readJSONFile" title="onc.util.util.readJSONFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readJSONFile</span></code></a>(filename)</p></td>
+<td><p>Read JSON from a file and return it as an object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.writeJSONFile" title="onc.util.util.writeJSONFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeJSONFile</span></code></a>(filename, obj[, sort])</p></td>
+<td><p>Write an object as JSON to a file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.toString" title="onc.util.util.toString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toString</span></code></a>(obj)</p></td>
+<td><p>Return the string representation of an object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.isNumber" title="onc.util.util.isNumber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isNumber</span></code></a>(obj)</p></td>
+<td><p>Check if an object is a valid number.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.daterangeByDay" title="onc.util.util.daterangeByDay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">daterangeByDay</span></code></a>(startDate, endDate)</p></td>
+<td><p>Split a date range into a list of day date range objects.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.daterangeByWeek" title="onc.util.util.daterangeByWeek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">daterangeByWeek</span></code></a>(startDate, endDate[, dayOfWeek])</p></td>
+<td><p>Split a date range into a list of week date range objects.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.daterangeByMonth" title="onc.util.util.daterangeByMonth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">daterangeByMonth</span></code></a>(startDate, endDate)</p></td>
+<td><p>Split a date range into a list of month date range objects by month.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.daterangeByYear" title="onc.util.util.daterangeByYear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">daterangeByYear</span></code></a>(startDate, endDate)</p></td>
+<td><p>Split a date range into a list of year date range objects.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#onc.util.util.copyFieldIfExists" title="onc.util.util.copyFieldIfExists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copyFieldIfExists</span></code></a>(fromDic, toDic, keys)</p></td>
+<td><p>Copy the field at name from fromDic to toDic only if it exists</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.util.util.datetimeFormat" title="onc.util.util.datetimeFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetimeFormat</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="onc.util.util.datetimeFormat">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">datetimeFormat</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%Y-%m-%dT%H:%M:%S.%f'</span></em><a class="headerlink" href="#onc.util.util.datetimeFormat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.printErrorMessage">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">printErrorMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showUrl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showValue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#printErrorMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.printErrorMessage" title="Link to this definition"></a></dt>
+<dd><p>Print an error message from an ONC web service call to the console.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.printCount">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">printCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#printCount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.printCount" title="Link to this definition"></a></dt>
+<dd><p>Print a count with a name to the console.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.printResponseTime">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">printResponseTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#printResponseTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.printResponseTime" title="Link to this definition"></a></dt>
+<dd><p>Print a time duration of a web service call to the console.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.getHMS">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">getHMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seconds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#getHMS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.getHMS" title="Link to this definition"></a></dt>
+<dd><p>Convert a time value in seconds to a string in the format Hours:Minutes:Seconds.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.printHMS">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">printHMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seconds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#printHMS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.printHMS" title="Link to this definition"></a></dt>
+<dd><p>Print a time value in seconds as string in the format Hours:Minutes:Seconds
+to the console.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.convertSize">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">convertSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#convertSize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.convertSize" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of a size in bytes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.toBytes">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">toBytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#toBytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.toBytes" title="Link to this definition"></a></dt>
+<dd><p>Return a size in bytes from a string representation of a file size</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.toSeconds">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">toSeconds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#toSeconds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.toSeconds" title="Link to this definition"></a></dt>
+<dd><p>Return a time in seconds from a string representing a time</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.printWithEnd">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">printWithEnd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#printWithEnd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.printWithEnd" title="Link to this definition"></a></dt>
+<dd><p>Print a message to the console without a line break.</p>
+<p>This allows for writing subsequent messages to the same line,
+such as Downloading…..</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.readJSONFile">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">readJSONFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#readJSONFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.readJSONFile" title="Link to this definition"></a></dt>
+<dd><p>Read JSON from a file and return it as an object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.writeJSONFile">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">writeJSONFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#writeJSONFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.writeJSONFile" title="Link to this definition"></a></dt>
+<dd><p>Write an object as JSON to a file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.toString">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">toString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#toString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.toString" title="Link to this definition"></a></dt>
+<dd><p>Return the string representation of an object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.isNumber">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">isNumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#isNumber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.isNumber" title="Link to this definition"></a></dt>
+<dd><p>Check if an object is a valid number.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.daterangeByDay">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">daterangeByDay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">startDate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endDate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#daterangeByDay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.daterangeByDay" title="Link to this definition"></a></dt>
+<dd><p>Split a date range into a list of day date range objects.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.daterangeByWeek">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">daterangeByWeek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">startDate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endDate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dayOfWeek</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SU</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#daterangeByWeek"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.daterangeByWeek" title="Link to this definition"></a></dt>
+<dd><p>Split a date range into a list of week date range objects.</p>
+<p>The method accepts a parameter to specifiy the beginning of the week.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.daterangeByMonth">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">daterangeByMonth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">startDate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endDate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#daterangeByMonth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.daterangeByMonth" title="Link to this definition"></a></dt>
+<dd><p>Split a date range into a list of month date range objects by month.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.daterangeByYear">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">daterangeByYear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">startDate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endDate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#daterangeByYear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.daterangeByYear" title="Link to this definition"></a></dt>
+<dd><p>Split a date range into a list of year date range objects.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onc.util.util.copyFieldIfExists">
+<span class="sig-prename descclassname"><span class="pre">onc.util.util.</span></span><span class="sig-name descname"><span class="pre">copyFieldIfExists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fromDic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toDic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/onc/util/util.html#copyFieldIfExists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.util.util.copyFieldIfExists" title="Link to this definition"></a></dt>
+<dd><p>Copy the field at name from fromDic to toDic only if it exists</p>
+<p>&#64;param fromDic: Origin Dictionary
+&#64;param toDic: Destination Dictionary
+&#64;param keys: Array of keys of the elements to copy</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="onc.util" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../onc/index.html" class="btn btn-neutral float-right" title="onc.onc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
