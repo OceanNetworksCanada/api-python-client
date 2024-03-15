@@ -91,7 +91,7 @@ class _OncDelivery(_OncService):
         status = ""
         log = _PollLog(True)
         print(
-            f"To cancel the running data product, run 'onc.cancelDataProduct({dpRequestId})'"
+            f"To cancel the running data product, run 'onc.cancelDataProduct({dpRequestId})'"  # noqa: E501
         )
         url = f"{self._config('baseUrl')}api/dataProductDelivery"
         runResult = {"runIds": [], "fileCount": 0, "runTime": 0, "requestCount": 0}

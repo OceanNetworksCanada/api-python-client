@@ -783,15 +783,77 @@ class ONC:
         return self.delivery.requestDataProduct(filters)
 
     def checkDataProduct(self, dpRequestId: int):
+        """
+        Check status of a requested data product.
+
+        The API endpoint is ``/dataProductDelivery/status``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/status
+        for usage.
+
+        Parameters
+        ----------
+        dpRequestId : int
+            A dpRequestId returned from calling ``requestDataProduct``.
+
+        Returns
+        -------
+        dict
+            API response.
+        """
         return self.delivery.checkDataProduct(dpRequestId)
 
     def runDataProduct(self, dpRequestId: int, waitComplete: bool = True):
         return self.delivery.runDataProduct(dpRequestId, waitComplete)
 
     def cancelDataProduct(self, dpRequestId: int):
+        """
+        Cancel a running data product.
+
+        The API endpoint is ``/dataProductDelivery/cancel``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/cancel
+        for usage.
+
+        Parameters
+        ----------
+        dpRequestId : int
+            A dpRequestId returned from calling ``requestDataProduct``.
+
+        Returns
+        -------
+        list of dict
+            API response. Each status returned in the list is a dict with the following structure.
+
+            - dpRunId: int
+            - status: str
+        """  # noqa: E501
         return self.delivery.cancelDataProduct(dpRequestId)
 
     def restartDataProduct(self, dpRequestId: int, waitComplete: bool = True):
+        """
+        Restart a cancelled data product.
+
+        The API endpoint is ``/dataProductDelivery/restart``.
+
+        Restart searches cancelled by calling the ``cancelDataProduct`` method.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/restart
+        for usage.
+
+        Parameters
+        ----------
+        dpRequestId : int
+            A dpRequestId returned from calling ``requestDataProduct``.
+
+        Returns
+        -------
+        list of dict
+            API response. Each status returned in the list is a dict with the following structure.
+
+            - dpRunId: int
+            - status: str
+        """  # noqa: E501
         return self.delivery.restartDataProduct(dpRequestId, waitComplete)
 
     def downloadDataProduct(
@@ -825,6 +887,68 @@ class ONC:
         return self.realTime.getDirectRawByDevice(filters, allPages)
 
     def getSensorCategoryCodes(self, filters: dict):
+        """
+        Return a list of sensor category codes.
+
+        A helper method for narrowing down the sensorCategoryCodes that are of interest
+        prior to the use of the scalardata service.
+
+        Parameters
+        ----------
+        filters : dict
+            Query string parameters in the API request.
+            Use the same filters for calling ``getDirectByLocation`` or ``getDirectByDevice``.
+
+        Returns
+        -------
+        list of dict
+            API response. Each sensor category code returned in the list is a dict with the following structure.
+
+            - outputFormat: str
+            - sensorCategoryCode: str
+            - sensorCode: str
+            - sensorName: str
+            - unitOfMeasure: str
+
+        Examples
+        --------
+        >>> params = {
+        ...     "locationCode": "NCBC",
+        ...     "deviceCategoryCode": "BPR",
+        ...     "propertyCode": "seawatertemperature,totalpressure",
+        ... }  # doctest: +SKIP
+        >>> onc.getSensorCategoryCodes(params)  # doctest: +SKIP
+        [
+            {
+                "outputFormat": "array",
+                "sensorCategoryCode": "pressure",
+                "sensorCode": "Pressure",
+                "sensorName": "Seafloor Pressure",
+                "unitOfMeasure": "decibar",
+            },
+            {
+                "outputFormat": "array",
+                "sensorCategoryCode": "temperature",
+                "sensorCode": "Temperature",
+                "sensorName": "Housing Temperature",
+                "unitOfMeasure": "C",
+            },
+            {
+                "outputFormat": "array",
+                "sensorCategoryCode": "temperature1",
+                "sensorCode": "temperature1",
+                "sensorName": "Temperature",
+                "unitOfMeasure": "C",
+            },
+            {
+                "outputFormat": "array",
+                "sensorCategoryCode": "temperature2",
+                "sensorCode": "temperature2",
+                "sensorName": "P-Sensor Temperature",
+                "unitOfMeasure": "C",
+            },
+        ]
+        """  # noqa: E501
         return self.realTime.getSensorCategoryCodes(filters)
 
     # Archive file methods
