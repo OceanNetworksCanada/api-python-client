@@ -39,6 +39,7 @@ class _OncService:
         """
         if filters is None:
             filters = {}
+        filters["token"] = self._config("token")
         timeout = self._config("timeout")
 
         txtParams = parse.unquote(parse.urlencode(filters))

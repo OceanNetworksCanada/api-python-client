@@ -74,6 +74,13 @@ class _OncDelivery(_OncService):
         self._printProductRequest(response)
         return response
 
+    def checkDataProduct(self, dpRequestId: int):
+        url = f"{self._config('baseUrl')}api/dataProductDelivery/status"
+        filters = {
+            "dpRequestId": dpRequestId,
+        }
+        return self._doRequest(url, filters)
+
     def runDataProduct(self, dpRequestId: int, waitComplete: bool):
         """
         Run a product request.
@@ -83,6 +90,9 @@ class _OncDelivery(_OncService):
         """
         status = ""
         log = _PollLog(True)
+        print(
+            f"To cancel the running data product, run 'onc.cancelDataProduct({dpRequestId})'"  # noqa: E501
+        )
         url = f"{self._config('baseUrl')}api/dataProductDelivery"
         runResult = {"runIds": [], "fileCount": 0, "runTime": 0, "requestCount": 0}
 
@@ -108,6 +118,8 @@ class _OncDelivery(_OncService):
             if waitComplete:
                 status = data[0]["status"]
                 log.logMessage(data)
+                if status == "cancelled":
+                    break
                 if code != 200:
                     sleep(self.pollPeriod)
             else:
@@ -127,6 +139,24 @@ class _OncDelivery(_OncService):
             runResult["runIds"].append(run["dpRunId"])
 
         return runResult
+
+    def cancelDataProduct(self, dpRequestId: int):
+        url = f"{self._config('baseUrl')}api/dataProductDelivery/cancel"
+        filters = {
+            "dpRequestId": dpRequestId,
+        }
+        return self._doRequest(url, filters)
+
+    def restartDataProduct(self, dpRequestId: int, waitComplete: bool):
+        url = f"{self._config('baseUrl')}api/dataProductDelivery/restart"
+        filters = {
+            "dpRequestId": dpRequestId,
+        }
+        data = self._doRequest(url, filters)
+        if waitComplete:
+            return self.runDataProduct(dpRequestId, True)
+        else:
+            return data
 
     def downloadDataProduct(
         self,

@@ -13,3 +13,17 @@ def params() -> dict:
         "dpo_qualityControl": 1,
         "dpo_resample": "none",
     }
+
+
+@pytest.fixture()
+def expected_keys_download_results() -> dict:
+    return {
+        "url": str,
+        "status": str,
+        "size": int,
+        "file": str,
+        "index": str,
+        "downloaded": bool,
+        "requestCount": int,
+        "fileDownloadTime": float,
+    }

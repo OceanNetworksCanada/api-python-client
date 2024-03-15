@@ -12,8 +12,16 @@ Check [here](https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms) for mo
 
 The [ONC](#onc.onc.ONC) class provides a wrapper for Oceans 3.0 API requests.
 All the client library's functionality is provided as methods of this class.
+Each [Oceans 3.0 public API](https://data.oceannetworks.ca/OpenAPI) has a corresponding public method in this class.
+In addition, the ONC class provides some useful helper methods that involve multiple APIs to simplify the workflow.
 
 Create an ONC object to access this library's functionalities.
+
+```python
+from onc import ONC
+
+onc = ONC("YOUR_TOKEN_HERE")
+```
 
 ## Discovery methods
 
@@ -65,12 +73,20 @@ If the data product requested doesn't exist in our archive, it will be generated
 
 :::
 
-|                         Method                          |                  Description                   |                                               API Endpoint                                               |
-| :-----------------------------------------------------: | :--------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
-|    [orderDataProduct](#onc.onc.ONC.orderDataProduct)    | Request, run, and download <br> a data product |                                                                                                          |
-|  [requestDataProduct](#onc.onc.ONC.requestDataProduct)  |             Request a data product             |  [/dataProductDelivery/request](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/request)  |
-|      [runDataProduct](#onc.onc.ONC.runDataProduct)      |          Run a requested data product          |      [/dataProductDelivery/run](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/run)      |
-| [downloadDataProduct](#onc.onc.ONC.downloadDataProduct) |            Download a data product             | [/dataProductDelivery/download](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/download) |
+|                         Method                          |                  Description                  |                                               API Endpoint                                               |
+| :-----------------------------------------------------: | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+|  [requestDataProduct](#onc.onc.ONC.requestDataProduct)  |            Request a data product             |  [/dataProductDelivery/request](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/request)  |
+|    [checkDataProduct](#onc.onc.ONC.checkDataProduct)    | Check status of a <br> requested data product |   [/dataProductDelivery/status](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/status)   |
+|      [runDataProduct](#onc.onc.ONC.runDataProduct)      |         Run a requested data product          |      [/dataProductDelivery/run](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/run)      |
+|   [cancelDataProduct](#onc.onc.ONC.cancelDataProduct)   |         Cancel a running data product         |   [/dataProductDelivery/cancel](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/cancel)   |
+|  [restartDataProduct](#onc.onc.ONC.restartDataProduct)  |       Restart a cancelled data product        |  [/dataProductDelivery/restart](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/restart)  |
+| [downloadDataProduct](#onc.onc.ONC.downloadDataProduct) |            Download a data product            | [/dataProductDelivery/download](https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/download) |
+
+Helper methods are listed below.
+
+|                      Method                       |                Description                |
+| :-----------------------------------------------: | :---------------------------------------: |
+| [orderDataProduct](#onc.onc.ONC.orderDataProduct) | Request, run, and download a data product |
 
 ## Near real-time data access methods
 
@@ -103,6 +119,12 @@ Use the _allPages_ parameter to automatically download all pages required for yo
 | [getDirectRawByLocation](#onc.onc.ONC.getDirectRawByLocation) |  Returns raw data <br> from a specific location and device category   |    [/rawdata/location](https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location)    |
 |   [getDirectRawByDevice](#onc.onc.ONC.getDirectRawByDevice)   |                Returns raw data from a specific device                |      [/rawdata/device](https://data.oceannetworks.ca/OpenAPI#get-/rawdata/device)      |
 
+Helper methods are listed below.
+
+|                            Method                             |                                      Description                                      |
+| :-----------------------------------------------------------: | :-----------------------------------------------------------------------------------: |
+| [getSensorCategoryCodes](#onc.onc.ONC.getSensorCategoryCodes) | Returns a list of sensor category codes <br> prior to querying the scalardata service |
+
 ## Archive file download methods
 
 These methods allow users to directly download previously generated data product files from our archive.
@@ -131,4 +153,9 @@ Due to security regulations, some very recent files (e.g. hydrophone.wav files i
 | [getListByLocation](#onc.onc.ONC.getListByLocation) | Returns a list of available archive files <br> from a specific location and device category | [/archivefile/location](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location) |
 |   [getListByDevice](#onc.onc.ONC.getListByDevice)   |            Returns a list of available archive files <br> from a specific device            |   [/archivefile/device](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device)   |
 |           [getFile](#onc.onc.ONC.getFile)           |                                  Download an archive file                                   | [/archivefile/download](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download) |
-|    [getDirectFiles](#onc.onc.ONC.getDirectFiles)    |           Download a list of archived files <br> that match the filters provided            |                                                                                          |
+
+Helper methods are listed below.
+
+|                    Method                     |                            Description                            |
+| :-------------------------------------------: | :---------------------------------------------------------------: |
+| [getDirectFiles](#onc.onc.ONC.getDirectFiles) | Download a list of archived files that match the filters provided |
