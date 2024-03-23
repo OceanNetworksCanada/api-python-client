@@ -54,6 +54,7 @@ doc = [
     "black[jupyter]",
     "ipykernel",
     "tox",
+    "jupytext",
 ]
 
 [tool.isort]
