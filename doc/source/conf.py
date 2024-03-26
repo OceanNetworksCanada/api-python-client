@@ -45,7 +45,6 @@ nb_execution_mode = "off"  # off for faster local build. It is deleted in doc.ym
 nb_merge_streams = True
 nb_execution_timeout = 90
 nb_execution_raise_on_error = True
-nb_execution_excludepatterns = ["Code_Examples/*"]
 
 # -- Sphinx AutoAPI --
 # https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html

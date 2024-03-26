@@ -56,12 +56,8 @@ class ONC:
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
         self.showInfo = showInfo
         self.timeout = timeout
-        self.baseUrl = "https://data.oceannetworks.ca/"
-        self._out_path = Path(outPath).resolve()
-
-        # Switch to qa if needed
-        if not production:
-            self.baseUrl = "https://qa.oceannetworks.ca/"
+        self.production = production
+        self.outPath = outPath
 
         # Create service objects
         self.discovery = _OncDiscovery(self)
@@ -69,7 +65,6 @@ class ONC:
         self.realTime = _OncRealTime(self)
         self.archive = _OncArchive(self)
 
-    # Add getter and setter for self._out_path
     @property
     def outPath(self) -> Path:
         """
@@ -82,6 +77,22 @@ class ONC:
     @outPath.setter
     def outPath(self, outPath: str | Path) -> None:
         self._out_path = Path(outPath).resolve()
+
+    @property
+    def production(self) -> bool:
+        """
+        Return whether the test is against the Production environment or not.
+        """
+        return self._production
+
+    @production.setter
+    def production(self, is_production: bool) -> None:
+        self._production = is_production
+
+        if is_production:
+            self.baseUrl = "https://data.oceannetworks.ca/"
+        else:
+            self.baseUrl = "https://qa.oceannetworks.ca/"
 
     def print(self, obj, filename: str = "") -> None:
         """
