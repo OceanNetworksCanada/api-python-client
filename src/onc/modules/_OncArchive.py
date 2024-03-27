@@ -18,7 +18,7 @@ class _OncArchive(_OncService):
     def __init__(self, parent: object):
         super().__init__(parent)
 
-    def getListByLocation(self, filters: dict = None, allPages: bool = False):
+    def getArchivefileByLocation(self, filters: dict, allPages: bool):
         """
         Return a list of archived files for a device category in a location.
 
@@ -26,7 +26,7 @@ class _OncArchive(_OncService):
         """
         return self._getList(filters, by="location", allPages=allPages)
 
-    def getListByDevice(self, filters: dict = None, allPages: bool = False):
+    def getArchivefileByDevice(self, filters: dict, allPages: bool):
         """
         Return a list of archived files from a specific device.
 
@@ -34,7 +34,15 @@ class _OncArchive(_OncService):
         """
         return self._getList(filters, by="device", allPages=allPages)
 
-    def getFile(self, filename: str = "", overwrite: bool = False):
+    def getArchivefile(self, filters: dict, allPages: bool):
+        return self._delegateByFilters(
+            byDevice=self.getArchivefileByDevice,
+            byLocation=self.getArchivefileByLocation,
+            filters=filters,
+            allPages=allPages,
+        )
+
+    def downloadArchivefile(self, filename: str = "", overwrite: bool = False):
         url = self._serviceUrl("archivefiles")
 
         filters = {
@@ -71,7 +79,7 @@ class _OncArchive(_OncService):
             "file": filename,
         }
 
-    def getDirectFiles(
+    def downloadDirectArchivefile(
         self, filters: dict, overwrite: bool = False, allPages: bool = False
     ):
         """
@@ -88,16 +96,7 @@ class _OncArchive(_OncService):
             del filters["returnOptions"]
 
         # Get a list of files
-        if "locationCode" in filters and "deviceCategoryCode" in filters:
-            dataRows = self.getListByLocation(filters=filters, allPages=allPages)
-        elif "deviceCode" in filters:
-            dataRows = self.getListByDevice(filters=filters, allPages=allPages)
-        else:
-            raise ValueError(
-                "getDirectFiles filters require either a combination of "
-                '"locationCode" and "deviceCategoryCode", '
-                'or a "deviceCode" present.'
-            )
+        dataRows = self.getArchivefile(filters, allPages)
 
         n = len(dataRows["files"])
         print(f"Obtained a list of {n} files to download.")
@@ -116,7 +115,7 @@ class _OncArchive(_OncService):
 
             if (not fileExists) or (fileExists and overwrite):
                 print(f'   ({tries} of {n}) Downloading file: "{filename}"')
-                downInfo = self.getFile(filename, overwrite)
+                downInfo = self.downloadArchivefile(filename, overwrite)
                 size += downInfo["size"]
                 time += downInfo["downloadTime"]
                 downInfos.append(downInfo)

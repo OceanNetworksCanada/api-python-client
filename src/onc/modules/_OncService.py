@@ -97,3 +97,20 @@ class _OncService:
         Returns a property from the parent (ONC class)
         """
         return getattr(self.parent(), key)
+
+    def _delegateByFilters(self, byDevice, byLocation, **kwargs):
+        """
+        Delegate getX helper methods into getXByDevice or getXByLocation methods.
+        """
+        filters = kwargs["filters"]
+
+        if "deviceCode" in filters:
+            return byDevice(**kwargs)
+        elif "locationCode" in filters and "deviceCategoryCode" in filters:
+            return byLocation(**kwargs)
+        else:
+            raise ValueError(
+                "Query parameters require either a combination of "
+                "'locationCode' and 'deviceCategoryCode', "
+                "or a 'deviceCode' present."
+            )

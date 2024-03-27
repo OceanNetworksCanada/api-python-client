@@ -12,7 +12,7 @@ class _OncRealTime(_OncService):
     def __init__(self, config: dict):
         super().__init__(config)
 
-    def getDirectByLocation(self, filters: dict, allPages: bool):
+    def getScalardataByLocation(self, filters: dict, allPages: bool):
         """
         Return scalar data readings from a device category in a location.
 
@@ -21,7 +21,7 @@ class _OncRealTime(_OncService):
         """
         return self._getDirectAllPages(filters, "scalardata", "getByLocation", allPages)
 
-    def getDirectByDevice(self, filters: dict, allPages: bool):
+    def getScalardataByDevice(self, filters: dict, allPages: bool):
         """
         Return scalar data readings from a device.
 
@@ -30,7 +30,15 @@ class _OncRealTime(_OncService):
         """
         return self._getDirectAllPages(filters, "scalardata", "getByDevice", allPages)
 
-    def getDirectRawByLocation(self, filters: dict, allPages: bool):
+    def getScalardata(self, filters: dict, allPages: bool):
+        return self._delegateByFilters(
+            byDevice=self.getScalardataByDevice,
+            byLocation=self.getScalardataByLocation,
+            filters=filters,
+            allPages=allPages,
+        )
+
+    def getRawdataByLocation(self, filters: dict, allPages: bool):
         """
         Return raw data readings from a device category in a location.
 
@@ -39,7 +47,7 @@ class _OncRealTime(_OncService):
         """
         return self._getDirectAllPages(filters, "rawdata", "getByLocation", allPages)
 
-    def getDirectRawByDevice(self, filters: dict, allPages: bool):
+    def getRawdataByDevice(self, filters: dict, allPages: bool):
         """
         Return raw data readings from an device.
 
@@ -48,12 +56,17 @@ class _OncRealTime(_OncService):
         """
         return self._getDirectAllPages(filters, "rawdata", "getByDevice", allPages)
 
+    def getRawdata(self, filters: dict, allPages: bool):
+        return self._delegateByFilters(
+            byDevice=self.getRawdataByDevice,
+            byLocation=self.getRawdataByLocation,
+            filters=filters,
+            allPages=allPages,
+        )
+
     def getSensorCategoryCodes(self, filters: dict):
         updated_filters = filters | {"returnOptions": "excludeScalarData"}
-        if "deviceCode" in filters:
-            return self.getDirectByDevice(updated_filters, False)["sensorData"]
-        else:
-            return self.getDirectByLocation(updated_filters, False)["sensorData"]
+        return self.getScalardata(updated_filters, False)["sensorData"]
 
     def _getDirectAllPages(
         self, filters: dict, service: str, method: str, allPages: bool

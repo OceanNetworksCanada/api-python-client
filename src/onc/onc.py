@@ -245,7 +245,7 @@ class ONC:
         """  # noqa: E501
         return self.discovery.getLocations(filters)
 
-    def getLocationHierarchy(self, filters: dict | None = None):
+    def getLocationsTree(self, filters: dict | None = None):
         """
         Return a location tree.
 
@@ -324,6 +324,8 @@ class ONC:
         ]
         """  # noqa: E501
         return self.discovery.getLocationHierarchy(filters)
+
+    getLocationHierarchy = getLocationsTree
 
     def getDeployments(self, filters: dict | None = None):
         """
@@ -881,21 +883,31 @@ class ONC:
 
     # Real-time methods
 
-    def getDirectScalar(self, filters: dict = None, allPages: bool = False):
-        # Alias for getDirectByLocation (to be eventually discontinued)
-        return self.getDirectByLocation(filters, allPages)
+    def getScalardataByLocation(self, filters: dict = None, allPages: bool = False):
+        return self.realTime.getScalardataByLocation(filters, allPages)
 
-    def getDirectByLocation(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectByLocation(filters, allPages)
+    getDirectByLocation = getScalardataByLocation
 
-    def getDirectByDevice(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectByDevice(filters, allPages)
+    def getScalardataByDevice(self, filters: dict = None, allPages: bool = False):
+        return self.realTime.getScalardataByDevice(filters, allPages)
 
-    def getDirectRawByLocation(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectRawByLocation(filters, allPages)
+    getDirectByDevice = getScalardataByDevice
 
-    def getDirectRawByDevice(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectRawByDevice(filters, allPages)
+    def getScalardata(self, filters: dict = None, allPages: bool = False):
+        return self.realTime.getScalardata(filters, allPages)
+
+    def getRawdataByLocation(self, filters: dict = None, allPages: bool = False):
+        return self.realTime.getRawdataByLocation(filters, allPages)
+
+    getDirectRawByLocation = getRawdataByLocation
+
+    def getRawdataByDevice(self, filters: dict = None, allPages: bool = False):
+        return self.realTime.getRawdataByDevice(filters, allPages)
+
+    getDirectRawByDevice = getRawdataByDevice
+
+    def getRawdata(self, filters: dict = None, allPages: bool = False):
+        return self.realTime.getRawdata(filters, allPages)
 
     def getSensorCategoryCodes(self, filters: dict):
         """
@@ -964,16 +976,27 @@ class ONC:
 
     # Archive file methods
 
-    def getListByLocation(self, filters: dict = None, allPages: bool = False):
-        return self.archive.getListByLocation(filters, allPages)
+    def getArchivefileByLocation(self, filters: dict = None, allPages: bool = False):
+        return self.archive.getArchivefileByLocation(filters, allPages)
 
-    def getListByDevice(self, filters: dict = None, allPages: bool = False):
-        return self.archive.getListByDevice(filters, allPages)
+    getListByLocation = getArchivefileByLocation
 
-    def getFile(self, filename: str = "", overwrite: bool = False):
-        return self.archive.getFile(filename, overwrite)
+    def getArchivefileByDevice(self, filters: dict = None, allPages: bool = False):
+        return self.archive.getArchivefileByDevice(filters, allPages)
 
-    def getDirectFiles(
+    getListByDevice = getArchivefileByDevice
+
+    def getArchivefile(self, filters: dict = None, allPages: bool = False):
+        return self.archive.getArchivefile(filters, allPages)
+
+    def downloadArchivefile(self, filename: str = "", overwrite: bool = False):
+        return self.archive.downloadArchivefile(filename, overwrite)
+
+    getFile = downloadArchivefile
+
+    def downloadDirectArchivefile(
         self, filters: dict = None, overwrite: bool = False, allPages: bool = False
     ):
-        return self.archive.getDirectFiles(filters, overwrite, allPages)
+        return self.archive.downloadDirectArchivefile(filters, overwrite, allPages)
+
+    getDirectFiles = downloadDirectArchivefile
