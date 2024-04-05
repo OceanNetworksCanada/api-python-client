@@ -57,6 +57,13 @@ doc = [
     "jupytext",
 ]
 
+regression = [
+    "jupytext",
+    "pytest",
+    "python-dotenv",
+    "pandas",
+]
+
 [tool.isort]
 profile = "black"
 src_paths = ["onc", "tests"]
