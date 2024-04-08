@@ -1,3 +1,5 @@
+from typing import Any
+
 from ._MultiPage import _MultiPage
 from ._OncService import _OncService
 
@@ -46,9 +48,16 @@ class _OncRealTime(_OncService):
         """
         return self._getDirectAllPages(filters, "rawdata", "getByDevice", allPages)
 
+    def getSensorCategoryCodes(self, filters: dict):
+        updated_filters = filters | {"returnOptions": "excludeScalarData"}
+        if "deviceCode" in filters:
+            return self.getDirectByDevice(updated_filters, False)["sensorData"]
+        else:
+            return self.getDirectByLocation(updated_filters, False)["sensorData"]
+
     def _getDirectAllPages(
         self, filters: dict, service: str, method: str, allPages: bool
-    ):
+    ) -> Any:
         """
         Keeps downloading all scalar or raw data pages until finished.
 

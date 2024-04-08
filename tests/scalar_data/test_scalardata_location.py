@@ -3,43 +3,34 @@ import requests
 
 
 @pytest.fixture
-def params():
-    return {
-        "locationCode": "NCBC",
-        "deviceCategoryCode": "BPR",
-        "propertyCode": "seawatertemperature,totalpressure",
-        "dateFrom": "2019-11-23T00:00:00.000Z",
-        "dateTo": "2019-11-23T00:01:00.000Z",
-        "rowLimit": 80000,
-    }
-
-
-@pytest.fixture
-def params_multiple_pages(params):
+def params_multiple_pages(params_location):
     # rowLimit should be less than the total number of rows.
-    return params | {"rowLimit": 25}
+    return params_location | {"rowLimit": 25}
 
 
-def test_invalid_param_value(requester, params):
-    params_invalid_param_value = params | {"locationCode": "XYZ123"}
+def test_invalid_param_value(requester, params_location):
+    params_invalid_param_value = params_location | {"locationCode": "XYZ123"}
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
         requester.getDirectByLocation(params_invalid_param_value)
 
 
-def test_invalid_param_name(requester, params):
-    params_invalid_param_name = params | {"locationCodes": "NCBC"}
+def test_invalid_param_name(requester, params_location):
+    params_invalid_param_name = params_location | {"locationCodes": "NCBC"}
     with pytest.raises(requests.HTTPError, match=r"API Error 129"):
         requester.getDirectByLocation(params_invalid_param_name)
 
 
-def test_no_data(requester, params):
-    params_no_data = params | {"dateFrom": "2000-01-01", "dateTo": "2000-01-02"}
+def test_no_data(requester, params_location):
+    params_no_data = params_location | {
+        "dateFrom": "2000-01-01",
+        "dateTo": "2000-01-02",
+    }
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
         requester.getDirectByLocation(params_no_data)
 
 
-def test_valid_params_one_page(requester, params, params_multiple_pages):
-    data = requester.getDirectByLocation(params)
+def test_valid_params_one_page(requester, params_location, params_multiple_pages):
+    data = requester.getDirectByLocation(params_location)
     data_all_pages = requester.getDirectByLocation(params_multiple_pages, allPages=True)
 
     assert (
