@@ -27,15 +27,19 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
+          # Convert the dummy token to the real token for executing the jupyter notebook
+          sed -i "s/YOUR_TOKEN/$TOKEN/" doc/source/Tutorial/onc_Library_Tutorial.ipynb
           sed -i '/nb_execution_mode = "off"/d' doc/source/conf.py # enable executing jupyter notebook
           sphinx-build -W doc/source doc/build/html
 
       - name: Remove ampersand encoding and token in the generated html
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           # See issues about ampersand encoding at https://github.com/executablebooks/MyST-Parser/issues/760
           sed -i 's/amp;//g' doc/build/html/Tutorial/Oceans_3.0_API_Tutorial.html
           # Some cell outputs in the Jupyter notebook contain the token
-          sed -i 's/token=[a-zA-Z0-9-]\+/token=YOUR_TOKEN/g' doc/build/html/Tutorial/onc_Library_Tutorial.html
+          sed -i "s/$TOKEN/YOUR_TOKEN/g" doc/build/html/Tutorial/onc_Library_Tutorial.html
 
       - name: Run ghp-import to generate GitHub Pages
         run: |
