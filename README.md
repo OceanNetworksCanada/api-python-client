@@ -167,6 +167,11 @@ The client library documentation is hosted on [GitHub Pages](https://oceannetwor
 For documentation and examples about Oceans 3.0 API, visit the [wiki](https://wiki.oceannetworks.ca/display/O2A/Oceans+3.0+API+Home)
 and [OpenAPI](https://data.oceannetworks.ca/OpenAPI) page on the Oceans 3.0 Data Portal website.
 
+# Multithreading issue
+
+We kindly ask users to **not** use too many threads when using threading/multiprocessing libraries on download tasks.
+It can cause issues for both server and client and may not appreciably increase download speeds.
+
 # Contributing
 
 All contributions are welcome and appreciated!

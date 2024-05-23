@@ -51,3 +51,33 @@ nb_execution_raise_on_error = True
 autoapi_dirs = ["../../src"]
 autoapi_ignore = ["*modules*"]
 suppress_warnings = ["autoapi.python_import_resolution"]
+
+
+def skip_rules(app, what, name, obj, skip, options):
+    # 1. skip aliases in ONC class
+    aliases = [
+        "getLocationHierarchy",
+        "getDirectByLocation",
+        "getDirectByDevice",
+        "getDirectRawByLocation",
+        "getDirectRawByDevice",
+        "getListByLocation",
+        "getListByDevice",
+        "getFile",
+        "getDirectFiles",
+    ]
+    onc_aliases = {f"onc.ONC.{alias}" for alias in aliases}
+
+    if name in onc_aliases:
+        skip = True
+
+    # 2. skip submodules onc.onc.ONC
+    if what == "module":
+        skip = True
+
+    return skip
+
+
+def setup(sphinx):
+    # sphinx.connect("autoapi-skip-member", skip_aliases_in_ONC_class)
+    sphinx.connect("autoapi-skip-member", skip_rules)

@@ -245,7 +245,7 @@ class ONC:
         """  # noqa: E501
         return self.discovery.getLocations(filters)
 
-    def getLocationHierarchy(self, filters: dict | None = None):
+    def getLocationsTree(self, filters: dict | None = None):
         """
         Return a location tree.
 
@@ -258,6 +258,8 @@ class ONC:
 
         See https://data.oceannetworks.ca/OpenAPI#get-/locations/tree
         for usage and available query string parameters.
+
+        The function ``getLocationHierarchy`` is an alias for this function.
 
         Parameters
         ----------
@@ -294,7 +296,7 @@ class ONC:
         >>> params = {
         ...     "locationCode": "BACCC",
         ... }  # doctest: +SKIP
-        >>> onc.getLocationHierarchy(params)  # doctest: +SKIP
+        >>> onc.getLocationsTree(params)  # doctest: +SKIP
         [
             {
                 "locationName": "Coral Cliff",
@@ -324,6 +326,8 @@ class ONC:
         ]
         """  # noqa: E501
         return self.discovery.getLocationHierarchy(filters)
+
+    getLocationHierarchy = getLocationsTree
 
     def getDeployments(self, filters: dict | None = None):
         """
@@ -881,21 +885,236 @@ class ONC:
 
     # Real-time methods
 
-    def getDirectScalar(self, filters: dict = None, allPages: bool = False):
-        # Alias for getDirectByLocation (to be eventually discontinued)
-        return self.getDirectByLocation(filters, allPages)
+    def getScalardataByLocation(self, filters: dict = None, allPages: bool = False):
+        """
+        Return scalar data in JSON format by given location code and device category code.
 
-    def getDirectByLocation(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectByLocation(filters, allPages)
+        The API endpoint is ``/scalardata/location``.
 
-    def getDirectByDevice(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectByDevice(filters, allPages)
+        See https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location
+        for usage.
 
-    def getDirectRawByLocation(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectRawByLocation(filters, allPages)
+        The function ``getDirectByLocation`` is an alias for this function.
 
-    def getDirectRawByDevice(self, filters: dict = None, allPages: bool = False):
-        return self.realTime.getDirectRawByDevice(filters, allPages)
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+
+            Supported parameters are:
+
+            - locationCode (**required**)
+            - deviceCategoryCode (**required**)
+            - propertyCode
+            - sensorCategoryCodes
+            - dateFrom
+            - dateTo
+            - metadata
+            - rowLimit
+            - outputFormat
+            - returnOptions
+            - getLatest
+            - qualityControl
+            - resampleType
+            - resamplePeriod
+            - fillGaps
+            - sensorsToInclude
+
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.realTime.getScalardataByLocation(filters, allPages)
+
+    getDirectByLocation = getScalardataByLocation
+
+    def getScalardataByDevice(self, filters: dict = None, allPages: bool = False):
+        """
+        Return scalar data in JSON format by given device code.
+
+        The API endpoint is ``/scalardata/device``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device
+        for usage.
+
+        The function ``getDirectByDevice`` is an alias for this function.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+
+            Supported parameters are:
+
+            - deviceCode (**required**)
+            - sensorCategoryCodes
+            - dateFrom
+            - dateTo
+            - rowLimit
+            - outputFormat
+            - returnOptions
+            - getLatest
+            - qualityControl
+            - resampleType
+            - resamplePeriod
+            - fillGaps
+            - sensorsToInclude
+
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.realTime.getScalardataByDevice(filters, allPages)
+
+    getDirectByDevice = getScalardataByDevice
+
+    def getScalardata(self, filters: dict = None, allPages: bool = False):
+        """
+        Return scalar data in JSON format by given query parameters.
+
+        A helper method for getting scalar data. Whether it is by device or by location is inferred
+        from the keys in the given query parameters.
+
+        - ByDevice requires deviceCode.
+        - ByLocation requires locationCode and deviceCategoryCode.
+        - Raise ``ValueError`` if they both exist.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request. See ``getScalardataByLocation`` and ``getScalardataByDevice``
+            for more information.
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+
+        """  # noqa: E501
+        return self.realTime.getScalardata(filters, allPages)
+
+    def getRawdataByLocation(self, filters: dict = None, allPages: bool = False):
+        """
+        Return the raw data at a given location for the given device category.
+
+        A date range is optional. When not specified, data from all time will be returned
+        within (possibly default) row and size limits.
+
+        The API endpoint is ``/rawdata/location``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location
+        for usage.
+
+        The function ``getDirectRawByLocation`` is an alias for this function.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+
+            Supported parameters are:
+
+            - locationCode (**required**)
+            - deviceCategoryCode (**required**)
+            - dateFrom
+            - dateTo
+            - rowLimit
+            - sizeLimit
+            - convertHexToDecimal
+            - outputFormat
+            - getLatest
+            - skipErrors
+
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.realTime.getRawdataByLocation(filters, allPages)
+
+    getDirectRawByLocation = getRawdataByLocation
+
+    def getRawdataByDevice(self, filters: dict = None, allPages: bool = False):
+        """
+        Return the raw data for a given device.
+
+        A date range is optional. When not specified, data from all time will be returned
+        within (possibly default) row and size limits.
+
+        The API endpoint is ``/rawdata/device``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/rawdata/device
+        for usage.
+
+        The function ``getDirectRawByDevice`` is an alias for this function.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+
+            Supported parameters are:
+
+            - deviceCode (**required**)
+            - dateFrom
+            - dateTo
+            - rowLimit
+            - sizeLimit
+            - convertHexToDecimal
+            - outputFormat
+            - getLatest
+            - skipErrors
+
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.realTime.getRawdataByDevice(filters, allPages)
+
+    getDirectRawByDevice = getRawdataByDevice
+
+    def getRawdata(self, filters: dict = None, allPages: bool = False):
+        """
+        Return the raw data by given query parameters.
+
+        A helper method for getting the raw data. Whether it is by device or by location is inferred
+        from the keys in the given query parameters.
+
+        - ByDevice requires deviceCode.
+        - ByLocation requires locationCode and deviceCategoryCode.
+        - Raise ``ValueError`` if they both exist.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request. See ``getRawdataByLocation`` and ``getRawdataByDevice``
+            for more information.
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.realTime.getRawdata(filters, allPages)
 
     def getSensorCategoryCodes(self, filters: dict):
         """
@@ -908,7 +1127,7 @@ class ONC:
         ----------
         filters : dict
             Query string parameters in the API request.
-            Use the same filters for calling ``getDirectByLocation`` or ``getDirectByDevice``.
+            Use the same filters for calling ``getScalardata``.
 
         Returns
         -------
@@ -964,16 +1183,176 @@ class ONC:
 
     # Archive file methods
 
-    def getListByLocation(self, filters: dict = None, allPages: bool = False):
-        return self.archive.getListByLocation(filters, allPages)
+    def getArchivefileByLocation(self, filters: dict = None, allPages: bool = False):
+        """
+        Return a list of files available in Oceans 3.0 Archiving System
+        for a given location code and device category code.
 
-    def getListByDevice(self, filters: dict = None, allPages: bool = False):
-        return self.archive.getListByDevice(filters, allPages)
+        The API endpoint is ``/archivefile/location``.
 
-    def getFile(self, filename: str = "", overwrite: bool = False):
-        return self.archive.getFile(filename, overwrite)
+        See https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location
+        for usage.
 
-    def getDirectFiles(
+        The function ``getListByLocation`` is an alias for this function.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+
+            Supported parameters are:
+
+            - locationCode (**required**)
+            - deviceCategoryCode (**required**)
+            - dateFrom
+            - dateTo
+            - dateArchivedFrom
+            - dateArchivedTo
+            - fileExtension
+            - dataProductCode
+            - returnOptions
+            - rowLimit
+            - page
+            - getLatest
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.archive.getArchivefileByLocation(filters, allPages)
+
+    getListByLocation = getArchivefileByLocation
+
+    def getArchivefileByDevice(self, filters: dict = None, allPages: bool = False):
+        """
+        Return a list of files available in Oceans 3.0 Archiving System
+        for a given device code.
+
+        The API endpoint is ``/archivefile/device``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device
+        for usage.
+
+        The function ``getListByDevice`` is an alias for this function.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+
+            Supported parameters are:
+
+            - deviceCode (**required**)
+            - dateFrom
+            - dateTo
+            - dateArchivedFrom
+            - dateArchivedTo
+            - fileExtension
+            - dataProductCode
+            - returnOptions
+            - rowLimit
+            - page
+            - getLatest
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.archive.getArchivefileByDevice(filters, allPages)
+
+    getListByDevice = getArchivefileByDevice
+
+    def getArchivefile(self, filters: dict = None, allPages: bool = False):
+        """
+        Return a list of files available in Oceans 3.0 Archiving System by given query parameters.
+
+        A helper method for getting a list of archive files. Whether it is by device or by location is inferred
+        from the keys in the given query parameters.
+
+        - ByDevice requires deviceCode.
+        - ByLocation requires locationCode and deviceCategoryCode.
+        - Raise ``ValueError`` if they both exist.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+            See ``getArchivefileByLocation`` and ``getArchivefileByDevice`` for more information.
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            API response.
+        """  # noqa: E501
+        return self.archive.getArchivefile(filters, allPages)
+
+    def downloadArchivefile(self, filename: str = "", overwrite: bool = False):
+        """
+        Download a file from Oceans 3.0 Archiving System by specifying the file name.
+
+        The file will be downloaded without any compression.
+        Many files in the archive are compressed for storage,
+        uncompressing these files takes time on the server and increases data volume to transfer.
+
+        The API endpoint is ``/archivefile/download``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download
+        for usage.
+
+        The function ``getFile`` is an alias for this function.
+
+        Parameters
+        ----------
+        filename : str, default ""
+            A valid name of a file in DMAS Archiving System.
+        overwrite : bool, default False
+            Whether to overwrite the file if it exists.
+
+        Returns
+        -------
+        dict | None
+            dict showing the error message if the filename is invalid.
+            None if the download is successful.
+        """  # noqa: E501
+        return self.archive.downloadArchivefile(filename, overwrite)
+
+    getFile = downloadArchivefile
+
+    def downloadDirectArchivefile(
         self, filters: dict = None, overwrite: bool = False, allPages: bool = False
     ):
-        return self.archive.getDirectFiles(filters, overwrite, allPages)
+        """
+        Download files from Oceans 3.0 Archiving System by given query parameters.
+
+        A helper method to combine ``getArchivefile`` and ``downloadArchivefile``.
+        Internally it calls ``getArchivefile`` to get a list of archive files,
+        and ``downloadArchivefile`` to download all files.
+
+        The function ``getDirectFiles`` is an alias for this function.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+            See ``getArchivefileByLocation`` and ``getArchivefileByDevice`` for more information.
+        overwrite : bool, default False
+            Whether to overwrite the file if it exists.
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+
+        Returns
+        -------
+        dict
+            A dict showing download results.
+        """  # noqa: E501
+        return self.archive.downloadDirectArchivefile(filters, overwrite, allPages)
+
+    getDirectFiles = downloadDirectArchivefile

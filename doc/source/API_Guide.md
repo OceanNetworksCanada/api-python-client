@@ -45,15 +45,15 @@ Use discovery methods to:
 
 :::
 
-|                          Method                           |             Description              |                                   API Endpoint                                   |
-| :-------------------------------------------------------: | :----------------------------------: | :------------------------------------------------------------------------------: |
-|         [getLocations](#onc.onc.ONC.getLocations)         |          Returns locations           |        [/locations](https://data.oceannetworks.ca/OpenAPI#get-/locations)        |
-| [getLocationHierarchy](#onc.onc.ONC.getLocationHierarchy) |       Returns a location tree        |   [/locations/tree](https://data.oceannetworks.ca/OpenAPI#get-/locations/tree)   |
-|       [getDeployments](#onc.onc.ONC.getDeployments)       | Returns a list of device deployments |      [/deployments](https://data.oceannetworks.ca/OpenAPI#get-/deployments)      |
-|  [getDeviceCategories](#onc.onc.ONC.getDeviceCategories)  | Returns a list of device categories  | [/deviceCategories](https://data.oceannetworks.ca/OpenAPI#get-/deviceCategories) |
-|           [getDevices](#onc.onc.ONC.getDevices)           |      Returns a list of devices       |          [/devices](https://data.oceannetworks.ca/OpenAPI#get-/devices)          |
-|        [getProperties](#onc.onc.ONC.getProperties)        |     Returns a list of properties     |       [/properties](https://data.oceannetworks.ca/OpenAPI#get-/properties)       |
-|      [getDataProducts](#onc.onc.ONC.getDataProducts)      |   Returns a list of data products    |     [/dataProducts](https://data.oceannetworks.ca/OpenAPI#get-/dataProducts)     |
+|                         Method                          |             Description             |                                   API Endpoint                                   |
+| :-----------------------------------------------------: | :---------------------------------: | :------------------------------------------------------------------------------: |
+|        [getLocations](#onc.onc.ONC.getLocations)        |          Return locations           |        [/locations](https://data.oceannetworks.ca/OpenAPI#get-/locations)        |
+|    [getLocationsTree](#onc.onc.ONC.getLocationsTree)    |       Return a location tree        |   [/locations/tree](https://data.oceannetworks.ca/OpenAPI#get-/locations/tree)   |
+|      [getDeployments](#onc.onc.ONC.getDeployments)      | Return a list of device deployments |      [/deployments](https://data.oceannetworks.ca/OpenAPI#get-/deployments)      |
+| [getDeviceCategories](#onc.onc.ONC.getDeviceCategories) | Return a list of device categories  | [/deviceCategories](https://data.oceannetworks.ca/OpenAPI#get-/deviceCategories) |
+|          [getDevices](#onc.onc.ONC.getDevices)          |      Return a list of devices       |          [/devices](https://data.oceannetworks.ca/OpenAPI#get-/devices)          |
+|       [getProperties](#onc.onc.ONC.getProperties)       |     Return a list of properties     |       [/properties](https://data.oceannetworks.ca/OpenAPI#get-/properties)       |
+|     [getDataProducts](#onc.onc.ONC.getDataProducts)     |   Return a list of data products    |     [/dataProducts](https://data.oceannetworks.ca/OpenAPI#get-/dataProducts)     |
 
 ## Data product download methods
 
@@ -112,18 +112,20 @@ Use the _allPages_ parameter to automatically download all pages required for yo
 
 :::
 
-|                            Method                             |                              Description                              |                                      API Endpoint                                      |
-| :-----------------------------------------------------------: | :-------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
-|    [getDirectByLocation](#onc.onc.ONC.getDirectByLocation)    | Returns scalar data <br> from a specific location and device category | [/scalardata/location](https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location) |
-|      [getDirectByDevice](#onc.onc.ONC.getDirectByDevice)      |              Returns scalar data from a specific device               |   [/scalardata/device](https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device)   |
-| [getDirectRawByLocation](#onc.onc.ONC.getDirectRawByLocation) |  Returns raw data <br> from a specific location and device category   |    [/rawdata/location](https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location)    |
-|   [getDirectRawByDevice](#onc.onc.ONC.getDirectRawByDevice)   |                Returns raw data from a specific device                |      [/rawdata/device](https://data.oceannetworks.ca/OpenAPI#get-/rawdata/device)      |
+|                             Method                              |                             Description                              |                                      API Endpoint                                      |
+| :-------------------------------------------------------------: | :------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
+| [getScalardataByLocation](#onc.onc.ONC.getScalardataByLocation) | Return scalar data <br> from a specific location and device category | [/scalardata/location](https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location) |
+|   [getScalardataByDevice](#onc.onc.ONC.getScalardataByDevice)   |              Return scalar data from a specific device               |   [/scalardata/device](https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device)   |
+|    [getRawdataByLocation](#onc.onc.ONC.getRawdataByLocation)    |  Return raw data <br> from a specific location and device category   |    [/rawdata/location](https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location)    |
+|      [getRawdataByDevice](#onc.onc.ONC.getRawdataByDevice)      |                Return raw data from a specific device                |      [/rawdata/device](https://data.oceannetworks.ca/OpenAPI#get-/rawdata/device)      |
 
 Helper methods are listed below.
 
-|                            Method                             |                                      Description                                      |
-| :-----------------------------------------------------------: | :-----------------------------------------------------------------------------------: |
-| [getSensorCategoryCodes](#onc.onc.ONC.getSensorCategoryCodes) | Returns a list of sensor category codes <br> prior to querying the scalardata service |
+|                            Method                             |                                     Description                                      |
+| :-----------------------------------------------------------: | :----------------------------------------------------------------------------------: |
+| [getSensorCategoryCodes](#onc.onc.ONC.getSensorCategoryCodes) | Return a list of sensor category codes <br> prior to querying the scalardata service |
+|          [getScalardata](#onc.onc.ONC.getScalardata)          |                                  Return scalar data                                  |
+|             [getRawdata](#onc.onc.ONC.getRawdata)             |                                   Return raw data                                    |
 
 ## Archive file download methods
 
@@ -148,14 +150,15 @@ Due to security regulations, some very recent files (e.g. hydrophone.wav files i
 
 :::
 
-|                       Method                        |                                         Description                                         |                                       API Endpoint                                       |
-| :-------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
-| [getListByLocation](#onc.onc.ONC.getListByLocation) | Returns a list of available archive files <br> from a specific location and device category | [/archivefile/location](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location) |
-|   [getListByDevice](#onc.onc.ONC.getListByDevice)   |            Returns a list of available archive files <br> from a specific device            |   [/archivefile/device](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device)   |
-|           [getFile](#onc.onc.ONC.getFile)           |                                  Download an archive file                                   | [/archivefile/download](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download) |
+|                              Method                               |                                        Description                                         |                                       API Endpoint                                       |
+| :---------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
+| [getArchivefileByLocation](#onc.onc.ONC.getArchivefileByLocation) | Return a list of available archive files <br> from a specific location and device category | [/archivefile/location](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location) |
+|   [getArchivefileByDevice](#onc.onc.ONC.getArchivefileByDevice)   |            Return a list of available archive files <br> from a specific device            |   [/archivefile/device](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device)   |
+|      [downloadArchivefile](#onc.onc.ONC.downloadArchivefile)      |                                  Download an archive file                                  | [/archivefile/download](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download) |
 
 Helper methods are listed below.
 
-|                    Method                     |                            Description                            |
-| :-------------------------------------------: | :---------------------------------------------------------------: |
-| [getDirectFiles](#onc.onc.ONC.getDirectFiles) | Download a list of archived files that match the filters provided |
+|                               Method                                |                            Description                            |
+| :-----------------------------------------------------------------: | :---------------------------------------------------------------: |
+| [downloadDirectArchivefile](#onc.onc.ONC.downloadDirectArchivefile) | Download a list of archived files that match the filters provided |
+|            [getArchivefile](#onc.onc.ONC.getArchivefile)            |             Return a list of available archive files              |
