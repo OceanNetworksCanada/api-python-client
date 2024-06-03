@@ -6,6 +6,10 @@
 
 - Improved package setup (pyproject.toml, linting and formatter).
   ([#1](https://github.com/OceanNetworksCanada/api-python-client/issues/1))
+
+  Now you can import the ONC class using `from onc import ONC` instead of `from onc.onc import ONC`.
+  The longer version still works.
+
 - Added support of Path type for outPath (instance variable in ONC class).
   ([#12](https://github.com/OceanNetworksCanada/api-python-client/issues/12))
 - Added GitHub Actions for continuous integration.
@@ -19,21 +23,22 @@
 - Renamed some public methods (old names are still available) to make the naming more consistent with the api end points.
   ([#33](https://github.com/OceanNetworksCanada/api-python-client/issues/33))
 
-| API End Point         | Old Name               | New Name                  |
-| --------------------- | ---------------------- | ------------------------- |
-| /locations/tree       | getLocationHierarchy   | getLocationsTree          |
-| /scalardata/location  | getDirectByLocation    | getScalardataByLocation   |
-| /scalardata/device    | getDirectByDevice      | getScalardataByDevice     |
-| /rawdata/location     | getDirectRawByLocation | getRawdataByLocation      |
-| /rawdata/device       | getDirectRawByDevice   | getRawdataByDevice        |
-| /archivefile/location | getListByLocation      | getArchivefileByLocation  |
-| /archivefile/device   | getListByDevice        | getArchivefileByDevice    |
-| /archivefile/download | getFile                | downloadArchivefile       |
-| N/A                   | getDirectFiles         | downloadDirectArchivefile |
+  | API End Point         | Old Name               | New Name                  |
+  | --------------------- | ---------------------- | ------------------------- |
+  | /locations/tree       | getLocationHierarchy   | getLocationsTree          |
+  | /scalardata/location  | getDirectByLocation    | getScalardataByLocation   |
+  | /scalardata/device    | getDirectByDevice      | getScalardataByDevice     |
+  | /rawdata/location     | getDirectRawByLocation | getRawdataByLocation      |
+  | /rawdata/device       | getDirectRawByDevice   | getRawdataByDevice        |
+  | /archivefile/location | getListByLocation      | getArchivefileByLocation  |
+  | /archivefile/device   | getListByDevice        | getArchivefileByDevice    |
+  | /archivefile/download | getFile                | downloadArchivefile       |
+  | N/A                   | getDirectFiles         | downloadDirectArchivefile |
 
 - Added helper methods to combine `getXXXByLocation` and `getXXXByDevice` into `getXXX`.
   ([#33](https://github.com/OceanNetworksCanada/api-python-client/issues/33))
-  - Namely, `getScalardata`, `getRawdata` and `getArchivefile`.
+
+  Namely, `getScalardata`, `getRawdata` and `getArchivefile`.
 
 ### Fixes
 
