@@ -87,13 +87,13 @@ onc.getLocations(params)
 
 ### Get all locations with instruments that have a specific device category and a specific property
 
-Return all locations with at least one instrument that has the device category "**BPR**" and property code "*
-*totalpressure**".
+Return all locations with at least one instrument that has the device category "**BPR**" and property code 
+"**totalpressure**".
 
 ```python
 params = {
     "deviceCategoryCode": "BPR",
-    "propertyCode": "pressure",
+    "propertyCode": "totalpressure",
 }
 onc.getLocations(params)
 ```
