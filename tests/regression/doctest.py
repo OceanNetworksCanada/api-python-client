@@ -214,10 +214,10 @@ def test_get_data_products(requester):
             "dataProductOptions": [
                 {
                     "allowableRange": {
-                        "lowerBound": "-160",
+                        "lowerBound": "-160.0",
                         "onlyIntegers": False,
                         "unitOfMeasure": None,
-                        "upperBound": "140",
+                        "upperBound": "140.0",
                     },
                     "allowableValues": ["-1000"],
                     "defaultValue": "-1000",
@@ -239,10 +239,10 @@ def test_get_data_products(requester):
                 },
                 {
                     "allowableRange": {
-                        "lowerBound": "-160",
+                        "lowerBound": "-160.0",
                         "onlyIntegers": False,
                         "unitOfMeasure": None,
-                        "upperBound": "140",
+                        "upperBound": "140.0",
                     },
                     "allowableValues": ["-1000"],
                     "defaultValue": "-1000",
