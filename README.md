@@ -108,7 +108,7 @@ which can be obtained from the [Data Product Options](https://wiki.oceannetworks
 You can download more than 120 different [types of data products](https://wiki.oceannetworks.ca/display/O2A/Available+Data+Products) including audio & video.
 
 Check more on the _[data product download methods guide](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#data-product-download-methods)_
-and _[code examples](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Data_Product.html)_.
+and _[code examples](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Data_Products.html)_.
 
 ## Obtaining sensor readings in (near) real-time
 
