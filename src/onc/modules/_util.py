@@ -1,3 +1,4 @@
+import time
 from datetime import timedelta
 from pathlib import Path
 
@@ -7,10 +8,11 @@ import requests
 
 def saveAsFile(
     response: requests.Response, outPath: Path, fileName: str, overwrite: bool
-) -> None:
+) -> tuple[int, float]:
     """
     Saves the file downloaded in the response object, in the outPath, with filename
     If overwrite, will overwrite files with the same name
+    Return the file size and download time
     """
     filePath = outPath / fileName
     outPath.mkdir(parents=True, exist_ok=True)
@@ -18,8 +20,16 @@ def saveAsFile(
     # Save file in outPath if it doesn't exist yet
     if Path.exists(filePath) and not overwrite:
         raise FileExistsError(filePath)
+
+    start = time.time()
+    size = 0
     with open(filePath, "wb+") as file:
-        file.write(response.content)
+        for chunk in response.iter_content(chunk_size=128):
+            file.write(chunk)
+            size += len(chunk)
+
+    downloadTime = time.time() - start
+    return (size, round(downloadTime, 3))
 
 
 def _formatSize(size: float) -> str:

@@ -210,7 +210,7 @@ class _OncDelivery(_OncService):
             )
 
             if status == 200 or status == 777:
-                # file was downloaded (200), or downloaded & skipped (777)
+                # file was downloaded (200), or skipped before downloading (777)
                 fileList.append(dpf.getInfo())
                 index += 1
                 dpf = _DataProductFile(runId, str(index), baseUrl, token)

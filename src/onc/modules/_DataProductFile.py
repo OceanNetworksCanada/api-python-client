@@ -1,5 +1,5 @@
 from pathlib import Path
-from time import sleep, time
+from time import sleep
 from warnings import warn
 
 import requests
@@ -55,9 +55,9 @@ class _DataProductFile:
         self._status = 202
         while self._status == 202:
             # Run timed request
-            start = time()
-            response = requests.get(self._baseUrl, self._filters, timeout=timeout)
-            duration = time() - start
+            response = requests.get(
+                self._baseUrl, self._filters, timeout=timeout, stream=True
+            )
 
             self._downloadUrl = response.url
             self._status = response.status_code
@@ -68,12 +68,12 @@ class _DataProductFile:
 
             if self._status == 200:
                 self._downloaded = True
-                self._downloadingTime = round(duration, 3)
                 filename = self.extractNameFromHeader(response)
                 self._filePath = filename
-                self._fileSize = len(response.content)
                 try:
-                    saveAsFile(response, outPath, filename, overwrite)
+                    self._fileSize, self._downloadingTime = saveAsFile(
+                        response, outPath, filename, overwrite
+                    )
                 except FileExistsError:
                     if self._retries > 1:
                         print("")
@@ -87,9 +87,6 @@ class _DataProductFile:
             elif self._status == 204:  # No data found
                 print("   No data found.")
 
-            elif self._status == 400:
-                raise requests.HTTPError(_createErrorMessage(response))
-
             elif self._status == 404:  # Index too high, no more files to download
                 log.printNewLine()
                 pass
@@ -101,6 +98,8 @@ class _DataProductFile:
                     f"with the runId: {self._filters['dpRunId']}",
                     stacklevel=2,
                 )
+            else:
+                raise requests.HTTPError(_createErrorMessage(response))
 
         return self._status
 
