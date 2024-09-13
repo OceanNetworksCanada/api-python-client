@@ -272,6 +272,7 @@ def test_get_sensor_category_codes(requester):
     result = [
         {
             "outputFormat": "array",
+            "propertyCode": "totalpressure",
             "sensorCategoryCode": "pressure",
             "sensorCode": "Pressure",
             "sensorName": "Seafloor Pressure",
@@ -279,6 +280,7 @@ def test_get_sensor_category_codes(requester):
         },
         {
             "outputFormat": "array",
+            "propertyCode": "seawatertemperature",
             "sensorCategoryCode": "temperature",
             "sensorCode": "Temperature",
             "sensorName": "Housing Temperature",
@@ -286,6 +288,7 @@ def test_get_sensor_category_codes(requester):
         },
         {
             "outputFormat": "array",
+            "propertyCode": "seawatertemperature",
             "sensorCategoryCode": "temperature1",
             "sensorCode": "temperature1",
             "sensorName": "Temperature",
@@ -293,6 +296,7 @@ def test_get_sensor_category_codes(requester):
         },
         {
             "outputFormat": "array",
+            "propertyCode": "seawatertemperature",
             "sensorCategoryCode": "temperature2",
             "sensorCode": "temperature2",
             "sensorName": "P-Sensor Temperature",
