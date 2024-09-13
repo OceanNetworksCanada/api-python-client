@@ -1135,6 +1135,7 @@ class ONC:
             API response. Each sensor category code returned in the list is a dict with the following structure.
 
             - outputFormat: str
+            - propertyCode: str
             - sensorCategoryCode: str
             - sensorCode: str
             - sensorName: str
@@ -1151,6 +1152,7 @@ class ONC:
         [
             {
                 "outputFormat": "array",
+                "propertyCode": "totalpressure",
                 "sensorCategoryCode": "pressure",
                 "sensorCode": "Pressure",
                 "sensorName": "Seafloor Pressure",
@@ -1158,6 +1160,7 @@ class ONC:
             },
             {
                 "outputFormat": "array",
+                "propertyCode": "seawatertemperature",
                 "sensorCategoryCode": "temperature",
                 "sensorCode": "Temperature",
                 "sensorName": "Housing Temperature",
@@ -1165,6 +1168,7 @@ class ONC:
             },
             {
                 "outputFormat": "array",
+                "propertyCode": "seawatertemperature",
                 "sensorCategoryCode": "temperature1",
                 "sensorCode": "temperature1",
                 "sensorName": "Temperature",
@@ -1172,6 +1176,7 @@ class ONC:
             },
             {
                 "outputFormat": "array",
+                "propertyCode": "seawatertemperature",
                 "sensorCategoryCode": "temperature2",
                 "sensorCode": "temperature2",
                 "sensorName": "P-Sensor Temperature",
