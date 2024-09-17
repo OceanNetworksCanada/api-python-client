@@ -4,6 +4,7 @@ import weakref
 from time import time
 
 import dateutil.parser
+import humanize
 
 from ._util import _formatDuration
 
@@ -38,11 +39,17 @@ class _MultiPage:
             )
 
             pageCount = 1
-            pageEstimate = self._estimatePages(response, service, responseTime)
+            pageEstimate = self._estimatePages(response, service)
             if pageEstimate > 0:
-                timeEstimate = _formatDuration(pageEstimate * responseTime)
-                print(f"Estimated approx. {pageEstimate} pages")
-                print(f"Estimated approx. {timeEstimate} to complete")
+                # Exclude the first page when calculating the time estimation
+                timeEstimate = _formatDuration((pageEstimate - 1) * responseTime)
+                print(
+                    f"Downloading time for the first page: {humanize.naturaldelta(responseTime)}"  # noqa: E501
+                )
+                print(f"Estimated approx. {pageEstimate} pages in total.")
+                print(
+                    f"Estimated approx. {timeEstimate} to complete for the rest of the pages."  # noqa: E501
+                )
 
             # keep downloading pages until next is None
             print("")
@@ -111,7 +118,7 @@ class _MultiPage:
         elif service == "archivefiles":
             response["files"] += nextResponse["files"]
 
-    def _estimatePages(self, response: object, service: str, responseTime: float):
+    def _estimatePages(self, response: object, service: str):
         """
         Estimate the number of pages the request will require.
 
@@ -127,16 +134,17 @@ class _MultiPage:
         if pageTimespan == 0:
             return 0
 
-        # total timespan to cover
+        # total timespan to cover in the next parameter excluding the first page
         totalBegin = dateutil.parser.parse(response["next"]["parameters"]["dateFrom"])
         totalEnd = dateutil.parser.parse(response["next"]["parameters"]["dateTo"])
         totalTimespan = totalEnd - totalBegin
 
         # handle cases of very small timeframes
-        pageSeconds = max(pageTimespan.seconds, 1)
-        totalSeconds = totalTimespan.seconds
+        pageSeconds = max(pageTimespan.total_seconds(), 1)
+        totalSeconds = totalTimespan.total_seconds()
 
-        return math.ceil(totalSeconds / pageSeconds)
+        # plus one for the first page
+        return math.ceil(totalSeconds / pageSeconds) + 1
 
     def _rowCount(self, response, service: str):
         """
