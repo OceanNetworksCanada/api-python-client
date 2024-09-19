@@ -1,5 +1,4 @@
 import os
-import time
 from pathlib import Path
 
 import humanize
@@ -52,15 +51,15 @@ class _OncArchive(_OncService):
         }
 
         # Download the archived file with filename (response contents is binary)
-        start = time.time()
-        response = requests.get(url, filters, timeout=self._config("timeout"))
+        response = requests.get(
+            url, filters, timeout=self._config("timeout"), stream=True
+        )
         status = response.status_code
-        elapsed = time.time() - start
 
         if response.ok:
             # Save file to output path
             outPath: Path = self._config("outPath")
-            saveAsFile(response, outPath, filename, overwrite)
+            size, downloadTime = saveAsFile(response, outPath, filename, overwrite)
 
         else:
             msg = _createErrorMessage(response)
@@ -74,8 +73,8 @@ class _OncArchive(_OncService):
         return {
             "url": response.url,
             "status": txtStatus,
-            "size": len(response.content),
-            "downloadTime": round(elapsed, 3),
+            "size": size,
+            "downloadTime": downloadTime,
             "file": filename,
         }
 
@@ -113,7 +112,7 @@ class _OncArchive(_OncService):
             filePath = outPath / filename
             fileExists = os.path.exists(filePath)
 
-            if (not fileExists) or (fileExists and overwrite):
+            if not fileExists or overwrite:
                 print(f'   ({tries} of {n}) Downloading file: "{filename}"')
                 downInfo = self.downloadArchivefile(filename, overwrite)
                 size += downInfo["size"]
