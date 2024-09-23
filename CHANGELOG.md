@@ -1,5 +1,25 @@
 # Changelog
 
+## v2.4.1 (2024-09-24)
+
+### Fixes
+
+- Fixed duplicate downloading issues when the downloaded file exists and the overwrite parameter is False
+  in `downloadArchivefile`, `downloadDataProduct`, and `orderDataProduct`.
+  ([#41](https://github.com/OceanNetworksCanada/api-python-client/issues/41))
+
+- Fixed incorrect time estimation when downloading scalardata in multiple pages.
+  ([#45](https://github.com/OceanNetworksCanada/api-python-client/issues/45))
+
+### Contributors
+
+- [Kan Fu](https://github.com/kan-fu)
+
+### Reviewers panel
+
+- [Angela Schlesinger](https://github.com/aschlesin)
+- [Eli Ferguson](https://github.com/eliferguson)
+
 ## v2.4.0 (2024-05-30)
 
 ### Enhancements
