@@ -20,7 +20,13 @@ params = {
     "dateTo": "2019-06-08T00:00:00.000Z",
 }
 
-onc.getListByDevice(params)
+onc.getArchivefile(params)
+
+# Longer method name
+# onc.getArchivefileByDevice(params)
+
+# Alias method name
+# onc.getListByDevice(params)
 ```
 
 ### Get a list of all archived files available from a specific device for a specific time-range with a specific extension
@@ -36,13 +42,23 @@ params = {
     "dateTo": "2019-06-08T00:00:00.000Z",
 }
 
-onc.getListByDevice(params)
+onc.getArchivefile(params)
+
+# Longer method name
+# onc.getArchivefileByDevice(params)
+
+# Alias method name
+# onc.getListByDevice(params)
 ```
 
 ### Download a file by its filename
 
 ```python
-onc.getFile("RDIADCP600WH25471_20190607T120000.555Z.rdi", overwrite=True)
+
+onc.downloadArchivefile("ICLISTENHF1560_20181005T000403.000Z-spect.mat", overwrite=True)
+
+# Alias method name
+# onc.getFile("ICLISTENHF1560_20181005T000403.000Z-spect.mat", overwrite=True)
 ```
 
 ## [/archivefile/location](https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location)
@@ -56,49 +72,58 @@ _locationCode_:"**SEVIP**")
 params = {
     "deviceCategoryCode": "HYDROPHONE",
     "locationCode": "SEVIP",
-    "dateFrom": "2017-01-01T00:00:00.000Z",
-    "dateTo": "2019-12-31T00:00:00.000Z",
+    "dateFrom": "2018-10-05T00:05:00.000Z",
+    "dateTo": "2018-10-05T00:06:00.000Z",
 }
 
-onc.getListByLocation(params)["files"]
+onc.getArchivefile(params)
+
+# Longer method name
+# onc.getArchivefileByLocation(params)
+
+# Alias method name
+# onc.getListByLocation(params)
 ```
 
 ### Get a list of all archived files available from a specific location and a device category for a specific time-range with a specific file extension
 
 Return the archived files for a device with _deviceCategoryCode_ "**HYDROPHONE**" at location Straight of Georgia East (
-_locationCode_:"**SEVIP**") with file extension "**wav**".
+_locationCode_:"**SEVIP**") with file extension "**mat**".
 
 ```python
 params = {
     "deviceCategoryCode": "HYDROPHONE",
     "locationCode": "SEVIP",
-    "extension": "wav",
-    "dateFrom": "2017-01-01T00:00:00.000Z",
-    "dateTo": "2019-12-31T00:00:00.000Z",
+    "extension": "mat",
+    "dateFrom": "2018-10-05T00:05:00.000Z",
+    "dateTo": "2018-10-05T00:06:00.000Z",
 }
 
-onc.getListByLocation(params)["files"]
+onc.getArchivefile(params)
+
+# Longer method name
+# onc.getArchivefileByLocation(params)
+
+# Alias method name
+# onc.getListByLocation(params)
 ```
 
 ## Download archived files that match the parameters
 
-Download all "wav" files from a hydrophone at Straight of Georgia East (_locationCode_:"**SEVIP**") from the last 2
-hours
+Download all "mat" files from a hydrophone at Straight of Georgia East (_locationCode_:"**SEVIP**") using the parameter above.
 
 ```python
-import datetime
-
-# Get the current ISO8601 timestamp, without milliseconds
-now = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + ".000Z"
-
 params = {
-    "locationCode": "SEVIP",  # Strait of Georgia East
-    "deviceCategoryCode": "HYDROPHONE",  # Hydrophones
-    "dateFrom": "-PT2H",  # Minus 2 hours from dateTo
-    "dateTo": now,
-    "extension": "wav",
+    "deviceCategoryCode": "HYDROPHONE",
+    "locationCode": "SEVIP",
+    "extension": "mat",
+    "dateFrom": "2018-10-05T00:05:00.000Z",
+    "dateTo": "2018-10-05T00:06:00.000Z",
 }
 
-# Download available files (will throw an exception if there are no deployments for the device during the last two hours)
+onc.downloadDirectArchivefile(params)
+
+# Alias method name
 # onc.getDirectFiles(params)
+
 ```
