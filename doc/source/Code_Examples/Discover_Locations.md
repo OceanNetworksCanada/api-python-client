@@ -87,7 +87,7 @@ onc.getLocations(params)
 
 ### Get all locations with instruments that have a specific device category and a specific property
 
-Return all locations with at least one instrument that has the device category "**BPR**" and property code 
+Return all locations with at least one instrument that has the device category "**BPR**" and property code.
 "**totalpressure**".
 
 ```python
@@ -158,5 +158,8 @@ Return the location hierarchy from the "**MOBP**" ("Mobile Platforms") node and 
 params = {
     "locationCode": "MOBP",
 }
-onc.getLocationHierarchy(params)
+onc.getLocationsTree(params)
+
+# Alias method name
+# onc.getLocationHierarchy(params)
 ```

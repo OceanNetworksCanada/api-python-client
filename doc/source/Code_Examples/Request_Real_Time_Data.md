@@ -19,7 +19,13 @@ params = {
     "getLatest": "true",
 }
 
-onc.getDirectByLocation(params)
+onc.getScalardata(params)
+
+# Longer method name
+# onc.getScalardataByLocation(params)
+
+# Alias method name
+# onc.getDirectByLocation(params)
 ```
 
 ### Get 1 minute of time-series scalar data readings from a a device in a location
@@ -32,7 +38,13 @@ params = {
     "dateTo": "2016-09-01T00:01:00.000Z",
 }
 
-onc.getDirectByLocation(params)
+onc.getScalardata(params)
+
+# Longer method name
+# onc.getScalardataByLocation(params)
+
+# Alias method name
+# onc.getDirectByLocation(params)
 ```
 
 ### Get 10 seconds of raw CTD data readings from a location
@@ -45,7 +57,13 @@ params = {
     "dateTo": "2017-05-23T00:00:10.000Z",
 }
 
-onc.getDirectRawByLocation(params)["data"]["readings"]
+onc.getRawdata(params)["data"]["readings"]
+
+# Longer method name
+# onc.getRawdataByLocation(params)["data"]["readings"]
+
+# Alias method name
+# onc.getDirectRawByLocation(params)["data"]["readings"]
 ```
 
 ## [/scalardata/device](https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device)
@@ -59,7 +77,13 @@ params = {
     "dateTo": "2019-06-01T00:00:10.000Z",
 }
 
-onc.getDirectByDevice(params)
+onc.getRawdata(params)
+
+# Longer method name
+# onc.getRawdataByDevice(params)
+
+# Alias method name
+# onc.getDirectRawByDevice(params)
 ```
 
 ### Get 1 minute of time-series scalar data readings from a specific device
@@ -71,5 +95,11 @@ params = {
     "dateTo": "2016-09-01T00:01:00.000Z",
 }
 
-onc.getDirectByDevice(params)
+onc.getScalardata(params)
+
+# Longer method name
+# onc.getScalardataByDevice(params)
+
+# Alias method name
+# onc.getDirectByDevice(params)
 ```
