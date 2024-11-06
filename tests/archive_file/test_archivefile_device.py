@@ -23,31 +23,31 @@ def params_multiple_pages(params):
 def test_invalid_param_value(requester, params):
     params_invalid_param_value = params | {"deviceCode": "XYZ123"}
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
-        requester.getListByDevice(params_invalid_param_value)
+        requester.getArchivefile(params_invalid_param_value)
 
 
 def test_invalid_params_missing_required(requester, params):
     del params["deviceCode"]
-    with pytest.raises(requests.HTTPError, match=r"API Error 128"):
-        requester.getListByDevice(params)
+    with pytest.raises(ValueError):
+        requester.getArchivefile(params)
 
 
 def test_invalid_param_name(requester, params):
     params_invalid_param_name = params | {"deviceCodes": "BPR-Folger-59"}
     with pytest.raises(requests.HTTPError, match=r"API Error 129"):
-        requester.getListByDevice(params_invalid_param_name)
+        requester.getArchivefile(params_invalid_param_name)
 
 
 def test_no_data(requester, params):
     params_no_data = params | {"dateFrom": "2000-01-01", "dateTo": "2000-01-02"}
-    data = requester.getListByDevice(params_no_data)
+    data = requester.getArchivefile(params_no_data)
 
     assert len(data["files"]) == 0
 
 
 def test_valid_params_one_page(requester, params, params_multiple_pages):
-    data = requester.getListByDevice(params)
-    data_all_pages = requester.getListByDevice(params_multiple_pages, allPages=True)
+    data = requester.getArchivefile(params)
+    data_all_pages = requester.getArchivefile(params_multiple_pages, allPages=True)
 
     assert (
         len(data["files"]) > params_multiple_pages["rowLimit"]
@@ -63,7 +63,7 @@ def test_valid_params_one_page(requester, params, params_multiple_pages):
 
 
 def test_valid_params_multiple_pages(requester, params_multiple_pages):
-    data = requester.getListByDevice(params_multiple_pages)
+    data = requester.getArchivefile(params_multiple_pages)
 
     assert (
         len(data["files"]) == params_multiple_pages["rowLimit"]

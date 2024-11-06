@@ -9,7 +9,7 @@ def test_invalid_time_range_greater_start_time(requester):
         "dateTo": "2019-01-01",
     }
     with pytest.raises(requests.HTTPError, match=r"API Error 23"):
-        requester.getLocationHierarchy(params_invalid_time_range_greater_start_time)
+        requester.getLocationsTree(params_invalid_time_range_greater_start_time)
 
 
 def test_invalid_time_range_future_start_time(requester):
@@ -18,25 +18,25 @@ def test_invalid_time_range_future_start_time(requester):
         "dateFrom": "2050-01-01",
     }
     with pytest.raises(requests.HTTPError, match=r"API Error 25"):
-        requester.getLocationHierarchy(params_invalid_time_range_future_start_time)
+        requester.getLocationsTree(params_invalid_time_range_future_start_time)
 
 
 def test_invalid_param_value(requester):
     params_invalid_param_value = {"locationCode": "XYZ123"}
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
-        requester.getLocationHierarchy(params_invalid_param_value)
+        requester.getLocationsTree(params_invalid_param_value)
 
 
 def test_invalid_param(requester):
     params_invalid_param_name = {"locationCodes": "ARCT"}
     with pytest.raises(requests.HTTPError, match=r"API Error 129"):
-        requester.getLocationHierarchy(params_invalid_param_name)
+        requester.getLocationsTree(params_invalid_param_name)
 
 
 def test_no_data(requester):
     params_no_data = {"locationCode": "ARCT", "dateTo": "1900-01-01"}
     with pytest.raises(requests.HTTPError, match=r"404 Client Error"):
-        requester.getLocationHierarchy(params_no_data)
+        requester.getLocationsTree(params_no_data)
 
 
 def test_valid_params(requester, util):
@@ -50,7 +50,7 @@ def test_valid_params(requester, util):
         "hasPropertyData": bool,
     }
 
-    data = requester.getLocationHierarchy(params)
+    data = requester.getLocationsTree(params)
 
     assert len(data) > 0, "Valid locations tree test should return at least 1 row."
 

@@ -75,7 +75,7 @@ def test_get_locations_tree(requester):
         }
     ]
 
-    assert requester.getLocationHierarchy(params) == result
+    assert requester.getLocationsTree(params) == result
 
 
 def test_get_deployments(requester):
