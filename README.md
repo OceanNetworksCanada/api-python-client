@@ -12,10 +12,10 @@
 onc is a Python client library that facilitates access to scientific data hosted by [Ocean Networks Canada](https://oceannetworks.ca)
 through the [Oceans 3.0 API](https://data.oceannetworks.ca/OpenAPI) public web services.
 It can help you explore and download our data, by consuming our
-_[discovery](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#discovery-methods)_,
-_[data product download](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#data-product-download-methods)_,
-_[archive file download](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#archive-file-download-methods)_, and
-_[near real-time data access](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#near-real-time-data-access-methods)_ services.
+_[discovery](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#discovery-methods)_,
+_[data product download](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#data-product-download-methods)_,
+_[archive file download](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#archive-file-download-methods)_, and
+_[near real-time data access](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#near-real-time-data-access-methods)_ services.
 
 # Getting Started
 
@@ -59,7 +59,7 @@ The example below uses the `getLocations` method to search for locations that in
 ```python
 from onc import ONC
 
-onc = ONC("YOUR_TOKEN_HERE")
+onc = ONC("YOUR_TOKEN")
 
 onc.getLocations({"locationName": "Burrard"})
 ```
@@ -74,7 +74,7 @@ onc.getDeviceCategories({"locationCode": "BIIP"})
 onc.getDataProducts({"locationCode": "BIIP", "deviceCategoryCode": "CTD"})
 ```
 
-Check more on the _[discovery methods guide](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#discovery-methods)_
+Check more on the _[discovery methods guide](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#discovery-methods)_
 and _[code examples](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/index.html)_.
 
 ## Downloading data products
@@ -107,7 +107,7 @@ They also include a couple of filters to configure this specific data product ty
 which can be obtained from the [Data Product Options](https://wiki.oceannetworks.ca/display/DP/Data+Product+Options) documentation.
 You can download more than 120 different [types of data products](https://wiki.oceannetworks.ca/display/O2A/Available+Data+Products) including audio & video.
 
-Check more on the _[data product download methods guide](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#data-product-download-methods)_
+Check more on the _[data product download methods guide](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#data-product-download-methods)_
 and _[code examples](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Data_Products.html)_.
 
 ## Obtaining sensor readings in (near) real-time
@@ -125,13 +125,16 @@ params = {
     "dateFrom": "2019-06-20T00:00:00.000Z",
     "dateTo": "2019-06-20T00:00:05.000Z",
 }
-onc.getDirectByLocation(params)
+onc.getScalardata(params)
+
+# Longer method name
+# onc.getScalardataByLocation(params)
 ```
 
 The result includes matching lists of "values" and "sampleTimes" (increases performance for long time ranges).
 We also use the property code "conductivity" to limit results to a specific property available in this CTD.
 
-Check more on the _[near real-time data access methods guide](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#near-real-time-data-access-methods)_
+Check more on the _[near real-time data access methods guide](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#near-real-time-data-access-methods)_
 and _[code examples](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Request_Real_Time_Data.html)_.
 
 ## Downloading archived files
@@ -149,16 +152,19 @@ params = {
     "dateFrom": "2016-12-01T00:00:00.000Z",
     "dateTo": "2016-12-01T00:05:00.000Z",
 }
-result = onc.getListByLocation(params, allPages=True)
+result = onc.getArchivefile(params, allPages=True)
 
-# download one of the files from result["files"]
-onc.getFile("AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg")
+# Longer method name
+# result = onc.getArchivefileByLocation(params, allPages=True)
+
+# Download one of the files from result["files"]
+onc.downloadArchivefile("AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg", overwrite=True)
 ```
 
-You can use the method `getFile()` as above to download individual files or the method `getDirectFiles()`
+You can use the method `downloadArchivefile()` as above to download individual files or the method `downloadDirectArchivefile()`
 to download all the files that match your filters.
 
-Check more on the _[archive file download methods guide](https://oceannetworkscanada.github.io/api-python-client/API_Guide.html#archive-file-download-methods)_
+Check more on the _[archive file download methods guide](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#archive-file-download-methods)_
 and _[code examples](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Archived_Files.html)_.
 
 # Documentation
