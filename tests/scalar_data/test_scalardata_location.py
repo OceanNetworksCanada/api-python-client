@@ -11,13 +11,13 @@ def params_multiple_pages(params_location):
 def test_invalid_param_value(requester, params_location):
     params_invalid_param_value = params_location | {"locationCode": "XYZ123"}
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
-        requester.getDirectByLocation(params_invalid_param_value)
+        requester.getScalardata(params_invalid_param_value)
 
 
 def test_invalid_param_name(requester, params_location):
     params_invalid_param_name = params_location | {"locationCodes": "NCBC"}
     with pytest.raises(requests.HTTPError, match=r"API Error 129"):
-        requester.getDirectByLocation(params_invalid_param_name)
+        requester.getScalardata(params_invalid_param_name)
 
 
 def test_no_data(requester, params_location):
@@ -26,12 +26,12 @@ def test_no_data(requester, params_location):
         "dateTo": "2000-01-02",
     }
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
-        requester.getDirectByLocation(params_no_data)
+        requester.getScalardata(params_no_data)
 
 
 def test_valid_params_one_page(requester, params_location, params_multiple_pages):
-    data = requester.getDirectByLocation(params_location)
-    data_all_pages = requester.getDirectByLocation(params_multiple_pages, allPages=True)
+    data = requester.getScalardata(params_location)
+    data_all_pages = requester.getScalardata(params_multiple_pages, allPages=True)
 
     assert (
         _get_row_num(data) > params_multiple_pages["rowLimit"]
@@ -47,7 +47,7 @@ def test_valid_params_one_page(requester, params_location, params_multiple_pages
 
 
 def test_valid_params_multiple_pages(requester, params_multiple_pages):
-    data = requester.getDirectByLocation(params_multiple_pages)
+    data = requester.getScalardata(params_multiple_pages)
 
     assert (
         _get_row_num(data) == params_multiple_pages["rowLimit"]

@@ -5,19 +5,19 @@ import requests
 def test_invalid_param_value(requester, params_location):
     params_invalid_param_value = params_location | {"locationCode": "XYZ123"}
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
-        requester.getListByLocation(params_invalid_param_value)
+        requester.getArchivefile(params_invalid_param_value)
 
 
 def test_invalid_params_missing_required(requester, params_location):
     del params_location["locationCode"]
-    with pytest.raises(requests.HTTPError, match=r"API Error 128"):
-        requester.getListByLocation(params_location)
+    with pytest.raises(ValueError):
+        requester.getArchivefile(params_location)
 
 
 def test_invalid_param_name(requester, params_location):
     params_invalid_param_name = params_location | {"locationCodes": "NCBC"}
     with pytest.raises(requests.HTTPError, match=r"API Error 129"):
-        requester.getListByLocation(params_invalid_param_name)
+        requester.getArchivefile(params_invalid_param_name)
 
 
 def test_no_data(requester, params_location):
@@ -26,14 +26,14 @@ def test_no_data(requester, params_location):
         "dateTo": "2000-01-02",
     }
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
-        requester.getListByLocation(params_no_data)
+        requester.getArchivefile(params_no_data)
 
 
 def test_valid_params_one_page(
     requester, params_location, params_location_multiple_pages
 ):
-    data = requester.getListByLocation(params_location)
-    data_all_pages = requester.getListByLocation(
+    data = requester.getArchivefile(params_location)
+    data_all_pages = requester.getArchivefile(
         params_location_multiple_pages, allPages=True
     )
 
@@ -51,7 +51,7 @@ def test_valid_params_one_page(
 
 
 def test_valid_params_multiple_pages(requester, params_location_multiple_pages):
-    data = requester.getListByLocation(params_location_multiple_pages)
+    data = requester.getArchivefile(params_location_multiple_pages)
 
     assert (
         len(data["files"]) == params_location_multiple_pages["rowLimit"]

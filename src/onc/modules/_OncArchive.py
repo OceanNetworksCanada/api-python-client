@@ -21,16 +21,16 @@ class _OncArchive(_OncService):
         """
         Return a list of archived files for a device category in a location.
 
-        The filenames obtained can be used to download files using the getFile() method.
-        """
+        The filenames obtained can be used to download files using the ``downloadArchivefile`` method.
+        """  # noqa: E501
         return self._getList(filters, by="location", allPages=allPages)
 
     def getArchivefileByDevice(self, filters: dict, allPages: bool):
         """
         Return a list of archived files from a specific device.
 
-        The filenames obtained can be used to download files using the getFile() method.
-        """
+        The filenames obtained can be used to download files using the ``downloadArchivefile`` method.
+        """  # noqa: E501
         return self._getList(filters, by="device", allPages=allPages)
 
     def getArchivefile(self, filters: dict, allPages: bool):
@@ -84,8 +84,8 @@ class _OncArchive(_OncService):
         """
         Download a list of archived files that match the filters provided.
 
-        This function invokes the method getListByLocation() or getListByDevice()
-        to obtain a list of files, and the method getFile() to download all files found.
+        This function invokes the method ``getArchivefile`` to obtain a list of files,
+        and the method ``downloadArchivefile`` to download all files found.
 
         See https://wiki.oceannetworks.ca/display/O2A/archivefiles
         for usage and available filters.
@@ -150,7 +150,7 @@ class _OncArchive(_OncService):
 
     def _getList(self, filters: dict, by: str = "location", allPages: bool = False):
         """
-        Wraps archivefiles getListByLocation and getListByDevice methods
+        Wraps archivefiles getArchivefileByLocation and getArchivefileByDevice methods
         """
         url = self._serviceUrl("archivefiles")
         filters["token"] = self._config("token")

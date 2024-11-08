@@ -4,8 +4,10 @@ from pathlib import Path
 
 import pytest
 
-markdown_dir = Path(__file__).parent.parent.parent / "doc/source/Code_Examples"
+base_path = Path(__file__).parent.parent.parent
+markdown_dir = base_path / "doc/source/Code_Examples"
 markdowns = [md for md in markdown_dir.glob("*.md") if md.name != "index.md"]
+markdowns.append(base_path / "README.md")
 
 
 @pytest.mark.parametrize("markdown", markdowns)

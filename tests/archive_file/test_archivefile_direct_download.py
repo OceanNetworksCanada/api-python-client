@@ -1,6 +1,6 @@
 def test_valid_params_one_page(requester, params_location, util):
-    data = requester.getListByLocation(params_location)
-    result = requester.getDirectFiles(params_location)
+    data = requester.getArchivefile(params_location)
+    result = requester.downloadDirectArchivefile(params_location)
 
     assert util.get_download_files_num(requester) == len(data["files"])
 
@@ -8,7 +8,7 @@ def test_valid_params_one_page(requester, params_location, util):
 
 
 def test_valid_params_multiple_pages(requester, params_location_multiple_pages, util):
-    result = requester.getDirectFiles(params_location_multiple_pages)
+    result = requester.downloadDirectArchivefile(params_location_multiple_pages)
 
     assert (
         util.get_download_files_num(requester)

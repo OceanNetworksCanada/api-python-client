@@ -11,25 +11,25 @@ def params_multiple_pages(params_device):
 def test_invalid_param_value(requester, params_device):
     params_invalid_param_value = params_device | {"deviceCode": "XYZ123"}
     with pytest.raises(requests.HTTPError, match=r"API Error 127"):
-        requester.getDirectByDevice(params_invalid_param_value)
+        requester.getScalardata(params_invalid_param_value)
 
 
 def test_invalid_param_name(requester, params_device):
     params_invalid_param_name = params_device | {"deviceCodes": "BPR-Folger-59"}
     with pytest.raises(requests.HTTPError, match=r"API Error 129"):
-        requester.getDirectByDevice(params_invalid_param_name)
+        requester.getScalardata(params_invalid_param_name)
 
 
 def test_no_data(requester, params_device):
     params_no_data = params_device | {"dateFrom": "2000-01-01", "dateTo": "2000-01-02"}
-    data = requester.getDirectByDevice(params_no_data)
+    data = requester.getScalardata(params_no_data)
 
     assert data["sensorData"] is None
 
 
 def test_valid_params_one_page(requester, params_device, params_multiple_pages):
-    data = requester.getDirectByDevice(params_device)
-    data_all_pages = requester.getDirectByDevice(params_multiple_pages, allPages=True)
+    data = requester.getScalardata(params_device)
+    data_all_pages = requester.getScalardata(params_multiple_pages, allPages=True)
 
     assert (
         _get_row_num(data) > params_multiple_pages["rowLimit"]
@@ -45,7 +45,7 @@ def test_valid_params_one_page(requester, params_device, params_multiple_pages):
 
 
 def test_valid_params_multiple_pages(requester, params_multiple_pages):
-    data = requester.getDirectByDevice(params_multiple_pages)
+    data = requester.getScalardata(params_multiple_pages)
 
     assert (
         _get_row_num(data) == params_multiple_pages["rowLimit"]
