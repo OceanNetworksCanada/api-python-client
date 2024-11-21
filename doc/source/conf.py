@@ -54,7 +54,7 @@ suppress_warnings = ["autoapi.python_import_resolution"]
 
 
 def skip_rules(app, what, name, obj, skip, options):
-    # 1. skip aliases in ONC class
+    # 1. skip aliases and instance_variables in ONC class
     aliases = [
         "getLocationHierarchy",
         "getDirectByLocation",
@@ -68,16 +68,28 @@ def skip_rules(app, what, name, obj, skip, options):
     ]
     onc_aliases = {f"onc.ONC.{alias}" for alias in aliases}
 
-    if name in onc_aliases:
+    instance_variables = [
+        "token",
+        "showInfo",
+        "timeout",
+        "production",
+        "outPath",
+        "discovery",
+        "delivery",
+        "archive",
+        "realTime",
+    ]
+    onc_instance_variables = {f"onc.ONC.{var}" for var in instance_variables}
+
+    if name in onc_aliases | onc_instance_variables:
         skip = True
 
-    # 2. skip submodules onc.onc.ONC
-    if what == "module":
+    # 2. skip submodules onc.onc.ONC and onc.util
+    if what == "module" or "util" in name:
         skip = True
 
     return skip
 
 
 def setup(sphinx):
-    # sphinx.connect("autoapi-skip-member", skip_aliases_in_ONC_class)
     sphinx.connect("autoapi-skip-member", skip_rules)
