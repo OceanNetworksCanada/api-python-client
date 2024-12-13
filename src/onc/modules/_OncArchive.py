@@ -112,7 +112,7 @@ class _OncArchive(_OncService):
             filePath = outPath / filename
             fileExists = os.path.exists(filePath)
 
-            if not fileExists or overwrite:
+            if not fileExists or os.path.getsize(filePath) == 0 or overwrite:
                 print(f'   ({tries} of {n}) Downloading file: "{filename}"')
                 downInfo = self.downloadArchivefile(filename, overwrite)
                 size += downInfo["size"]
