@@ -1,3 +1,4 @@
+import os
 import time
 from datetime import timedelta
 from pathlib import Path
@@ -17,16 +18,15 @@ def saveAsFile(
     filePath = outPath / fileName
     outPath.mkdir(parents=True, exist_ok=True)
 
-    # Save file in outPath if it doesn't exist yet
-    if Path.exists(filePath) and not overwrite:
+    # Save/Overwrite file in outPath if the file doesn't exist yet
+    # or it is there but with 0 file size
+    if not overwrite and Path.exists(filePath) and os.path.getsize(filePath) != 0:
         raise FileExistsError(filePath)
 
     start = time.time()
     size = 0
-    with open(filePath, "wb+") as file:
-        for chunk in response.iter_content(chunk_size=128):
-            file.write(chunk)
-            size += len(chunk)
+    with open(filePath, "wb") as file:
+        file.write(response.content)
 
     downloadTime = time.time() - start
     return (size, round(downloadTime, 3))

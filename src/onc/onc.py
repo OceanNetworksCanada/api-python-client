@@ -1319,7 +1319,8 @@ class ONC:
         filename : str, default ""
             A valid name of a file in DMAS Archiving System.
         overwrite : bool, default False
-            Whether to overwrite the file if it exists.
+            Whether to overwrite the file if it exists. 0 size file is treated as non-existent,
+            meaning it gets overwritten even when overwrite=False.
 
         Returns
         -------
