@@ -164,6 +164,9 @@ onc.downloadArchivefile("AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg", ove
 You can use the method `downloadArchivefile()` as above to download individual files or the method `downloadDirectArchivefile()`
 to download all the files that match your filters.
 
+Alternatively, if you prefer using a download manager like [aria2](https://aria2.github.io/) or [Free Download Manager](https://www.freedownloadmanager.org/), `getArchivefileUrls` and `getArchivefileUrl` can return the download URLs of the archivefile
+without downloading the files.
+
 Check more on the _[archive file download methods guide](https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#archive-file-download-methods)_
 and _[code examples](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Archived_Files.html)_.
 

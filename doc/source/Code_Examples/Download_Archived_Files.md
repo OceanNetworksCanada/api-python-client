@@ -110,7 +110,7 @@ onc.getArchivefile(params)
 
 ## Download archived files that match the parameters
 
-Download all "mat" files from a hydrophone at Straight of Georgia East (_locationCode_:"**SEVIP**") using the parameter above.
+Download all "mat" files from a hydrophone at Straight of Georgia East (_locationCode_:"**SEVIP**").
 
 ```python
 params = {
@@ -127,3 +127,57 @@ onc.downloadDirectArchivefile(params)
 # onc.getDirectFiles(params)
 
 ```
+
+## Download archived files using a download manager
+
+Return the download URLs from a hydrophone at Straight of Georgia East (_locationCode_:"**SEVIP**").
+
+```python
+params = {
+    "deviceCategoryCode": "HYDROPHONE",
+    "locationCode": "SEVIP",
+    "extension": "mat",
+    "dateFrom": "2018-10-05T00:00:00.000Z",
+    "dateTo": "2018-10-05T00:10:00.000Z",
+}
+
+# print is necessary to render the newline character
+print(onc.getArchivefileUrls(params, joinedWithNewline=True))
+```
+
+After running the code, a list of URLs will be printed.
+
+```
+https://data.oceannetworks.ca/api/archivefile/download?filename=ICLISTENHF1560_20181004T235903.000Z-spect.mat&token=Your_TOKEN
+https://data.oceannetworks.ca/api/archivefile/download?filename=ICLISTENHF1560_20181005T000403.000Z-spect.mat&token=Your_TOKEN
+https://data.oceannetworks.ca/api/archivefile/download?filename=ICLISTENHF1560_20181005T000903.000Z-spect.mat&token=Your_TOKEN
+```
+
+At this point, you can open your favorite download manager, paste the URLs, and start the download.
+Most modern download managers support batch download, probably from a multi-line text input, the clipboard or a file.
+
+Here is an example of using a popular open source download manager -- aria2.
+
+### webui-aria2
+
+[aria2](https://aria2.github.io/) is a lightweight multi-protocol & multi-source command-line download utility.
+[webui-aria2](https://github.com/ziahamza/webui-aria2) is a web interface to interact with aria2.
+Refer to the webui-aria2 [README](https://github.com/ziahamza/webui-aria2?tab=readme-ov-file#webui-aria2) file
+for more information on how to use the tool.
+
+1. Install aria2 by downloading it from the [release](https://github.com/aria2/aria2/releases)
+   (or use your package manager if you are on Linux), extract the zip file,
+   and start the server by running
+
+```shell
+./aria2c --enable-rpc --rpc-listen-all
+```
+
+2. Go to <https://ziahamza.github.io/webui-aria2> (or you can download this repository and open index.html
+   from docs folder), change "Enter the host" field to "localhost" in the setting, and save the settings.
+   Sometimes you need to also refresh the page.
+   ![Aria2c host change.png](../_static/Code_Examples/webui-aria2c-host.png)
+
+3. Click "Add" -> "By URIs" in the menu. Fill in the URLs and start the download.
+   You can also customize the download in the "Download settings" like changing the download directory.
+   ![Aria2c add URLs.png](../_static/Code_Examples/webui-aria2c-add-uri.png)
