@@ -41,6 +41,18 @@ class _OncArchive(_OncService):
             allPages=allPages,
         )
 
+    def getArchivefileUrls(self, filters: dict, allPages: bool) -> list[str]:
+        file_list: list[str] = self.getArchivefile(filters, allPages)["files"]
+        return list(map(self.getArchivefileUrl, file_list))
+
+    def getArchivefileUrl(self, filename: str) -> str:
+        """
+        Return an archivefile absolute download URL for a filename
+        """
+        url = self._serviceUrl("archivefile")
+        token = self._config("token")
+        return f"{url}/download?filename={filename}&token={token}"
+
     def downloadArchivefile(self, filename: str = "", overwrite: bool = False):
         url = self._serviceUrl("archivefiles")
 
@@ -123,7 +135,7 @@ class _OncArchive(_OncService):
             else:
                 print(f'   Skipping "{filename}": File already exists.')
                 downInfo = {
-                    "url": self._getDownloadUrl(filename),
+                    "url": self.getArchivefileUrl(filename),
                     "status": "skipped",
                     "size": 0,
                     "downloadTime": 0,
@@ -138,15 +150,6 @@ class _OncArchive(_OncService):
             "downloadResults": downInfos,
             "stats": {"totalSize": size, "downloadTime": time, "fileCount": successes},
         }
-
-    def _getDownloadUrl(self, filename: str):
-        """
-        Returns an archivefile absolute download URL for a filename
-        """
-        url = self._serviceUrl("archivefiles")
-        return "{:s}?method=getFile&filename={:s}&token={:s}".format(
-            url, filename, self._config("token")
-        )
 
     def _getList(self, filters: dict, by: str = "location", allPages: bool = False):
         """

@@ -1299,6 +1299,59 @@ class ONC:
         """  # noqa: E501
         return self.archive.getArchivefile(filters, allPages)
 
+    def getArchivefileUrls(
+        self,
+        filters: dict = None,
+        allPages: bool = False,
+        joinedWithNewline: bool = False,
+    ) -> list[str] | str:
+        """
+        Return a list of file URLs (or joined with a newline) available in Oceans 3.0 Archiving System by given query parameters.
+
+        A helper method for getting a list of archive files URLs without downloading them.
+        It can also return a single string that concatenates all the URLs in the list together with a newline,
+        which can be useful if you are using a download manager and it supports batch downloading multiple URLs
+        that expects all the URLs on a separate line from either a file or the clipboard.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+            See ``getArchivefileByLocation`` and ``getArchivefileByDevice`` for more information.
+        allPages : bool, default False
+            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.
+        joinedWithNewline: bool, default False
+            Whether it returns a list of URLs or a single string that concatenates the list with a newline.
+
+        Returns
+        -------
+        list[str] | str
+            A list of file URLs or a single joined string.
+        """  # noqa: E501
+        file_urls = self.archive.getArchivefileUrls(filters, allPages)
+        if joinedWithNewline:
+            return "\n".join(file_urls)
+        else:
+            return file_urls
+
+    def getArchivefileUrl(self, filename: str = "") -> str:
+        """
+        Return a file URL from Oceans 3.0 Archiving System by specifying the file name.
+
+        A helper method for obtaining the archive file URL without actually downloading the file.
+
+        Parameters
+        ----------
+        filename : str, default ""
+            A valid name of a file in DMAS Archiving System.
+
+        Returns
+        -------
+        str:
+            A download URL for the given archive filename.
+        """  # noqa: E501
+        return self.archive.getArchivefileUrl(filename)
+
     def downloadArchivefile(self, filename: str = "", overwrite: bool = False):
         """
         Download a file from Oceans 3.0 Archiving System by specifying the file name.
