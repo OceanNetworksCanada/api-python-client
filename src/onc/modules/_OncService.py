@@ -77,6 +77,7 @@ class _OncService:
             "properties",
             "dataProducts",
             "archivefiles",
+            "archivefile",
             "scalardata",
             "rawdata",
         ]:
