@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+import pprint
 import weakref
 from time import time
 from urllib import parse
@@ -7,6 +9,8 @@ from urllib import parse
 import requests
 
 from ._util import _createErrorMessage, _formatDuration
+
+logging.basicConfig(format="%(levelname)s: %(message)s")
 
 
 class _OncService:
@@ -59,6 +63,26 @@ class _OncService:
             else:
                 response.raise_for_status()
         self._log(f"Web Service response time: {_formatDuration(responseTime)}")
+
+        # Log warning messages only when showWarning is True
+        # and jsonResult["messages"] is not an empty list
+        if (
+            self._config("showWarning")
+            and "messages" in jsonResult
+            and jsonResult["messages"]
+        ):
+            long_message = "\n".join(
+                [f"* {message}" for message in jsonResult["messages"]]
+            )
+
+            filters_without_token = filters.copy()
+            del filters_without_token["token"]
+            filters_str = pprint.pformat(filters_without_token)
+
+            logging.warning(
+                f"When calling {url} with filters\n{filters_str},\n"
+                f"there are several warning messages:\n{long_message}\n"
+            )
 
         if getTime:
             return jsonResult, responseTime
