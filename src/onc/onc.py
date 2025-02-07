@@ -32,6 +32,9 @@ class ONC:
 
         - True: Print all information and debug messages (intended for debugging).
         - False: Only print information messages.
+    showWarning : boolean, default True
+        Whether warning messages are displayed. Some web services have "messages" key in the response JSON
+        to indicate that something might need attention, like using a default value for a missing parameter.
     outPath : str | Path, default "output"
         The directory that files are saved to (relative to the current directory) when downloading files.
         The directory will be created if it does not exist during the download.
@@ -50,11 +53,13 @@ class ONC:
         token,
         production: bool = True,
         showInfo: bool = False,
+        showWarning: bool = True,
         outPath: str | Path = "output",
         timeout: int = 60,
     ):
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
         self.showInfo = showInfo
+        self.showWarning = showWarning
         self.timeout = timeout
         self.production = production
         self.outPath = outPath
