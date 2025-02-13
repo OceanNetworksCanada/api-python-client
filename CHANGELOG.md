@@ -1,5 +1,38 @@
 # Changelog
 
+## v2.5.0 (2025-02-13)
+
+### Enhancements
+
+- Added `getArchivefileUrl` and `getArchivefileUrls` to only return the download links of
+  the requested archive files.
+  ([#56](https://github.com/OceanNetworksCanada/api-python-client/issues/56))
+
+  This is useful because users can use them in their favorite download manager.
+  Check the [Code Example](https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Archived_Files.html#download-archived-files-using-a-download-manager)
+  for more information.
+
+- Added warning messages if the response has a "messages" key with a non-empty list value.
+  ([#58](https://github.com/OceanNetworksCanada/api-python-client/pull/58))
+
+  This feature can be turned off by using `onc = ONC(token=TOKEN, showWarning=False)`.
+
+### Fixes
+
+- Reverted back the incremental downloading files because it might generate invalid files
+  with partial file size (before it was zero file size).
+  ([#54](https://github.com/OceanNetworksCanada/api-python-client/issues/54))
+
+### Contributors
+
+- [Kan Fu](https://github.com/kan-fu)
+
+### Reviewers panel
+
+- [Angela Schlesinger](https://github.com/aschlesin)
+- [Eli Ferguson](https://github.com/eliferguson)
+- [Spencer Plovie](https://github.com/spencerwplovie)
+
 ## v2.4.1 (2024-09-24)
 
 ### Fixes
