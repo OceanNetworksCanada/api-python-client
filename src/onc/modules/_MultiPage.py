@@ -135,8 +135,12 @@ class _MultiPage:
             return 0
 
         # total timespan to cover in the next parameter excluding the first page
-        totalBegin = dateutil.parser.parse(response["next"]["parameters"]["dateFrom"])
-        totalEnd = dateutil.parser.parse(response["next"]["parameters"]["dateTo"])
+        totalBegin = dateutil.parser.parse(
+            response["next"]["parameters"]["dateFrom"], ignoretz=True
+        )
+        totalEnd = dateutil.parser.parse(
+            response["next"]["parameters"]["dateTo"], ignoretz=True
+        )
         totalTimespan = totalEnd - totalBegin
 
         # handle cases of very small timeframes
