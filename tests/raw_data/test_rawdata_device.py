@@ -37,6 +37,14 @@ def test_no_data(requester, params):
     assert _get_row_num(data) == 0
 
 
+def test_different_date_format_all_pages(requester, params_multiple_pages):
+    params_different_date_format = params_multiple_pages | {
+        "dateFrom": "2019-11-23T23:59:00.000Z",
+        "dateTo": "2019-11-24",
+    }
+    requester.getRawdata(params_different_date_format, allPages=True)
+
+
 def test_valid_params_one_page(requester, params, params_multiple_pages):
     data = requester.getRawdata(params)
     data_all_pages = requester.getRawdata(params_multiple_pages, allPages=True)
