@@ -53,7 +53,7 @@ class ONC:
         token,
         production: bool = True,
         showInfo: bool = False,
-        showWarning: bool = True,
+        showWarning: bool = False,
         outPath: str | Path = "output",
         timeout: int = 60,
     ):
