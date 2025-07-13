@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.5.1 (2025-07-12)
+
+### Enhancements
+
+- Change the default value of `showWarning` to be `False`.
+
+### Fixes
+
+- Ignore timezone when parsing non-standard datetime like "YYYY-MM-DD".
+  ([#60](https://github.com/OceanNetworksCanada/api-python-client/issues/60))
+
+### Contributors
+
+- [Kan Fu](https://github.com/kan-fu)
+
 ## v2.5.0 (2025-02-13)
 
 ### Enhancements
