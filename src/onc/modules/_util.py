@@ -24,7 +24,7 @@ def saveAsFile(
         raise FileExistsError(filePath)
 
     start = time.time()
-    size = 0
+    size = len(response.content)
     with open(filePath, "wb") as file:
         file.write(response.content)
 
