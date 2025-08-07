@@ -40,6 +40,8 @@ def test_valid_no_metadata(requester, params, expected_keys_download_results, ut
     assert data["downloadResults"][0]["index"] == "1"
     assert data["downloadResults"][0]["downloaded"] is True
 
+    assert data["stats"]["totalSize"] != 0
+
     assert util.get_download_files_num(requester) == 2, "The first two are png files."
 
     util.assert_dict_key_types(
