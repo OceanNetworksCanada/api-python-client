@@ -12,11 +12,11 @@ def nan_onc_flags(ds: xr.Dataset, flags_to_nan: list[int] = [4]) -> xr.Dataset:
     Parameters
     ----------
     ds: xr.Dataset
-        The input xarray Dataset. The dataset must contain data variables and matching flag variables prepended
-        with FlagTerm.
+        The input xarray Dataset. The dataset must contain data variables and matching
+        flag variables prepended with FlagTerm (defined in util.util).
     flags_to_nan: list[int]
-        A list of integer flag values to set to NaN if they are present in a variable. By default, only the flag for
-        bad data (4) is supplied.
+        A list of integer flag values to set to NaN if they are present in a variable.
+        By default, only the flag for bad data (4) is supplied.
 
     Returns
     -------
@@ -39,8 +39,8 @@ def nan_onc_flags(ds: xr.Dataset, flags_to_nan: list[int] = [4]) -> xr.Dataset:
 def remove_onc_flag_vars(ds: xr.Dataset) -> xr.Dataset:
     """
     Remove all flag variables from an xarray Dataset.
-    Usually this can be implemented after using nan_onc_flags to set bad data to NaN, or if you don't care about the
-    flag output.
+    Usually this can be implemented after using nan_onc_flags to set bad data to NaN,
+    or if you don't care about the flag output.
 
     Parameters
     ----------
@@ -65,14 +65,16 @@ def remove_onc_flag_vars(ds: xr.Dataset) -> xr.Dataset:
 def json2xarray(json_response_data: dict, join_method: str = 'outer') -> xr.Dataset:
     """
     Convert a getScalarData JSON response to an xarray Dataset.
-    This function only supports use of 'array' outputFormat and 'full' metadata query parameters.
+    This function only supports use of 'array' outputFormat and 'full' metadata
+    query parameters.
 
     Parameters
     ----------
     json_response_data: dict
         A json object returned from an ONC getScalarData request.
     join_method: str
-        The method to combine variables on. Options are the same as xr.combine_by_coords join options.
+        The method to combine variables on. Options are the same as
+        xr.combine_by_coords join options.
 
     Returns
     -------
@@ -91,22 +93,23 @@ def json2xarray(json_response_data: dict, join_method: str = 'outer') -> xr.Data
 
     loc_code = json_response_data['parameters']['locationCode'].upper()
 
-    citations = json_response_data['citations']
-    doi_info = [c['citations'] for c in citations] if len(citations) > 1 else citations[0]['citation']
+    cit = json_response_data['citations']
+    doi_info = [c['citations'] for c in cit] if len(cit) > 1 else cit[0]['citation']
 
     metadata = json_response_data['metadata']
     depth = metadata['depth']
     dev_cat_code = metadata['deviceCategoryCode']
     loc_name = metadata['locationName']
 
-    qaqc_flag_info = '\n'.join([f"{k}:{v}" for k, v in json_response_data['qaqcFlagInfo'].items()])
+    qaqc_flag_info = '\n'.join([f"{k}:{v}" for k, v in
+                                json_response_data['qaqcFlagInfo'].items()])
 
     device_data = json_response_data['sensorData']
 
     vds_list = []
     for var_data in device_data:  # This could probably be parallelized in the future.
 
-        # The sensorName is more descriptive than the propertyCode, so we will use that to name variables instead.
+        # The sensorName is more descriptive than the propertyCode.
         var_name = var_data['sensorName'].replace(' ', '_')
         var_name = var_name.replace('-', '_')
         var_name = var_name.replace('(', '')

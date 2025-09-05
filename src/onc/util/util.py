@@ -19,7 +19,7 @@ from netrc import netrc
 import pandas as pd
 
 datetimeFormat = "%Y-%m-%dT%H:%M:%S.%f"
-FlagTerm = 'flag'  # String that prepends and underscore joins variables to indicate a flag variable.
+FlagTerm = 'flag'  # String that prepends in pandas/xarray to indicate a flag variable.
 
 
 def printErrorMessage(response, parameters, showUrl=False, showValue=False):
@@ -355,8 +355,8 @@ def copyFieldIfExists(fromDic, toDic, keys):
 
 def dt2str(dt: datetime) -> str:
     """
-    Convert a Pythonic datetime object to a string that is compatible with the ONC Oceans 3.0 API dateFrom and dateTo
-    API query parameters.
+    Convert a Pythonic datetime object to a string that is compatible
+    with the ONC Oceans 3.0 API dateFrom and dateTo API query parameters.
 
 
     Parameters
@@ -390,8 +390,9 @@ def get_onc_token(netrc_path: os.PathLike | None = None) -> str:
     ----------
     netrc_path: os.PathLike | None
         The path to the .netrc file.
-        If left as the default value of None, the netrc module looks for a .netrc file in the user directory.
-        If None, the netrc module looks for a .netrc file in the user directory.
+        If left as the default value of None, the netrc module looks for a
+        .netrc file in the user directory. If None, the netrc module looks for a
+        .netrc file in the user directory.
 
 
     Returns
