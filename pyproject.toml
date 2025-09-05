@@ -16,6 +16,9 @@ dependencies = [
     "requests",
     'python-dateutil',
     "humanize",
+    "numpy",
+    "pandas",
+    "xarray",
 ]
 classifiers = [
     'Development Status :: 5 - Production/Stable',
