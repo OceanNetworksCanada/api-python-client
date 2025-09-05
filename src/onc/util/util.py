@@ -12,11 +12,14 @@
 
 import json
 import math
-from datetime import datetime, timedelta
-
 from dateutil.relativedelta import SU, relativedelta
+import os
+from datetime import datetime, timedelta
+from netrc import netrc
+import pandas as pd
 
 datetimeFormat = "%Y-%m-%dT%H:%M:%S.%f"
+FlagTerm = 'flag'  # String that prepends and underscore joins variables to indicate a flag variable.
 
 
 def printErrorMessage(response, parameters, showUrl=False, showValue=False):
@@ -348,3 +351,60 @@ def copyFieldIfExists(fromDic, toDic, keys):
     for key in keys:
         if key in fromDic:
             toDic[key] = fromDic[key]
+
+
+def dt2str(dt: datetime) -> str:
+    """
+    Convert a Pythonic datetime object to a string that is compatible with the ONC Oceans 3.0 API dateFrom and dateTo
+    API query parameters.
+
+
+    Parameters
+    ----------
+    dt: datetime
+        A Python datetime object.
+
+    Returns
+    -------
+    str
+
+    Examples
+    ----------
+    >>> dtstr = dt2str(datetime.now()) # doctest: +SKIP
+    """
+
+    dt = pd.to_datetime(dt)
+    dtstr = dt.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+    return dtstr
+
+
+def get_onc_token(netrc_path: os.PathLike | None = None) -> str:
+    """
+    Retrieve an ONC token from the password portion of a .netrc file entry.
+
+    machine data.oceannetworks.ca
+    login <username>
+    password <onc_token>
+
+    Parameters
+    ----------
+    netrc_path: os.PathLike | None
+        The path to the .netrc file.
+        If left as the default value of None, the netrc module looks for a .netrc file in the user directory.
+        If None, the netrc module looks for a .netrc file in the user directory.
+
+
+    Returns
+    -------
+    str
+
+    Examples
+    ----------
+    >>> token = get_onc_token() # doctest: +SKIP
+    """
+
+    if netrc_path is None:
+        _, __, onc_token = netrc().authenticators("data.oceannetworks.ca")
+    else:
+        _, __, onc_token = netrc(netrc_path).authenticators("data.oceannetworks.ca")
+    return onc_token
