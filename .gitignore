@@ -153,3 +153,5 @@ commit-msg
 
 # Mac OS specfic
 .DS_Store
+
+examples/data/
