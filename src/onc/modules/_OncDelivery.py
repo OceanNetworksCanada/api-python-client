@@ -387,7 +387,8 @@ class _OncDelivery(_OncService):
             print(f"Total download Time: {txtDownTime}")
 
             # Print size and count of files
-            print(f"{downloadCount} files ({humanize.naturalsize(size)}) downloaded")
+            natural_size = humanize.naturalsize(size, binary=True)
+            print(f"{downloadCount} files ({natural_size}) downloaded")
         else:
             print("No files downloaded.")
 
