@@ -43,5 +43,5 @@ jobs:
 
       - name: Run test suite
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          ONC_TOKEN: ${{ secrets.ONC_TOKEN }}
         run: tox --skip-pkg-install

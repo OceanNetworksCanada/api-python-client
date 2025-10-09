@@ -60,6 +60,7 @@ The example below uses the `getLocations` method to search for locations that in
 from onc import ONC
 
 onc = ONC("YOUR_TOKEN")
+onc = ONC() # This works if the env variable "ONC_TOKEN" is set
 
 onc.getLocations({"locationName": "Burrard"})
 ```

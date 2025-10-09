@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 from onc import ONC
 
 load_dotenv(override=True)
-token = os.getenv("TOKEN")
 is_prod = os.getenv("ONC_ENV", "PROD") == "PROD"
 
 
@@ -17,7 +16,7 @@ def pytest_configure():
 
 @pytest.fixture
 def requester(tmp_path) -> ONC:
-    return ONC(token, is_prod, outPath=tmp_path)
+    return ONC(production=is_prod, outPath=tmp_path)
 
 
 @pytest.fixture(scope="session")
@@ -51,7 +50,7 @@ class Util:
         index = contents.index('onc = ONC("YOUR_TOKEN")\n')
         contents.insert(
             index + 1,
-            f"onc.token, onc.production, onc.timeout = '{token}', False, 300\n",  # noqa: E501
+            f"onc.token, onc.production, onc.timeout = '{os.getenv('ONC_TOKEN')}', False, 300\n",  # noqa: E501
         )
         with open(tmp_py, "w") as f:
             f.writelines(contents)
