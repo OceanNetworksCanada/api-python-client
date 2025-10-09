@@ -56,7 +56,7 @@ class ONC:
         token: str | None = None,
         production: bool = True,
         showInfo: bool = False,
-        showWarning: bool = False,
+        showWarning: bool = True,
         outPath: str | Path = "output",
         timeout: int = 60,
     ):
