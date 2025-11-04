@@ -46,6 +46,10 @@ class _OncDiscovery(_OncService):
     def getDataProducts(self, filters: dict):
         filters = filters or {}
         return self._discoveryRequest(filters, service="dataProducts")
+    
+    def getDataAvailability(self, filters: dict):
+        filters = filters or {}
+        return self._discoveryRequest(filters, service="dataAvailability/dataproducts")
 
     def _sanitizeBooleans(self, data: list):
         """

@@ -104,6 +104,7 @@ class _OncService:
             "archivefile",
             "scalardata",
             "rawdata",
+            "dataAvailability/dataproducts",
         ]:
             return f"{self._config('baseUrl')}api/{service}"
 
