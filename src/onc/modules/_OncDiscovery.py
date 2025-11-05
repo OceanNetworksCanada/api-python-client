@@ -10,9 +10,8 @@ class _OncDiscovery(_OncService):
     def __init__(self, parent: object):
         super().__init__(parent)
 
-    def _discoveryRequest(self, filters: dict, service: str, method: str = "get"):
+    def _discoveryRequest(self, filters: dict, service: str):
         url = self._serviceUrl(service)
-        filters["method"] = method
         filters["token"] = self._config("token")
 
         result = self._doRequest(url, filters)
@@ -25,7 +24,7 @@ class _OncDiscovery(_OncService):
 
     def getLocationHierarchy(self, filters: dict):
         filters = filters or {}
-        return self._discoveryRequest(filters, service="locations", method="getTree")
+        return self._discoveryRequest(filters, service="locations/tree")
 
     def getDeployments(self, filters: dict):
         filters = filters or {}
@@ -46,7 +45,7 @@ class _OncDiscovery(_OncService):
     def getDataProducts(self, filters: dict):
         filters = filters or {}
         return self._discoveryRequest(filters, service="dataProducts")
-    
+
     def getDataAvailability(self, filters: dict):
         filters = filters or {}
         return self._discoveryRequest(filters, service="dataAvailability/dataproducts")

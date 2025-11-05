@@ -23,7 +23,7 @@ class _MultiPage:
         """
         # pop archivefiles extension
         extension = None
-        if service == "archivefiles" and "extension" in filters:
+        if service.startswith("archivefile") and "extension" in filters:
             extension = filters["extension"]
             del filters["extension"]
 
@@ -84,7 +84,7 @@ class _MultiPage:
         @param extension: Only provide for archivefiles filtering
         Returns a tuple (jsonResponse, duration)
         """
-        if service == "archivefiles":
+        if service.startswith("archivefile"):
             response, duration = self.parent()._doRequest(url, filters, getTime=True)
             response = self.parent()._filterByExtension(response, extension)
         else:
@@ -97,7 +97,7 @@ class _MultiPage:
         Concatenates the data results from nextResponse into response
         Compatible with the row structure of different services
         """
-        if service == "scalardata":
+        if service.startswith("scalardata"):
             keys = response["sensorData"][0]["data"].keys()
 
             for sensorData in response["sensorData"]:
@@ -111,11 +111,11 @@ class _MultiPage:
                 for key in keys:
                     sensorData["data"][key] += nextSensor["data"][key]
 
-        elif service == "rawdata":
+        elif service.startswith("rawdata"):
             for key in response["data"]:
                 response["data"][key] += nextResponse["data"][key]
 
-        elif service == "archivefiles":
+        elif service.startswith("archivefile"):
             response["files"] += nextResponse["files"]
 
     def _estimatePages(self, response: object, service: str):
@@ -154,13 +154,13 @@ class _MultiPage:
         """
         Returns the number of records in the response
         """
-        if service == "scalardata":
+        if service.startswith("scalardata"):
             return len(response["sensorData"][0]["data"]["sampleTimes"])
 
-        elif service == "rawdata":
+        elif service.startswith("rawdata"):
             return len(response["data"]["times"])
 
-        elif service == "archivefiles":
+        elif service.startswith("archivefile"):
             return len(response["files"])
 
         return 0
@@ -171,15 +171,16 @@ class _MultiPage:
         Returns a timedelta object
         """
         # grab the first and last sample times
-        if service in ["scalardata", "rawdata"]:
-            if service == "scalardata":
-                first = response["sensorData"][0]["data"]["sampleTimes"][0]
-                last = response["sensorData"][0]["data"]["sampleTimes"][-1]
-            elif service == "rawdata":
-                first = response["data"]["times"][0]
-                last = response["data"]["times"][-1]
 
-        elif service == "archivefiles":
+        if service.startswith("scalardata"):
+            first = response["sensorData"][0]["data"]["sampleTimes"][0]
+            last = response["sensorData"][0]["data"]["sampleTimes"][-1]
+
+        elif service.startswith("rawdata"):
+            first = response["data"]["times"][0]
+            last = response["data"]["times"][-1]
+
+        elif service.startswith("archivefile"):
             row0 = response["files"][0]
             if isinstance(row0, str):
                 regExp = r"\d{8}T\d{6}\.\d{3}Z"
@@ -198,7 +199,6 @@ class _MultiPage:
                 last = response["files"][-1]["dateFrom"]
 
         # compute the timedelta
-        # print(first, last)
         dateFirst = dateutil.parser.parse(first)
         dateLast = dateutil.parser.parse(last)
         return dateLast - dateFirst

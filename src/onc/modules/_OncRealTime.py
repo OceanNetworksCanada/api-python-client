@@ -19,7 +19,7 @@ class _OncRealTime(_OncService):
         See https://wiki.oceannetworks.ca/display/O2A/scalardata+service
         for usage and available filters
         """
-        return self._getDirectAllPages(filters, "scalardata", "getByLocation", allPages)
+        return self._getDirectAllPages(filters, "scalardata/location", allPages)
 
     def getScalardataByDevice(self, filters: dict, allPages: bool):
         """
@@ -28,7 +28,7 @@ class _OncRealTime(_OncService):
         See https://wiki.oceannetworks.ca/display/O2A/scalardata+service
         for usage and available filters.
         """
-        return self._getDirectAllPages(filters, "scalardata", "getByDevice", allPages)
+        return self._getDirectAllPages(filters, "scalardata/device", allPages)
 
     def getScalardata(self, filters: dict, allPages: bool):
         return self._delegateByFilters(
@@ -45,7 +45,7 @@ class _OncRealTime(_OncService):
         See https://wiki.oceannetworks.ca/display/O2A/rawdata+service
         for usage and available filters.
         """
-        return self._getDirectAllPages(filters, "rawdata", "getByLocation", allPages)
+        return self._getDirectAllPages(filters, "rawdata/location", allPages)
 
     def getRawdataByDevice(self, filters: dict, allPages: bool):
         """
@@ -54,7 +54,7 @@ class _OncRealTime(_OncService):
         See https://wiki.oceannetworks.ca/display/O2A/rawdata+service
         for usage and available filters.
         """
-        return self._getDirectAllPages(filters, "rawdata", "getByDevice", allPages)
+        return self._getDirectAllPages(filters, "rawdata/device", allPages)
 
     def getRawdata(self, filters: dict, allPages: bool):
         return self._delegateByFilters(
@@ -68,9 +68,7 @@ class _OncRealTime(_OncService):
         updated_filters = filters | {"returnOptions": "excludeScalarData"}
         return self.getScalardata(updated_filters, False)["sensorData"]
 
-    def _getDirectAllPages(
-        self, filters: dict, service: str, method: str, allPages: bool
-    ) -> Any:
+    def _getDirectAllPages(self, filters: dict, service: str, allPages: bool) -> Any:
         """
         Keeps downloading all scalar or raw data pages until finished.
 
@@ -83,7 +81,6 @@ class _OncRealTime(_OncService):
         # prepare filters for first page request
         filters = filters or {}
         url = self._serviceUrl(service)
-        filters["method"] = method
         filters["token"] = self._config("token")
 
         # if sensorCategoryCodes is an array, join it into a comma-separated string

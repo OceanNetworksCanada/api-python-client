@@ -794,7 +794,7 @@ class ONC:
         ]
         """  # noqa: E501
         return self.discovery.getDataProducts(filters)
-    
+
     def getDataAvailability(self, filters: dict | None = None):
         """
         Return information about which data products are available at a given time.
@@ -807,7 +807,7 @@ class ONC:
         Parameters
         ----------
         filters : dict, optional
-            Query string parameters in the API request. 
+            Query string parameters in the API request.
 
             Supported parameters are:
 
@@ -823,14 +823,14 @@ class ONC:
             - maximumCoverage
             - getLatest
             - groupBy
-            - mergeGaps  
-            - includeEmptyDays  
-            - rowLimit  
+            - mergeGaps
+            - includeEmptyDays
+            - rowLimit
 
         Returns
         -------
         list of dict
-            API response. 
+            API response.
 
         Examples
         --------
@@ -863,7 +863,7 @@ class ONC:
             "next": None,
             "queryUrl": "https://data.oceannetworks.ca/api/dataAvailability/dataproducts?locationCode=NCBC&deviceCategoryCode=BPR&dateFrom=2019-11-23&dateTo=2019-11-30&token=ONC_TOKEN",
         }
-        
+
         """  # noqa: E501
         return self.discovery.getDataAvailability(filters)
 

@@ -23,14 +23,13 @@ class _DataProductFile:
         self._retries = 0
         self._status = 202
         self._downloaded = False
-        self._baseUrl = f"{baseUrl}api/dataProductDelivery"
+        self._baseUrl = f"{baseUrl}api/dataProductDelivery/download"
         self._filePath = ""
         self._fileSize = 0
         self._runningTime = 0
         self._downloadingTime = 0
 
         self._filters = {
-            "method": "download",
             "token": token,
             "dpRunId": dpRunId,
             "index": index,

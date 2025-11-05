@@ -23,7 +23,7 @@ class _OncArchive(_OncService):
 
         The filenames obtained can be used to download files using the ``downloadArchivefile`` method.
         """  # noqa: E501
-        return self._getList(filters, by="location", allPages=allPages)
+        return self._getList(filters, service="archivefile/location", allPages=allPages)
 
     def getArchivefileByDevice(self, filters: dict, allPages: bool):
         """
@@ -31,7 +31,7 @@ class _OncArchive(_OncService):
 
         The filenames obtained can be used to download files using the ``downloadArchivefile`` method.
         """  # noqa: E501
-        return self._getList(filters, by="device", allPages=allPages)
+        return self._getList(filters, service="archivefile/device", allPages=allPages)
 
     def getArchivefile(self, filters: dict, allPages: bool):
         return self._delegateByFilters(
@@ -49,16 +49,15 @@ class _OncArchive(_OncService):
         """
         Return an archivefile absolute download URL for a filename
         """
-        url = self._serviceUrl("archivefile")
+        url = self._serviceUrl("archivefile/download")
         token = self._config("token")
-        return f"{url}/download?filename={filename}&token={token}"
+        return f"{url}?filename={filename}&token={token}"
 
     def downloadArchivefile(self, filename: str = "", overwrite: bool = False):
-        url = self._serviceUrl("archivefiles")
+        url = self._serviceUrl("archivefile/download")
 
         filters = {
             "token": self._config("token"),
-            "method": "getFile",
             "filename": filename,
         }
 
@@ -151,15 +150,14 @@ class _OncArchive(_OncService):
             "stats": {"totalSize": size, "downloadTime": time, "fileCount": successes},
         }
 
-    def _getList(self, filters: dict, by: str = "location", allPages: bool = False):
+    def _getList(
+        self, filters: dict, service: str = "location", allPages: bool = False
+    ):
         """
         Wraps archivefiles getArchivefileByLocation and getArchivefileByDevice methods
         """
-        url = self._serviceUrl("archivefiles")
+        url = self._serviceUrl(service)
         filters["token"] = self._config("token")
-        filters["method"] = (
-            "getListByLocation" if by == "location" else "getListByDevice"
-        )
 
         # parse and remove the artificial parameter extension
         extension = None
@@ -169,7 +167,7 @@ class _OncArchive(_OncService):
 
         if allPages:
             mp = _MultiPage(self)
-            result = mp.getAllPages("archivefiles", url, filters2)
+            result = mp.getAllPages(service, url, filters2)
         else:
             if "extension" in filters2:
                 del filters2["extension"]

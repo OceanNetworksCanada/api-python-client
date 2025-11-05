@@ -95,16 +95,23 @@ class _OncService:
         """
         if service in [
             "locations",
+            "locations/tree",
             "deployments",
             "devices",
             "deviceCategories",
             "properties",
             "dataProducts",
-            "archivefiles",
-            "archivefile",
-            "scalardata",
-            "rawdata",
             "dataAvailability/dataproducts",
+            "archivefile/device",
+            "archivefile/location",
+            "archivefile/download",
+            "scalardata/location",
+            "scalardata/device",
+            "rawdata/location",
+            "rawdata/device",
+            "dataProductDelivery/request",
+            "dataProductDelivery/run",
+            "dataProductDelivery/download",
         ]:
             return f"{self._config('baseUrl')}api/{service}"
 
