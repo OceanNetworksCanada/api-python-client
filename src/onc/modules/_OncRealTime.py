@@ -9,8 +9,8 @@ class _OncRealTime(_OncService):
     Near real-time services methods
     """
 
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, config: dict, verbosity: str, redact_token: str, raise_http_errors: bool):
+        super().__init__(config, verbosity, redact_token, raise_http_errors)
 
     def getScalardataByLocation(self, filters: dict, allPages: bool):
         """
@@ -93,7 +93,7 @@ class _OncRealTime(_OncService):
             filters["sensorCategoryCodes"] = ",".join(filters["sensorCategoryCodes"])
 
         if allPages:
-            mp = _MultiPage(self)
+            mp = _MultiPage(self, self.verbosity, self.raise_http_errors)
             result = mp.getAllPages(service, url, filters)
         else:
             result = self._doRequest(url, filters)
