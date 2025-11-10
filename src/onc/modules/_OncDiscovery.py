@@ -7,8 +7,9 @@ class _OncDiscovery(_OncService):
         locations, deployments, devices, deviceCategories, properties, dataProducts
     """
 
-    def __init__(self, parent: object):
-        super().__init__(parent)
+    def __init__(self, parent: object, verbosity: str, redact_token: str, raise_http_errors: bool):
+        super().__init__(parent, verbosity, redact_token, raise_http_errors)
+
 
     def _discoveryRequest(self, filters: dict, service: str, method: str = "get"):
         url = self._serviceUrl(service)

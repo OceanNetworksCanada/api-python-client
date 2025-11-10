@@ -16,8 +16,8 @@ class _OncDelivery(_OncService):
     Methods that wrap the API data product delivery services
     """
 
-    def __init__(self, parent: object):
-        super().__init__(parent)
+    def __init__(self, parent: object, verbosity: str, redact_token: str, raise_http_errors: bool):
+        super().__init__(parent, verbosity, redact_token, raise_http_errors)
 
         # Default seconds to wait between consecutive download tries of a file
         # (when no estimate processing time is available)

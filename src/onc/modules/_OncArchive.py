@@ -14,8 +14,9 @@ class _OncArchive(_OncService):
     Methods that wrap the API archivefiles service
     """
 
-    def __init__(self, parent: object):
-        super().__init__(parent)
+    def __init__(self, parent: object, verbosity: str, redact_token: str, raise_http_errors: bool):
+        super().__init__(parent, verbosity, redact_token, raise_http_errors)
+
 
     def getArchivefileByLocation(self, filters: dict, allPages: bool):
         """

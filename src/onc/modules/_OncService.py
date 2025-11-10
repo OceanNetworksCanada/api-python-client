@@ -9,6 +9,12 @@ from urllib import parse
 import requests
 
 from ._util import _createErrorMessage, _formatDuration
+from onc.modules._Messages import (setup_logger,
+                                   build_error_message,
+                                   scrub_token,
+                                   REQ_MSG,
+                                   RESPONSE_TIME_MSG,
+                                   RESPONSE_MSG)
 
 logging.basicConfig(format="%(levelname)s: %(message)s")
 
@@ -18,8 +24,16 @@ class _OncService:
     Provides common configuration and functionality to Onc service classes (children)
     """
 
-    def __init__(self, parent: object):
+    def __init__(self, parent: object,
+                 verbosity: str,
+                 redact_token: bool,
+                 raise_http_errors: bool):
         self.parent = weakref.ref(parent)
+        self.redact_token = redact_token
+        self.raise_http_errors = raise_http_errors
+        self.verbosity = verbosity
+
+        self.__log = setup_logger('onc-service', level = verbosity)
 
     def _doRequest(self, url: str, filters: dict | None = None, getTime: bool = False):
         """
@@ -46,48 +60,60 @@ class _OncService:
         filters["token"] = self._config("token")
         timeout = self._config("timeout")
 
-        txtParams = parse.unquote(parse.urlencode(filters))
-        self._log(f"Requesting URL:\n{url}?{txtParams}")
-
-        start = time()
         response = requests.get(url, filters, timeout=timeout)
-        responseTime = time() - start
 
-        if response.ok:
-            jsonResult = response.json()
+        if self.redact_token is True:
+            try:
+                response_url = scrub_token(response.url)
+            except:
+                response_url = response.url
         else:
-            status = response.status_code
-            if status in [400, 401]:
-                msg = _createErrorMessage(response)
-                raise requests.HTTPError(msg)
+            response_url = response.url
+
+        # Log the url the user submitted.
+        self.__log.info(REQ_MSG.format(response_url))
+
+        # Display the time it took for ONC to respond in seconds.
+        # The requests.Response.elapsed value is a datetime.timedelta object.
+        responseTime = round(response.elapsed.total_seconds(),3) # To milliseconds.
+        self.__log.debug(RESPONSE_TIME_MSG.format(responseTime))
+
+        json_response = response.json()
+
+        if response.status_code == requests.codes.ok:
+            self.__log.info(RESPONSE_MSG.format("OK", response.status_code))
+            if getTime is True:
+                return json_response, responseTime
             else:
-                response.raise_for_status()
-        self._log(f"Web Service response time: {_formatDuration(responseTime)}")
-
-        # Log warning messages only when showWarning is True
-        # and jsonResult["messages"] is not an empty list
-        if (
-            self._config("showWarning")
-            and "messages" in jsonResult
-            and jsonResult["messages"]
-        ):
-            long_message = "\n".join(
-                [f"* {message}" for message in jsonResult["messages"]]
-            )
-
-            filters_without_token = filters.copy()
-            del filters_without_token["token"]
-            filters_str = pprint.pformat(filters_without_token)
-
-            logging.warning(
-                f"When calling {url} with filters\n{filters_str},\n"
-                f"there are several warning messages:\n{long_message}\n"
-            )
-
-        if getTime:
-            return jsonResult, responseTime
+                return json_response
         else:
-            return jsonResult
+            if response.status_code == requests.codes.not_found:
+                self.__log.error(RESPONSE_MSG.format("Not Found",
+                                                     response.status_code))
+            elif response.status_code == requests.codes.bad:
+                self.__log.error(RESPONSE_MSG.format("Bad Request",
+                                                     response.status_code))
+            elif response.status_code == requests.codes.unauthorized:
+                self.__log.error(RESPONSE_MSG.format("Unauthorized Request",
+                                                     response.status_code))
+            elif response.status_code == requests.codes.internal_server_error:
+                self.__log.error(RESPONSE_MSG.format("Internal Server Error",
+                                                     response.status_code))
+            else:
+                self.__log.error(RESPONSE_MSG.format('Error',response.status_code))
+
+            self.__log.error(build_error_message(response,
+                                                 self.redact_token))
+
+            if self.raise_http_errors is True:
+                response.raise_for_status()
+
+            else:
+                if getTime is True:
+                    return response, responseTime
+                else:
+                    return response
+
 
     def _serviceUrl(self, service: str):
         """
@@ -108,14 +134,6 @@ class _OncService:
             return f"{self._config('baseUrl')}api/{service}"
 
         return ""
-
-    def _log(self, message: str):
-        """
-        Prints message to console only when self.showInfo is true
-        @param message: String
-        """
-        if self._config("showInfo"):
-            print(message)
 
     def _config(self, key: str):
         """
@@ -139,3 +157,4 @@ class _OncService:
                 "'locationCode' and 'deviceCategoryCode', "
                 "or a 'deviceCode' present."
             )
+
