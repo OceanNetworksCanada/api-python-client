@@ -76,6 +76,7 @@ def _createErrorMessage(response: requests.Response) -> str:
     elif status == 401:
         return (
             f"Status 401 - Unauthorized: {response.url}\n"
+            
             "Please check that your Web Services API token is valid. "
             "Find your token in your registered profile at "
             "https://data.oceannetworks.ca."

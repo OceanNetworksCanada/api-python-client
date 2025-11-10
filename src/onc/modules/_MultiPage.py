@@ -8,12 +8,23 @@ import humanize
 
 from ._util import _formatDuration
 
+from onc.modules._Messages import (setup_logger, MULTIPAGE_MSG,
+                                   build_error_message,
+                                   scrub_token,
+                                   REQ_MSG,
+                                   RESPONSE_TIME_MSG,
+                                   RESPONSE_MSG)
+
+
 
 # Handles data multi-page downloads (scalardata, rawdata, archivefiles)
 class _MultiPage:
-    def __init__(self, parent: object):
+    def __init__(self, parent: object, verbosity: bool, raise_http_errors: bool):
         self.parent = weakref.ref(parent)
         self.result = None
+        self.raise_http_errors = raise_http_errors
+        self.__log = setup_logger('onc-multi', verbosity)
+
 
     def getAllPages(self, service: str, url: str, filters: dict):
         """
@@ -30,48 +41,42 @@ class _MultiPage:
         # download first page
         start = time()
         response, responseTime = self._doPageRequest(url, filters, service, extension)
-        rNext = response["next"]
 
-        if rNext is not None:
-            print(
-                "Data quantity is greater than the row limit and",
-                "will be downloaded in multiple pages.",
-            )
+        if isinstance(response,dict):
+            rNext = response["next"]
 
-            pageCount = 1
-            pageEstimate = self._estimatePages(response, service)
-            if pageEstimate > 0:
-                # Exclude the first page when calculating the time estimation
-                timeEstimate = _formatDuration((pageEstimate - 1) * responseTime)
-                print(
-                    f"Downloading time for the first page: {humanize.naturaldelta(responseTime)}"  # noqa: E501
-                )
-                print(f"Estimated approx. {pageEstimate} pages in total.")
-                print(
-                    f"Estimated approx. {timeEstimate} to complete for the rest of the pages."  # noqa: E501
-                )
+            if rNext is not None:
+                self.__log.info("The requested data quantity is greater than the supplied "
+                                "row limit and will be downloaded over multiple requests.")
 
-            # keep downloading pages until next is None
-            print("")
-            while rNext is not None:
-                pageCount += 1
-                rowCount = self._rowCount(response, service)
+                pageCount = 1
+                pageEstimate = self._estimatePages(response, service)
+                if pageEstimate > 0:
+                    # Exclude the first page when calculating the time estimation
+                    timeEstimate = _formatDuration((pageEstimate - 1) * responseTime)
+                    self.__log.debug(f'Download time for page {pageCount}: {round(responseTime,2)} seconds')
+                    self.__log.info(f'Est. number of pages remaining for download: {pageEstimate-1}')
+                    self.__log.info(f'Est. number of seconds to download remaining data: {timeEstimate}')
 
-                print(f"   ({rowCount} samples) Downloading page {pageCount}...")
-                nextResponse, nextTime = self._doPageRequest(
-                    url, rNext["parameters"], service, extension
-                )
-                rNext = nextResponse["next"]
+                # keep downloading pages until next is None
+                while rNext is not None:
+                    pageCount += 1
+                    rowCount = self._rowCount(response, service)
 
-                # concatenate new data obtained
-                self._catenateData(response, nextResponse, service)
+                    self.__log.debug(f"Submitting request for page {pageCount} ({rowCount} samples)...")
 
-            totalTime = _formatDuration(time() - start)
-            print(
-                f"   ({self._rowCount(response, service):d} samples)"
-                f" Completed in {totalTime}."
-            )
-            response["next"] = None
+                    nextResponse, nextTime = self._doPageRequest(
+                        url, rNext["parameters"], service, extension
+                    )
+                    rNext = nextResponse["next"]
+
+                    # concatenate new data obtained
+                    self._catenateData(response, nextResponse, service)
+
+                totalTime = _formatDuration(time() - start)
+
+                self.__log.info(f"Downloaded {self._rowCount(response, service):d} total samples in {totalTime}.")
+                response["next"] = None
 
         return response
 

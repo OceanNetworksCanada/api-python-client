@@ -10,6 +10,7 @@ from onc.modules._OncDelivery import _OncDelivery
 from onc.modules._OncDiscovery import _OncDiscovery
 from onc.modules._OncRealTime import _OncRealTime
 
+from onc.modules._Messages import setup_logger
 
 class ONC:
     """
@@ -52,11 +53,12 @@ class ONC:
     def __init__(
         self,
         token: str | None = None,
-        production: bool = True,
-        showInfo: bool = False,
-        showWarning: bool = True,
         outPath: str | Path = "output",
+        verbosity: str = "INFO",
+        raise_http_errors: bool = True,
+        redact_token: bool = False,
         timeout: int = 60,
+        production: bool = True,
     ):
         if token is None or token == "":
             token = os.environ.get("ONC_TOKEN")
@@ -65,18 +67,32 @@ class ONC:
                 "ONC API token is required. Please provide it as the first argument, "
                 "or set it as the environment variable 'ONC_TOKEN'."
             )
+
+        self.verbosity = verbosity.upper()
+        self.redact_token = redact_token
+        self.raise_http_errors = raise_http_errors
+        self.__log = setup_logger('onc-client', self.verbosity)
+
+        if self.verbosity in ['INFO', 'DEBUG']:
+            self.showInfo = True
+            self.showWarning = True
+        elif self.verbosity in ['WARNING', 'ERROR']:
+            self.showInfo = False
+            self.showWarning = True
+
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
-        self.showInfo = showInfo
-        self.showWarning = showWarning
+
         self.timeout = timeout
         self.production = production
         self.outPath = outPath
 
         # Create service objects
-        self.discovery = _OncDiscovery(self)
-        self.delivery = _OncDelivery(self)
-        self.realTime = _OncRealTime(self)
-        self.archive = _OncArchive(self)
+        self.discovery = _OncDiscovery(self, verbosity, redact_token,raise_http_errors)
+        self.delivery = _OncDelivery(self, verbosity, redact_token,raise_http_errors)
+        self.realTime = _OncRealTime(self, verbosity, redact_token,raise_http_errors)
+        self.archive = _OncArchive(self, verbosity, redact_token,raise_http_errors)
+
+        self.__log.debug("Initialized ONC module.")
 
     @property
     def outPath(self) -> Path:
