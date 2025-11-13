@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime
 import json
+import os
 import re
 from pathlib import Path
 
@@ -20,8 +21,9 @@ class ONC:
 
     Parameters
     ----------
-    token : str
+    token : str | None, default None
         The ONC API token, which could be retrieved at https://data.oceannetworks.ca/Profile once logged in.
+        If None, the token is read from the environment variable ``ONC_TOKEN``.
     production : boolean, default True
         Whether the ONC Production server URL is used for service requests.
 
@@ -44,19 +46,27 @@ class ONC:
     Examples
     --------
     >>> from onc import ONC
+    >>> onc = ONC()  # Only if you set the env variable "ONC_TOKEN" # doctest: +SKIP
     >>> onc = ONC("YOUR_TOKEN_HERE")  # doctest: +SKIP
     >>> onc = ONC("YOUR_TOKEN_HERE", showInfo=True, outPath="onc-files")  # doctest: +SKIP
     """  # noqa: E501
 
     def __init__(
         self,
-        token,
+        token: str | None = None,
         production: bool = True,
         showInfo: bool = False,
-        showWarning: bool = False,
+        showWarning: bool = True,
         outPath: str | Path = "output",
         timeout: int = 60,
     ):
+        if token is None or token == "":
+            token = os.environ.get("ONC_TOKEN")
+        if token is None or token == "":
+            raise ValueError(
+                "ONC API token is required. Please provide it as the first argument, "
+                "or set it as the environment variable 'ONC_TOKEN'."
+            )
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
         self.showInfo = showInfo
         self.showWarning = showWarning
