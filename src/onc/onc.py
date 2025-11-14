@@ -795,6 +795,78 @@ class ONC:
         """  # noqa: E501
         return self.discovery.getDataProducts(filters)
 
+    def getDataAvailability(self, filters: dict | None = None):
+        """
+        Return information about which data products are available at a given time.
+
+        The API endpoint is ``/dataAvailability/dataproducts``.
+
+        See https://data.oceannetworks.ca/OpenAPI#get-/dataAvailability/dataproducts
+        for usage and available filters.
+
+        Parameters
+        ----------
+        filters : dict, optional
+            Query string parameters in the API request.
+
+            Supported parameters are:
+
+            - locationCode
+            - deviceCategoryCode
+            - deviceCode
+            - propertyCode
+            - dateFrom
+            - dateTo
+            - dataProductCode
+            - extension
+            - minimumCoverage
+            - maximumCoverage
+            - getLatest
+            - groupBy
+            - mergeGaps
+            - includeEmptyDays
+            - rowLimit
+
+        Returns
+        -------
+        list of dict
+            API response.
+
+        Examples
+        --------
+        >>> params = {
+        ...     "locationCode": "NCBC",
+        ...     "deviceCategoryCode": "BPR",
+        ...     "dateFrom": "2019-11-23",
+        ...     "dateTo": "2019-11-30",
+        ... }  # doctest: +SKIP
+        >>> onc.getDataAvailability(params)  # doctest: +SKIP
+        {
+            "availableDataProducts": [
+                {
+                    "averageFileCoverage": 0.875,
+                    "dataProductCode": "LF",
+                    "dateFrom": "2019-11-23T00:00:00.000Z",
+                    "dateTo": "2019-12-01T00:00:00.000Z",
+                    "deviceCode": "BPR-Folger-59",
+                    "extension": "txt",
+                    "fileCount": 7,
+                    "maxFileCoverage": 1.0,
+                    "maxFileCoverageDate": "2019-11-23T00:00:00.000Z",
+                    "minFileCoverage": 0.0,
+                    "minFileCoverageDate": "2019-11-30T00:00:00.000Z",
+                    "totalFileSize": 8707618,
+                    "totalUncompressedFileSize": 33868912,
+                }
+            ],
+            "messages": [],
+            "next": None,
+            "queryUrl": "https://data.oceannetworks.ca/api/dataAvailability/dataproducts?locationCode=NCBC&deviceCategoryCode=BPR&dateFrom=2019-11-23&dateTo=2019-11-30&token=ONC_TOKEN",
+        }
+
+        """  # noqa: E501
+        return self.discovery.getDataAvailability(filters)
+
     # Delivery methods
 
     def orderDataProduct(

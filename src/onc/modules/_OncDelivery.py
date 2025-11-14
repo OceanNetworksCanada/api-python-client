@@ -65,9 +65,8 @@ class _OncDelivery(_OncService):
         """
         Data product request
         """
-        filters["method"] = "request"
         filters["token"] = self._config("token")
-        url = "{:s}api/dataProductDelivery".format(self._config("baseUrl"))
+        url = f"{self._config('baseUrl')}api/dataProductDelivery/request"
         response = self._doRequest(url, filters)
 
         self._estimatePollPeriod(response)
@@ -93,7 +92,7 @@ class _OncDelivery(_OncService):
         print(
             f"To cancel the running data product, run 'onc.cancelDataProduct({dpRequestId})'"  # noqa: E501
         )
-        url = f"{self._config('baseUrl')}api/dataProductDelivery"
+        url = f"{self._config('baseUrl')}api/dataProductDelivery/run"
         runResult = {"runIds": [], "fileCount": 0, "runTime": 0, "requestCount": 0}
 
         start = time()
@@ -101,7 +100,6 @@ class _OncDelivery(_OncService):
             response = requests.get(
                 url,
                 {
-                    "method": "run",
                     "token": self._config("token"),
                     "dpRequestId": dpRequestId,
                 },
@@ -283,9 +281,8 @@ class _OncDelivery(_OncService):
         Given a runId, polls the "download" method to count files.
         Uses HTTP HEAD to avoid downloading the files.
         """
-        url = f"{self._config('baseUrl')}api/dataProductDelivery"
+        url = f"{self._config('baseUrl')}api/dataProductDelivery/download"
         filters = {
-            "method": "download",
             "token": self._config("token"),
             "dpRunId": runId,
             "index": 1,
