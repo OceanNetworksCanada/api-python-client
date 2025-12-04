@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discover Devices &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Discover Deployments" href="Discover_Deployments.html" />
+    <link rel="prev" title="Discover Locations" href="Discover_Locations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Code Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Discover_Locations.html">Discover Locations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Discover Devices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#devices">/devices</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-available-devices">Get all available devices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-the-device-information-for-a-specific-device-code">Get the device information for a specific device code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-which-have-a-certain-word-in-the-device-name">Get all devices which have a certain word in the device name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-that-have-been-deployed-at-a-specific-location">Get all devices that have been deployed at a specific location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-from-a-specific-device-category">Get all devices from a specific device category</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-with-a-specific-property-code">Get all devices with a specific property code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-with-a-specific-device-category-and-a-specific-property-code">Get all devices with a specific device category and a specific property code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-that-support-a-specific-data-product-code">Get all devices that support a specific data product code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-deployed-between-two-dates">Get all devices deployed between two dates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-deployed-at-a-specific-location-between-two-dates">Get all devices deployed at a specific location, between two dates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-devices-deployed-at-a-specific-location-between-two-dates-with-a-sensor-of-a-specific-property-code">Get all devices deployed at a specific location, between two dates, with a sensor of a specific property code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Deployments.html">Discover Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Device_Categories.html">Discover Device Categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Properties.html">Discover Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Data_Products.html">Discover Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Data_Availability.html">Discover Data Availability for Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Download_Data_Products.html">Download Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Request_Real_Time_Data.html">Request (Near) Real-Time Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Download_Archived_Files.html">Download Archived Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Code Examples</a></li>
+      <li class="breadcrumb-item active">Discover Devices</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Code_Examples/Discover_Devices.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="discover-devices">
+<h1>Discover Devices<a class="headerlink" href="#discover-devices" title="Link to this heading"></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the token from your Oceans 3.0 profile page</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ONC</span>
+
+<span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="devices">
+<h2><a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/devices">/devices</a><a class="headerlink" href="#devices" title="Link to this heading"></a></h2>
+<section id="get-all-available-devices">
+<h3>Get all available devices<a class="headerlink" href="#get-all-available-devices" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="get-the-device-information-for-a-specific-device-code">
+<h3>Get the device information for a specific device code<a class="headerlink" href="#get-the-device-information-for-a-specific-device-code" title="Link to this heading"></a></h3>
+<p>Return the device with the <em>deviceCode</em> “<strong>NORTEKAQDPRO8398</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NORTEKAQDPRO8398&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-which-have-a-certain-word-in-the-device-name">
+<h3>Get all devices which have a certain word in the device name<a class="headerlink" href="#get-all-devices-which-have-a-certain-word-in-the-device-name" title="Link to this heading"></a></h3>
+<p>Return all devices with “<strong>jasco</strong>” in the name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;jasco&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-that-have-been-deployed-at-a-specific-location">
+<h3>Get all devices that have been deployed at a specific location<a class="headerlink" href="#get-all-devices-that-have-been-deployed-at-a-specific-location" title="Link to this heading"></a></h3>
+<p>Return all devices that have been deployed at the location with the <em>locationCode</em> “<strong>BACAX</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BACAX&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-from-a-specific-device-category">
+<h3>Get all devices from a specific device category<a class="headerlink" href="#get-all-devices-from-a-specific-device-category" title="Link to this heading"></a></h3>
+<p>Return all devices with the <em>deviceCategoryCode</em> “<strong>ADCP2MHZ</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;ADCP2MHZ&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-with-a-specific-property-code">
+<h3>Get all devices with a specific property code<a class="headerlink" href="#get-all-devices-with-a-specific-property-code" title="Link to this heading"></a></h3>
+<p>Return all devices that measures the propertyCode “<strong>oxygen</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;oxygen&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-with-a-specific-device-category-and-a-specific-property-code">
+<h3>Get all devices with a specific device category and a specific property code<a class="headerlink" href="#get-all-devices-with-a-specific-device-category-and-a-specific-property-code" title="Link to this heading"></a></h3>
+<p>Return all devices that has the device category “<strong>CTD</strong>” and property “<strong>pressure</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-that-support-a-specific-data-product-code">
+<h3>Get all devices that support a specific data product code<a class="headerlink" href="#get-all-devices-that-support-a-specific-data-product-code" title="Link to this heading"></a></h3>
+<p>Return all devices that support the dataProductCode “<strong>IBPP</strong>” (“Ice Buoy Profile Plots”).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dataProductCode&quot;</span><span class="p">:</span> <span class="s2">&quot;IBPP&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-deployed-between-two-dates">
+<h3>Get all devices deployed between two dates<a class="headerlink" href="#get-all-devices-deployed-between-two-dates" title="Link to this heading"></a></h3>
+<p>Return all devices deployed between 1 July 2010 and 30 June 2011.
+Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms#GlossaryofTerms-ISO8601Duration">here</a> for additional
+information about the supported dates/times format.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2010-07-01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2011-06-30T23:59:59.999Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-deployed-at-a-specific-location-between-two-dates">
+<h3>Get all devices deployed at a specific location, between two dates<a class="headerlink" href="#get-all-devices-deployed-at-a-specific-location-between-two-dates" title="Link to this heading"></a></h3>
+<p>Return all devices deployed between 1 July 2010 and 30 June 2011, at the location with the <em>locationCode</em> “<strong>BACAX</strong>” (”
+Barkely Canyon Axis (POD1)”).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BACAX&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2010-07-01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2011-06-30T23:59:59.999Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-devices-deployed-at-a-specific-location-between-two-dates-with-a-sensor-of-a-specific-property-code">
+<h3>Get all devices deployed at a specific location, between two dates, with a sensor of a specific property code<a class="headerlink" href="#get-all-devices-deployed-at-a-specific-location-between-two-dates-with-a-sensor-of-a-specific-property-code" title="Link to this heading"></a></h3>
+<p>Return all devices deployed between 1 July 2010 and 30 June 2011, at the location with the <em>locationCode</em> “<strong>BACAX</strong>” (”
+Barkely Canyon Axis (POD1)”), with the <em>propertyCode</em> “<strong>seawatertemperature</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BACAX&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;seawatertemperature&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2010-07-01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2011-06-30T23:59:59.999Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Discover_Locations.html" class="btn btn-neutral float-left" title="Discover Locations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Discover_Deployments.html" class="btn btn-neutral float-right" title="Discover Deployments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Archived Files &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing" href="../contributing.html" />
+    <link rel="prev" title="Request (Near) Real-Time Data" href="Request_Real_Time_Data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Code Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Discover_Locations.html">Discover Locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Devices.html">Discover Devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Deployments.html">Discover Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Device_Categories.html">Discover Device Categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Properties.html">Discover Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Data_Products.html">Discover Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Data_Availability.html">Discover Data Availability for Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Download_Data_Products.html">Download Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Request_Real_Time_Data.html">Request (Near) Real-Time Data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Download Archived Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#archivefile-device">/archivefile/device</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-a-list-of-all-archived-files-available-from-a-specific-device-for-a-specific-time-range">Get a list of all archived files available from a specific device for a specific time-range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-a-list-of-all-archived-files-available-from-a-specific-device-for-a-specific-time-range-with-a-specific-extension">Get a list of all archived files available from a specific device for a specific time-range with a specific extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#download-a-file-by-its-filename">Download a file by its filename</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#archivefile-location">/archivefile/location</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-a-list-of-all-archived-files-available-from-a-specific-location-and-a-device-category-for-a-specific-time-range">Get a list of all archived files available from a specific location and a device category for a specific time-range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-a-list-of-all-archived-files-available-from-a-specific-location-and-a-device-category-for-a-specific-time-range-with-a-specific-file-extension">Get a list of all archived files available from a specific location and a device category for a specific time-range with a specific file extension</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#download-archived-files-that-match-the-parameters">Download archived files that match the parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-archived-files-using-a-download-manager">Download archived files using a download manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#webui-aria2">webui-aria2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Code Examples</a></li>
+      <li class="breadcrumb-item active">Download Archived Files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Code_Examples/Download_Archived_Files.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="download-archived-files">
+<h1>Download Archived Files<a class="headerlink" href="#download-archived-files" title="Link to this heading"></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the token from your Oceans 3.0 profile page</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ONC</span>
+
+<span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="archivefile-device">
+<h2><a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device">/archivefile/device</a><a class="headerlink" href="#archivefile-device" title="Link to this heading"></a></h2>
+<section id="get-a-list-of-all-archived-files-available-from-a-specific-device-for-a-specific-time-range">
+<h3>Get a list of all archived files available from a specific device for a specific time-range<a class="headerlink" href="#get-a-list-of-all-archived-files-available-from-a-specific-device-for-a-specific-time-range" title="Link to this heading"></a></h3>
+<p>Return the archived files for a device with <em>deviceCode</em> “<strong>RDIADCP600WH25471</strong>”</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCode&quot;</span><span class="p">:</span> <span class="s2">&quot;RDIADCP600WH25471&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-07T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-08T00:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">onc</span><span class="o">.</span><span class="n">getArchivefile</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Longer method name</span>
+<span class="c1"># onc.getArchivefileByDevice(params)</span>
+
+<span class="c1"># Alias method name</span>
+<span class="c1"># onc.getListByDevice(params)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-a-list-of-all-archived-files-available-from-a-specific-device-for-a-specific-time-range-with-a-specific-extension">
+<h3>Get a list of all archived files available from a specific device for a specific time-range with a specific extension<a class="headerlink" href="#get-a-list-of-all-archived-files-available-from-a-specific-device-for-a-specific-time-range-with-a-specific-extension" title="Link to this heading"></a></h3>
+<p>Return the archived files for an ADCP instrument with <em>deviceCode</em> “<strong>RDIADCP600WH25471</strong>” that have <em>rdi</em> as the
+extension name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCode&quot;</span><span class="p">:</span> <span class="s2">&quot;RDIADCP600WH25471&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;rdi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-07T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-08T00:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">onc</span><span class="o">.</span><span class="n">getArchivefile</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Longer method name</span>
+<span class="c1"># onc.getArchivefileByDevice(params)</span>
+
+<span class="c1"># Alias method name</span>
+<span class="c1"># onc.getListByDevice(params)</span>
+</pre></div>
+</div>
+</section>
+<section id="download-a-file-by-its-filename">
+<h3>Download a file by its filename<a class="headerlink" href="#download-a-file-by-its-filename" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">onc</span><span class="o">.</span><span class="n">downloadArchivefile</span><span class="p">(</span><span class="s2">&quot;ICLISTENHF1560_20181005T000403.000Z-spect.mat&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Alias method name</span>
+<span class="c1"># onc.getFile(&quot;ICLISTENHF1560_20181005T000403.000Z-spect.mat&quot;, overwrite=True)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="archivefile-location">
+<h2><a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location">/archivefile/location</a><a class="headerlink" href="#archivefile-location" title="Link to this heading"></a></h2>
+<section id="get-a-list-of-all-archived-files-available-from-a-specific-location-and-a-device-category-for-a-specific-time-range">
+<h3>Get a list of all archived files available from a specific location and a device category for a specific time-range<a class="headerlink" href="#get-a-list-of-all-archived-files-available-from-a-specific-location-and-a-device-category-for-a-specific-time-range" title="Link to this heading"></a></h3>
+<p>Return the archived files for a device with <em>deviceCategoryCode</em> “<strong>HYDROPHONE</strong>” at location Straight of Georgia East (
+<em>locationCode</em>:”<strong>SEVIP</strong>”)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;HYDROPHONE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;SEVIP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:05:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:06:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">onc</span><span class="o">.</span><span class="n">getArchivefile</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Longer method name</span>
+<span class="c1"># onc.getArchivefileByLocation(params)</span>
+
+<span class="c1"># Alias method name</span>
+<span class="c1"># onc.getListByLocation(params)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-a-list-of-all-archived-files-available-from-a-specific-location-and-a-device-category-for-a-specific-time-range-with-a-specific-file-extension">
+<h3>Get a list of all archived files available from a specific location and a device category for a specific time-range with a specific file extension<a class="headerlink" href="#get-a-list-of-all-archived-files-available-from-a-specific-location-and-a-device-category-for-a-specific-time-range-with-a-specific-file-extension" title="Link to this heading"></a></h3>
+<p>Return the archived files for a device with <em>deviceCategoryCode</em> “<strong>HYDROPHONE</strong>” at location Straight of Georgia East (
+<em>locationCode</em>:”<strong>SEVIP</strong>”) with file extension “<strong>mat</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;HYDROPHONE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;SEVIP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;mat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:05:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:06:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">onc</span><span class="o">.</span><span class="n">getArchivefile</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Longer method name</span>
+<span class="c1"># onc.getArchivefileByLocation(params)</span>
+
+<span class="c1"># Alias method name</span>
+<span class="c1"># onc.getListByLocation(params)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="download-archived-files-that-match-the-parameters">
+<h2>Download archived files that match the parameters<a class="headerlink" href="#download-archived-files-that-match-the-parameters" title="Link to this heading"></a></h2>
+<p>Download all “mat” files from a hydrophone at Straight of Georgia East (<em>locationCode</em>:”<strong>SEVIP</strong>”).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;HYDROPHONE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;SEVIP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;mat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:05:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:06:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">onc</span><span class="o">.</span><span class="n">downloadDirectArchivefile</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Alias method name</span>
+<span class="c1"># onc.getDirectFiles(params)</span>
+
+</pre></div>
+</div>
+</section>
+<section id="download-archived-files-using-a-download-manager">
+<h2>Download archived files using a download manager<a class="headerlink" href="#download-archived-files-using-a-download-manager" title="Link to this heading"></a></h2>
+<p>Return the download URLs from a hydrophone at Straight of Georgia East (<em>locationCode</em>:”<strong>SEVIP</strong>”).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;HYDROPHONE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;SEVIP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;mat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-10-05T00:10:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># print is necessary to render the newline character</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">onc</span><span class="o">.</span><span class="n">getArchivefileUrls</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">joinedWithNewline</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>After running the code, a list of URLs will be printed.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>https://data.oceannetworks.ca/api/archivefile/download?filename=ICLISTENHF1560_20181004T235903.000Z-spect.mat&amp;token=Your_TOKEN
+https://data.oceannetworks.ca/api/archivefile/download?filename=ICLISTENHF1560_20181005T000403.000Z-spect.mat&amp;token=Your_TOKEN
+https://data.oceannetworks.ca/api/archivefile/download?filename=ICLISTENHF1560_20181005T000903.000Z-spect.mat&amp;token=Your_TOKEN
+</pre></div>
+</div>
+<p>At this point, you can open your favorite download manager, paste the URLs, and start the download.
+Most modern download managers support batch download, probably from a multi-line text input, the clipboard or a file.</p>
+<p>Here is an example of using a popular open source download manager – aria2.</p>
+<section id="webui-aria2">
+<h3>webui-aria2<a class="headerlink" href="#webui-aria2" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://aria2.github.io/">aria2</a> is a lightweight multi-protocol &amp; multi-source command-line download utility.
+<a class="reference external" href="https://github.com/ziahamza/webui-aria2">webui-aria2</a> is a web interface to interact with aria2.
+Refer to the webui-aria2 <a class="reference external" href="https://github.com/ziahamza/webui-aria2?tab=readme-ov-file#webui-aria2">README</a> file
+for more information on how to use the tool.</p>
+<ol class="arabic simple">
+<li><p>Install aria2 by downloading it from the <a class="reference external" href="https://github.com/aria2/aria2/releases">release</a>
+(or use your package manager if you are on Linux), extract the zip file,
+and start the server by running</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./aria2c<span class="w"> </span>--enable-rpc<span class="w"> </span>--rpc-listen-all
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Go to <a class="reference external" href="https://ziahamza.github.io/webui-aria2">https://ziahamza.github.io/webui-aria2</a> (or you can download this repository and open index.html
+from docs folder), change “Enter the host” field to “localhost” in the setting, and save the settings.
+Sometimes you need to also refresh the page.
+<img alt="Aria2c host change.png" src="../_images/webui-aria2c-host.png" /></p></li>
+<li><p>Click “Add” -&gt; “By URIs” in the menu. Fill in the URLs and start the download.
+You can also customize the download in the “Download settings” like changing the download directory.
+<img alt="Aria2c add URLs.png" src="../_images/webui-aria2c-add-uri.png" /></p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Request_Real_Time_Data.html" class="btn btn-neutral float-left" title="Request (Near) Real-Time Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

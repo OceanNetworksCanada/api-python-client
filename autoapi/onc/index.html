@@ -1,0 +1,1567 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onc &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="API Reference" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">onc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#onc.ONC"><code class="docutils literal notranslate"><span class="pre">ONC</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">onc</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/onc/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-onc">
+<span id="onc"></span><h1>onc<a class="headerlink" href="#module-onc" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#onc.ONC" title="onc.ONC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ONC</span></code></a></p></td>
+<td><p>A wrapper class for Oceans 3.0 API requests.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="onc.ONC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">onc.</span></span><span class="sig-name descname"><span class="pre">ONC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">production</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showWarning</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outPath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">pathlib.Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'output'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC" title="Link to this definition"></a></dt>
+<dd><p>A wrapper class for Oceans 3.0 API requests.</p>
+<p>All the client library’s functionality is provided as methods of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>token</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>default None</em>) – The ONC API token, which could be retrieved at <a class="reference external" href="https://data.oceannetworks.ca/Profile">https://data.oceannetworks.ca/Profile</a> once logged in.
+If None, the token is read from the environment variable <code class="docutils literal notranslate"><span class="pre">ONC_TOKEN</span></code>.</p></li>
+<li><p><strong>production</strong> (<em>boolean</em><em>, </em><em>default True</em>) – <p>Whether the ONC Production server URL is used for service requests.</p>
+<ul>
+<li><p>True: Use the production server.</p></li>
+<li><p>False: Use the internal ONC test server (reserved for ONC staff IP addresses).</p></li>
+</ul>
+</p></li>
+<li><p><strong>showInfo</strong> (<em>boolean</em><em>, </em><em>default False</em>) – <p>Whether verbose script messages are displayed, such as request url and processing time information.</p>
+<ul>
+<li><p>True: Print all information and debug messages (intended for debugging).</p></li>
+<li><p>False: Only print information messages.</p></li>
+</ul>
+</p></li>
+<li><p><strong>showWarning</strong> (<em>boolean</em><em>, </em><em>default True</em>) – Whether warning messages are displayed. Some web services have “messages” key in the response JSON
+to indicate that something might need attention, like using a default value for a missing parameter.</p></li>
+<li><p><strong>outPath</strong> (<em>str</em><em> | </em><em>Path</em><em>, </em><em>default &quot;output&quot;</em>) – The directory that files are saved to (relative to the current directory) when downloading files.
+The directory will be created if it does not exist during the download.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>default 60</em>) – Number of seconds before a request to the API is canceled due to a timeout.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">onc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ONC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">()</span>  <span class="c1"># Only if you set the env variable &quot;ONC_TOKEN&quot; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN_HERE&quot;</span><span class="p">)</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN_HERE&quot;</span><span class="p">,</span> <span class="n">showInfo</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outPath</span><span class="o">=</span><span class="s2">&quot;onc-files&quot;</span><span class="p">)</span>  
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="onc.ONC.showWarning">
+<span class="sig-name descname"><span class="pre">showWarning</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#onc.ONC.showWarning" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.print">
+<span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.print" title="Link to this definition"></a></dt>
+<dd><p>Pretty print a collection to the console or a file.</p>
+<p>Mainly used to print the results returned by other class methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – Any collection, including scalar values, dictionaries and lists (i.e. those returned by other class methods)</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) – <p>The filename that is used when saving the json file. It is relative to <code class="docutils literal notranslate"><span class="pre">self._out_path</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">.json</span></code> extension could be omitted.</p>
+<ul>
+<li><p>if not empty, save the output to the file.</p></li>
+<li><p>if empty, print the output to the console.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">()</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.formatUtc">
+<span class="sig-name descname"><span class="pre">formatUtc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dateString</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'now'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.formatUtc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.formatUtc" title="Link to this definition"></a></dt>
+<dd><p>Format the provided date string as an ISO8601 UTC date string.</p>
+<p>The ISO8601 UTC date format is required by the API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dateString</strong> (<em>str</em><em>, </em><em>default &quot;now&quot;</em>) – <p>A string that represents a date &amp; time in any of the formats
+described in <a class="reference external" href="http://labix.org/python-dateutil#head-c0e81a473b647dfa787dc11e8c69557ec2c3ecd2">http://labix.org/python-dateutil#head-c0e81a473b647dfa787dc11e8c69557ec2c3ecd2</a>.
+Examples are:</p>
+<ul class="simple">
+<li><p>”2016-12-04”</p></li>
+<li><p>”2016-Dec-04, 12:00:00”</p></li>
+<li><p>”2016 Dec 04 03:00 PM”</p></li>
+<li><p>”now” (returns current UTC date &amp; time)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">formatUtc</span><span class="p">(</span><span class="s2">&quot;2019-Sept-09 03:00 PM&quot;</span><span class="p">)</span>
+<span class="go">&#39;2019-09-09T15:00:00.000Z&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getLocations">
+<span class="sig-name descname"><span class="pre">getLocations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getLocations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getLocations" title="Link to this definition"></a></dt>
+<dd><p>Return locations.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/locations</span></code>.</p>
+<p>Return a list of location names and location codes.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/locations">https://data.oceannetworks.ca/OpenAPI#get-/locations</a>
+for usage and available query string parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request. Return all locations available if None.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+<li><p>propertyCode</p></li>
+<li><p>dataProductCode</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>locationName</p></li>
+<li><p>deviceCode</p></li>
+<li><p>includeChildren</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each location returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><p>deployments: int</p></li>
+<li><p>locationName: str</p></li>
+<li><p>depth: float</p></li>
+<li><dl class="simple">
+<dt>bbox: dict</dt><dd><ul>
+<li><p>bbox.maxDepth: float</p></li>
+<li><p>bbox.maxLat: float</p></li>
+<li><p>bbox.maxLon: float</p></li>
+<li><p>bbox.minDepth: float</p></li>
+<li><p>bbox.minLat: float</p></li>
+<li><p>bbox.minLon: float</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>description: str</p></li>
+<li><p>hasDeviceData: bool</p></li>
+<li><p>lon: float</p></li>
+<li><p>locationCode: str</p></li>
+<li><p>hasPropertyData: bool</p></li>
+<li><p>lat: float</p></li>
+<li><p>dataSearchURL: str</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms">https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms</a> for more information.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;FGPD&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2005-09-17T00:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-09-17T13:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;deployments&quot;: 46,</span>
+<span class="go">        &quot;locationName&quot;: &quot;Folger Deep&quot;,</span>
+<span class="go">        &quot;depth&quot;: 96.569761,</span>
+<span class="go">        &quot;bbox&quot;: {</span>
+<span class="go">            &quot;maxDepth&quot;: 105.0,</span>
+<span class="go">            &quot;maxLat&quot;: 48.814029,</span>
+<span class="go">            &quot;maxLon&quot;: -125.274604,</span>
+<span class="go">            &quot;minDepth&quot;: 94.0,</span>
+<span class="go">            &quot;minLat&quot;: 48.813667,</span>
+<span class="go">            &quot;minLon&quot;: -125.28195,</span>
+<span class="go">        },</span>
+<span class="go">        &quot;description&quot;: &quot; Folger Deep is a deep location in Folger Passage near a pillar-like seamount, where productivity and marine mammals are observed.&quot;,</span>
+<span class="go">        &quot;hasDeviceData&quot;: True,</span>
+<span class="go">        &quot;lon&quot;: -125.280572,</span>
+<span class="go">        &quot;locationCode&quot;: &quot;FGPD&quot;,</span>
+<span class="go">        &quot;hasPropertyData&quot;: False,</span>
+<span class="go">        &quot;lat&quot;: 48.813795,</span>
+<span class="go">        &quot;dataSearchURL&quot;: &quot;https://data.oceannetworks.ca/DataSearch?location=FGPD&quot;,</span>
+<span class="go">    }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getLocationsTree">
+<span class="sig-name descname"><span class="pre">getLocationsTree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getLocationsTree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getLocationsTree" title="Link to this definition"></a></dt>
+<dd><p>Return a location tree.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/locations/tree</span></code>.</p>
+<p>Return a hierarchical representation of the ONC Search Tree Nodes.
+The Search Tree is used in Oceans 3.0 to organize instruments and variables by location
+so that users can easily drill down by place name or mobile platform name
+to find the instruments or properties they are interested in.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/locations/tree">https://data.oceannetworks.ca/OpenAPI#get-/locations/tree</a>
+for usage and available query string parameters.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getLocationHierarchy</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request. Return a tree of all available locations if None.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+<li><p>propertyCode</p></li>
+<li><p>dataProductCode</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>locationName</p></li>
+<li><p>deviceCode</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each location returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><p>locationName: str</p></li>
+<li><p>children: list of dict | None</p></li>
+<li><p>description: string</p></li>
+<li><p>hasDeviceData: bool</p></li>
+<li><p>locationCode: str</p></li>
+<li><p>hasPropertyData: bool</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms">https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms</a> for more information.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BACCC&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getLocationsTree</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;locationName&quot;: &quot;Coral Cliff&quot;,</span>
+<span class="go">        &quot;children&quot;: [</span>
+<span class="go">            {</span>
+<span class="go">                &quot;locationName&quot;: &quot;ADCP 2 MHz East&quot;,</span>
+<span class="go">                &quot;children&quot;: None,</span>
+<span class="go">                &quot;description&quot;: &quot;&quot;,</span>
+<span class="go">                &quot;hasDeviceData&quot;: True,</span>
+<span class="go">                &quot;locationCode&quot;: &quot;BACCC.A1&quot;,</span>
+<span class="go">                &quot;hasPropertyData&quot;: False,</span>
+<span class="go">            },</span>
+<span class="go">            {</span>
+<span class="go">                &quot;locationName&quot;: &quot;ADCP 2 MHz West&quot;,</span>
+<span class="go">                &quot;children&quot;: None,</span>
+<span class="go">                &quot;description&quot;: &quot;&quot;,</span>
+<span class="go">                &quot;hasDeviceData&quot;: True,</span>
+<span class="go">                &quot;locationCode&quot;: &quot;BACCC.A2&quot;,</span>
+<span class="go">                &quot;hasPropertyData&quot;: False,</span>
+<span class="go">            },</span>
+<span class="go">        ],</span>
+<span class="go">        &quot;description&quot;: &quot; The Coral Cliffs are located within Barkley Canyon. At this location, boundary layer flow near steep bathymetry, interaction of currents, and deep-sea corals are observed.&quot;,</span>
+<span class="go">        &quot;hasDeviceData&quot;: False,</span>
+<span class="go">        &quot;locationCode&quot;: &quot;BACCC&quot;,</span>
+<span class="go">        &quot;hasPropertyData&quot;: True,</span>
+<span class="go">    }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getDeployments">
+<span class="sig-name descname"><span class="pre">getDeployments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getDeployments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getDeployments" title="Link to this definition"></a></dt>
+<dd><p>Return a list of device deployments.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/deployments</span></code>.</p>
+<p>Return all deployments defined in Oceans 3.0 which meet the filter criteria,
+where a deployment is the installation of a device at a location.
+The deployments service assists in knowing when and where specific types of data are available.</p>
+<p>The primary purpose for the deployments service is to find the dates and locations of deployments
+and use the dateFrom and dateTo datetimes when requesting a data product using the <code class="docutils literal notranslate"><span class="pre">dataProductDelivery</span></code> web service.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/deployments">https://data.oceannetworks.ca/OpenAPI#get-/deployments</a>
+for usage and available filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request. Return all device deployment if None.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+<li><p>deviceCode</p></li>
+<li><p>propertyCode</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each deployment returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><p>begin: str</p></li>
+<li><p>citation: dict</p></li>
+<li><p>depth: float</p></li>
+<li><p>deviceCategoryCode: str</p></li>
+<li><p>deviceCode: str</p></li>
+<li><p>end: str | None</p></li>
+<li><p>hasDeviceData: bool</p></li>
+<li><p>heading: float | None</p></li>
+<li><p>lat: float</p></li>
+<li><p>locationCode: str</p></li>
+<li><p>lon: float</p></li>
+<li><p>pitch: float | None</p></li>
+<li><p>roll: float | None</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms">https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms</a> for more information.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BACAX&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-09-17&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-09-17T13:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getDeployments</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;begin&quot;: &quot;2014-05-09T15:50:42.000Z&quot;,</span>
+<span class="go">        &quot;citation&quot;: {</span>
+<span class="go">            &quot;citation&quot;: &quot;Ocean Networks Canada Society. 2015. Barkley Canyon Axis Conductivity Temperature Depth Deployed 2014-05-09. Ocean Networks Canada Society. https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517.&quot;,</span>
+<span class="go">            &quot;doi&quot;: &quot;10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517&quot;,</span>
+<span class="go">            &quot;landingPageUrl&quot;: &quot;https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517&quot;,</span>
+<span class="go">            &quot;queryPid&quot;: None,</span>
+<span class="go">        },</span>
+<span class="go">        &quot;depth&quot;: 982.0,</span>
+<span class="go">        &quot;deviceCategoryCode&quot;: &quot;CTD&quot;,</span>
+<span class="go">        &quot;deviceCode&quot;: &quot;SBECTD16p6002&quot;,</span>
+<span class="go">        &quot;end&quot;: &quot;2015-09-17T12:59:52.000Z&quot;,</span>
+<span class="go">        &quot;hasDeviceData&quot;: True,</span>
+<span class="go">        &quot;heading&quot;: None,</span>
+<span class="go">        &quot;lat&quot;: 48.316583,</span>
+<span class="go">        &quot;locationCode&quot;: &quot;BACAX&quot;,</span>
+<span class="go">        &quot;lon&quot;: -126.050796,</span>
+<span class="go">        &quot;pitch&quot;: None,</span>
+<span class="go">        &quot;roll&quot;: None,</span>
+<span class="go">    }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getDevices">
+<span class="sig-name descname"><span class="pre">getDevices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getDevices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getDevices" title="Link to this definition"></a></dt>
+<dd><p>Return a list of devices.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/devices</span></code>.</p>
+<p>Return all the devices defined in Oceans 3.0 that meet a set of filter criteria.
+Devices are instruments that have one or more sensors that observe a property or phenomenon
+with a goal of producing an estimate of the value of a property.
+Devices are uniquely identified by a device code and can be deployed at multiple locations during their lifespan.</p>
+<p>The primary purpose of the devices service is to find devices that have the data you are interested in
+and use the deviceCode when requesting a data product using the <code class="docutils literal notranslate"><span class="pre">dataProductDelivery</span></code> web service.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/devices">https://data.oceannetworks.ca/OpenAPI#get-/devices</a>
+for usage and available filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request. Return all devices available if None.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+<li><p>deviceCode</p></li>
+<li><p>propertyCode</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each device returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>cvTerm: dict</dt><dd><ul>
+<li><dl class="simple">
+<dt>cvTerm.device: list of dict</dt><dd><ul>
+<li><p>cvTerm.device[].uri: str</p></li>
+<li><p>cvTerm.device[].vocabulary: str</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>dataRating: list of dict</dt><dd><ul>
+<li><p>dataRating[].dateFrom: str</p></li>
+<li><p>dataRating[].dateTo: str | None</p></li>
+<li><p>dataRating[].samplePeriod: float</p></li>
+<li><p>dataRating[].sampleSize: int</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>deviceCategoryCode: str</p></li>
+<li><p>deviceCode: str</p></li>
+<li><p>deviceId: int</p></li>
+<li><p>deviceLink: str</p></li>
+<li><p>deviceName: str</p></li>
+<li><p>hasDeviceData: bool</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms">https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms</a> for more information.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;deviceCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BPR-Folger-59&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2005-09-17T00:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-09-17T13:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;cvTerm&quot;: {</span>
+<span class="go">            &quot;device&quot;: [</span>
+<span class="go">                {</span>
+<span class="go">                    &quot;uri&quot;: &quot;http://vocab.nerc.ac.uk/collection/L22/current/TOOL1652/&quot;,</span>
+<span class="go">                    &quot;vocabulary&quot;: &quot;SeaVoX Device Catalogue&quot;,</span>
+<span class="go">                }</span>
+<span class="go">            ]</span>
+<span class="go">        },</span>
+<span class="go">        &quot;dataRating&quot;: [</span>
+<span class="go">            {</span>
+<span class="go">                &quot;dateFrom&quot;: &quot;2007-01-01T00:00:00.000Z&quot;,</span>
+<span class="go">                &quot;dateTo&quot;: None,</span>
+<span class="go">                &quot;samplePeriod&quot;: 1.0,</span>
+<span class="go">                &quot;sampleSize&quot;: 1,</span>
+<span class="go">            }</span>
+<span class="go">        ],</span>
+<span class="go">        &quot;deviceCategoryCode&quot;: &quot;BPR&quot;,</span>
+<span class="go">        &quot;deviceCode&quot;: &quot;BPR-Folger-59&quot;,</span>
+<span class="go">        &quot;deviceId&quot;: 21503,</span>
+<span class="go">        &quot;deviceLink&quot;: &quot;https://data.oceannetworks.ca/DeviceListing?DeviceId=21503&quot;,</span>
+<span class="go">        &quot;deviceName&quot;: &quot;NRCan Bottom Pressure Recorder 59&quot;,</span>
+<span class="go">        &quot;hasDeviceData&quot;: True,</span>
+<span class="go">    }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getDeviceCategories">
+<span class="sig-name descname"><span class="pre">getDeviceCategories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getDeviceCategories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getDeviceCategories" title="Link to this definition"></a></dt>
+<dd><p>Return a list of device categories</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/deviceCategories</span></code>.</p>
+<p>Return all device categories defined in Oceans 3.0 that meet a filter criteria.
+A Device Category represents an instrument type classification such as
+CTD (Conductivity, Temperature &amp; Depth Instrument) or BPR (Bottom Pressure Recorder).
+Devices from a category can record data for one or more properties (variables).</p>
+<p>The primary purpose of this service is to find device categories that have the data you want to access;
+the service provides the deviceCategoryCode you can use
+when requesting a data product via the <code class="docutils literal notranslate"><span class="pre">dataProductDelivery</span></code> web service.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/deviceCategories">https://data.oceannetworks.ca/OpenAPI#get-/deviceCategories</a>
+for usage and available filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request. Return all device categories available if None.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>deviceCategoryCode</p></li>
+<li><p>deviceCategoryName</p></li>
+<li><p>description</p></li>
+<li><p>locationCode</p></li>
+<li><p>propertyCode</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each device category returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>cvTerm: dict</dt><dd><ul>
+<li><dl class="simple">
+<dt>cvTerm.deviceCategory: list of dict</dt><dd><ul>
+<li><p>cvTerm.deviceCategory[].uri: str</p></li>
+<li><p>cvTerm.deviceCategory[].vocabulary: str</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>description: str</p></li>
+<li><p>deviceCategoryCode: str</p></li>
+<li><p>deviceCategoryName: str</p></li>
+<li><p>hasDeviceData: bool</p></li>
+<li><p>longDescription: str</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms">https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms</a> for more information.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;deviceCategoryName&quot;</span><span class="p">:</span> <span class="s2">&quot;Conductivity&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getDeviceCategories</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;cvTerm&quot;: {</span>
+<span class="go">            &quot;deviceCategory&quot;: [</span>
+<span class="go">                {</span>
+<span class="go">                    &quot;uri&quot;: &quot;http://vocab.nerc.ac.uk/collection/L05/current/130/&quot;,</span>
+<span class="go">                    &quot;vocabulary&quot;: &quot;SeaDataNet device categories&quot;,</span>
+<span class="go">                }</span>
+<span class="go">            ]</span>
+<span class="go">        },</span>
+<span class="go">        &quot;description&quot;: &quot;Conductivity Temperature (and Depth Sensor)&quot;,</span>
+<span class="go">        &quot;deviceCategoryCode&quot;: &quot;CTD&quot;,</span>
+<span class="go">        &quot;deviceCategoryName&quot;: &quot;Conductivity Temperature Depth&quot;,</span>
+<span class="go">        &quot;hasDeviceData&quot;: True,</span>
+<span class="go">        &quot;longDescription&quot;: &quot; Conductivity Temperature Depth (CTD) is an instrument package that contains sensors for measuring the conductivity, temperature, and pressure of seawater. Salinity, sound velocity, depth and density are variables that can be derived from sensor measurements. CTDs can carry additional instruments and sensors such as oxygen sensors, turbidity sensors and fluorometers.&quot;,</span>
+<span class="go">    }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getProperties">
+<span class="sig-name descname"><span class="pre">getProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getProperties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getProperties" title="Link to this definition"></a></dt>
+<dd><p>Return a list of properties.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/properties</span></code>.</p>
+<p>Return all properties defined in Oceans 3.0 that meet a filter criteria.
+Properties are observable phenomena (aka, variables) and are the common names given to sensor types
+(i.e., oxygen, pressure, temperature, etc).</p>
+<p>The primary purpose of this service is to find the available properties of the data you want to access;
+the service provides the propertyCode that you can use to request a data product via the <code class="docutils literal notranslate"><span class="pre">dataProductDelivery</span></code> web service.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/properties">https://data.oceannetworks.ca/OpenAPI#get-/properties</a>
+for usage and available filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request. Return all properties available if None.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>propertyCode</p></li>
+<li><p>propertyName</p></li>
+<li><p>description</p></li>
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+<li><p>deviceCode</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each property returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>cvTerm: dict</dt><dd><ul>
+<li><dl class="simple">
+<dt>cvTerm.property: list of dict</dt><dd><ul>
+<li><p>cvTerm.property[].uri: str</p></li>
+<li><p>cvTerm.property[].vocabulary: str</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>cvTerm.uom: list of dict</dt><dd><ul>
+<li><p>cvTerm.uom[].uri: str</p></li>
+<li><p>cvTerm.uom[].vocabulary: str</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>description: str</p></li>
+<li><p>hasDeviceData: bool</p></li>
+<li><p>hasPropertyData: bool</p></li>
+<li><p>propertyCode: str</p></li>
+<li><p>propertyName: str</p></li>
+<li><p>uom: str</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms">https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms</a> for more information.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;conductivity&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BACAX&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getProperties</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;cvTerm&quot;: {</span>
+<span class="go">            &quot;property&quot;: [],</span>
+<span class="go">            &quot;uom&quot;: [</span>
+<span class="go">                {</span>
+<span class="go">                    &quot;uri&quot;: &quot;http://vocab.nerc.ac.uk/collection/P06/current/UECA/&quot;,</span>
+<span class="go">                    &quot;vocabulary&quot;: &quot;BODC data storage units&quot;,</span>
+<span class="go">                }</span>
+<span class="go">            ],</span>
+<span class="go">        },</span>
+<span class="go">        &quot;description&quot;: &quot;Conductivity: siemens per metre&quot;,</span>
+<span class="go">        &quot;hasDeviceData&quot;: True,</span>
+<span class="go">        &quot;hasPropertyData&quot;: True,</span>
+<span class="go">        &quot;propertyCode&quot;: &quot;conductivity&quot;,</span>
+<span class="go">        &quot;propertyName&quot;: &quot;Conductivity&quot;,</span>
+<span class="go">        &quot;uom&quot;: &quot;S/m&quot;,</span>
+<span class="go">    }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getDataProducts">
+<span class="sig-name descname"><span class="pre">getDataProducts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getDataProducts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getDataProducts" title="Link to this definition"></a></dt>
+<dd><p>Return a list of data products.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/dataProducts</span></code>.</p>
+<p>Return all data products defined in Oceans 3.0 that meet a filter criteria.
+Data Products are downloadable representations of ONC observational data,
+provided in formats that can be easily ingested by analytical or visualization software.</p>
+<p>The primary purpose of this service is to identify which data products and formats (file extensions)
+are available for the locations, devices, device categories or properties of interest.
+Use the <cite>dataProductCode</cite> and <cite>extension</cite> when requesting a data product via the <code class="docutils literal notranslate"><span class="pre">dataProductDelivery</span></code> web service.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/dataProducts">https://data.oceannetworks.ca/OpenAPI#get-/dataProducts</a>
+for usage and available filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request. Return all data products available if None.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>dataProductCode</p></li>
+<li><p>extension</p></li>
+<li><p>dataProductName</p></li>
+<li><p>propertyCode</p></li>
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+<li><p>deviceCode</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each data product returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><p>dataProductCode: str</p></li>
+<li><p>dataProductName: str</p></li>
+<li><dl class="simple">
+<dt>dataProductOptions: list of dict</dt><dd><ul>
+<li><dl class="simple">
+<dt>dataProductOptions[].allowableRange: list of dict | None</dt><dd><ul>
+<li><p>dataProductOptions[].allowableRange.lowerBound: str</p></li>
+<li><p>dataProductOptions[].allowableRange.onlyIntegers: bool</p></li>
+<li><p>dataProductOptions[].allowableRange.unitOfMeasure: str | None</p></li>
+<li><p>dataProductOptions[].allowableRange.upperBound: str</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>dataProductOptions[].allowableValues: list of str</p></li>
+<li><p>dataProductOptions[].defaultValues: str</p></li>
+<li><p>dataProductOptions[].documentation: list of str</p></li>
+<li><p>dataProductOptions[].option: str</p></li>
+<li><p>dataProductOptions[].suboptions: list of dict | None</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>extension: str</p></li>
+<li><p>hasDeviceData: bool</p></li>
+<li><p>hasPropertyData: bool</p></li>
+<li><p>helpDocument: str</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms">https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms</a> for more information.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;dataProductCode&quot;</span><span class="p">:</span> <span class="s2">&quot;SHV&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getDataProducts</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;dataProductCode&quot;: &quot;SHV&quot;,</span>
+<span class="go">        &quot;dataProductName&quot;: &quot;Spectrogram For Hydrophone Viewer&quot;,</span>
+<span class="go">        &quot;dataProductOptions&quot;: [</span>
+<span class="go">            {</span>
+<span class="go">                &quot;allowableRange&quot;: {</span>
+<span class="go">                    &quot;lowerBound&quot;: &quot;-160.0&quot;,</span>
+<span class="go">                    &quot;onlyIntegers&quot;: False,</span>
+<span class="go">                    &quot;unitOfMeasure&quot;: None,</span>
+<span class="go">                    &quot;upperBound&quot;: &quot;140.0&quot;,</span>
+<span class="go">                },</span>
+<span class="go">                &quot;allowableValues&quot;: [&quot;-1000&quot;],</span>
+<span class="go">                &quot;defaultValue&quot;: &quot;-1000&quot;,</span>
+<span class="go">                &quot;documentation&quot;: [</span>
+<span class="go">                    &quot;https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options&quot;</span>
+<span class="go">                ],</span>
+<span class="go">                &quot;option&quot;: &quot;dpo_lowerColourLimit&quot;,</span>
+<span class="go">                &quot;suboptions&quot;: None,</span>
+<span class="go">            },</span>
+<span class="go">            {</span>
+<span class="go">                &quot;allowableRange&quot;: None,</span>
+<span class="go">                &quot;allowableValues&quot;: [&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;],</span>
+<span class="go">                &quot;defaultValue&quot;: &quot;0&quot;,</span>
+<span class="go">                &quot;documentation&quot;: [</span>
+<span class="go">                    &quot;https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options&quot;</span>
+<span class="go">                ],</span>
+<span class="go">                &quot;option&quot;: &quot;dpo_spectrogramColourPalette&quot;,</span>
+<span class="go">                &quot;suboptions&quot;: None,</span>
+<span class="go">            },</span>
+<span class="go">            {</span>
+<span class="go">                &quot;allowableRange&quot;: {</span>
+<span class="go">                    &quot;lowerBound&quot;: &quot;-160.0&quot;,</span>
+<span class="go">                    &quot;onlyIntegers&quot;: False,</span>
+<span class="go">                    &quot;unitOfMeasure&quot;: None,</span>
+<span class="go">                    &quot;upperBound&quot;: &quot;140.0&quot;,</span>
+<span class="go">                },</span>
+<span class="go">                &quot;allowableValues&quot;: [&quot;-1000&quot;],</span>
+<span class="go">                &quot;defaultValue&quot;: &quot;-1000&quot;,</span>
+<span class="go">                &quot;documentation&quot;: [</span>
+<span class="go">                    &quot;https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options&quot;</span>
+<span class="go">                ],</span>
+<span class="go">                &quot;option&quot;: &quot;dpo_upperColourLimit&quot;,</span>
+<span class="go">                &quot;suboptions&quot;: None,</span>
+<span class="go">            },</span>
+<span class="go">        ],</span>
+<span class="go">        &quot;extension&quot;: &quot;png&quot;,</span>
+<span class="go">        &quot;hasDeviceData&quot;: True,</span>
+<span class="go">        &quot;hasPropertyData&quot;: False,</span>
+<span class="go">        &quot;helpDocument&quot;: &quot;https://wiki.oceannetworks.ca/display/DP/146&quot;,</span>
+<span class="go">    }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getDataAvailability">
+<span class="sig-name descname"><span class="pre">getDataAvailability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getDataAvailability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getDataAvailability" title="Link to this definition"></a></dt>
+<dd><p>Return information about which data products are available at a given time.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/dataAvailability/dataproducts</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/dataAvailability/dataproducts">https://data.oceannetworks.ca/OpenAPI#get-/dataAvailability/dataproducts</a>
+for usage and available filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request.</p>
+<p>Supported parameters are:</p>
+<ul class="simple">
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+<li><p>deviceCode</p></li>
+<li><p>propertyCode</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>dataProductCode</p></li>
+<li><p>extension</p></li>
+<li><p>minimumCoverage</p></li>
+<li><p>maximumCoverage</p></li>
+<li><p>getLatest</p></li>
+<li><p>groupBy</p></li>
+<li><p>mergeGaps</p></li>
+<li><p>includeEmptyDays</p></li>
+<li><p>rowLimit</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NCBC&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BPR&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-11-23&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-11-30&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getDataAvailability</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">{</span>
+<span class="go">    &quot;availableDataProducts&quot;: [</span>
+<span class="go">        {</span>
+<span class="go">            &quot;averageFileCoverage&quot;: 0.875,</span>
+<span class="go">            &quot;dataProductCode&quot;: &quot;LF&quot;,</span>
+<span class="go">            &quot;dateFrom&quot;: &quot;2019-11-23T00:00:00.000Z&quot;,</span>
+<span class="go">            &quot;dateTo&quot;: &quot;2019-12-01T00:00:00.000Z&quot;,</span>
+<span class="go">            &quot;deviceCode&quot;: &quot;BPR-Folger-59&quot;,</span>
+<span class="go">            &quot;extension&quot;: &quot;txt&quot;,</span>
+<span class="go">            &quot;fileCount&quot;: 7,</span>
+<span class="go">            &quot;maxFileCoverage&quot;: 1.0,</span>
+<span class="go">            &quot;maxFileCoverageDate&quot;: &quot;2019-11-23T00:00:00.000Z&quot;,</span>
+<span class="go">            &quot;minFileCoverage&quot;: 0.0,</span>
+<span class="go">            &quot;minFileCoverageDate&quot;: &quot;2019-11-30T00:00:00.000Z&quot;,</span>
+<span class="go">            &quot;totalFileSize&quot;: 8707618,</span>
+<span class="go">            &quot;totalUncompressedFileSize&quot;: 33868912,</span>
+<span class="go">        }</span>
+<span class="go">    ],</span>
+<span class="go">    &quot;messages&quot;: [],</span>
+<span class="go">    &quot;next&quot;: None,</span>
+<span class="go">    &quot;queryUrl&quot;: &quot;https://data.oceannetworks.ca/api/dataAvailability/dataproducts?locationCode=NCBC&amp;deviceCategoryCode=BPR&amp;dateFrom=2019-11-23&amp;dateTo=2019-11-30&amp;token=ONC_TOKEN&quot;,</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.orderDataProduct">
+<span class="sig-name descname"><span class="pre">orderDataProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxRetries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downloadResultsOnly</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">includeMetadataFile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.orderDataProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.orderDataProduct" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.requestDataProduct">
+<span class="sig-name descname"><span class="pre">requestDataProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.requestDataProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.requestDataProduct" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.checkDataProduct">
+<span class="sig-name descname"><span class="pre">checkDataProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dpRequestId</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.checkDataProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.checkDataProduct" title="Link to this definition"></a></dt>
+<dd><p>Check status of a requested data product.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/dataProductDelivery/status</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/status">https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/status</a>
+for usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dpRequestId</strong> (<em>int</em>) – A dpRequestId returned from calling <code class="docutils literal notranslate"><span class="pre">requestDataProduct</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.runDataProduct">
+<span class="sig-name descname"><span class="pre">runDataProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dpRequestId</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waitComplete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.runDataProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.runDataProduct" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.cancelDataProduct">
+<span class="sig-name descname"><span class="pre">cancelDataProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dpRequestId</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.cancelDataProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.cancelDataProduct" title="Link to this definition"></a></dt>
+<dd><p>Cancel a running data product.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/dataProductDelivery/cancel</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/cancel">https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/cancel</a>
+for usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dpRequestId</strong> (<em>int</em>) – A dpRequestId returned from calling <code class="docutils literal notranslate"><span class="pre">requestDataProduct</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each status returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><p>dpRunId: int</p></li>
+<li><p>status: str</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.restartDataProduct">
+<span class="sig-name descname"><span class="pre">restartDataProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dpRequestId</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waitComplete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.restartDataProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.restartDataProduct" title="Link to this definition"></a></dt>
+<dd><p>Restart a cancelled data product.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/dataProductDelivery/restart</span></code>.</p>
+<p>Restart searches cancelled by calling the <code class="docutils literal notranslate"><span class="pre">cancelDataProduct</span></code> method.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/restart">https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/restart</a>
+for usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dpRequestId</strong> (<em>int</em>) – A dpRequestId returned from calling <code class="docutils literal notranslate"><span class="pre">requestDataProduct</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each status returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><p>dpRunId: int</p></li>
+<li><p>status: str</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.downloadDataProduct">
+<span class="sig-name descname"><span class="pre">downloadDataProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runId</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxRetries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downloadResultsOnly</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">includeMetadataFile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.downloadDataProduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.downloadDataProduct" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getScalardataByLocation">
+<span class="sig-name descname"><span class="pre">getScalardataByLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getScalardataByLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getScalardataByLocation" title="Link to this definition"></a></dt>
+<dd><p>Return scalar data in JSON format by given location code and device category code.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/scalardata/location</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location">https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location</a>
+for usage.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getDirectByLocation</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request.</p>
+<p>Supported parameters are:</p>
+<ul>
+<li><p>locationCode (<strong>required</strong>)</p></li>
+<li><p>deviceCategoryCode (<strong>required</strong>)</p></li>
+<li><p>propertyCode</p></li>
+<li><p>sensorCategoryCodes</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>metadata</p></li>
+<li><p>rowLimit</p></li>
+<li><p>outputFormat</p></li>
+<li><p>returnOptions</p></li>
+<li><p>getLatest</p></li>
+<li><p>qualityControl</p></li>
+<li><p>resampleType</p></li>
+<li><p>resamplePeriod</p></li>
+<li><p>fillGaps</p></li>
+<li><p>sensorsToInclude</p></li>
+</ul>
+</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getScalardataByDevice">
+<span class="sig-name descname"><span class="pre">getScalardataByDevice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getScalardataByDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getScalardataByDevice" title="Link to this definition"></a></dt>
+<dd><p>Return scalar data in JSON format by given device code.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/scalardata/device</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device">https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device</a>
+for usage.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getDirectByDevice</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request.</p>
+<p>Supported parameters are:</p>
+<ul>
+<li><p>deviceCode (<strong>required</strong>)</p></li>
+<li><p>sensorCategoryCodes</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>rowLimit</p></li>
+<li><p>outputFormat</p></li>
+<li><p>returnOptions</p></li>
+<li><p>getLatest</p></li>
+<li><p>qualityControl</p></li>
+<li><p>resampleType</p></li>
+<li><p>resamplePeriod</p></li>
+<li><p>fillGaps</p></li>
+<li><p>sensorsToInclude</p></li>
+</ul>
+</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getScalardata">
+<span class="sig-name descname"><span class="pre">getScalardata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getScalardata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getScalardata" title="Link to this definition"></a></dt>
+<dd><p>Return scalar data in JSON format by given query parameters.</p>
+<p>A helper method for getting scalar data. Whether it is by device or by location is inferred
+from the keys in the given query parameters.</p>
+<ul class="simple">
+<li><p>ByDevice requires deviceCode.</p></li>
+<li><p>ByLocation requires locationCode and deviceCategoryCode.</p></li>
+<li><p>Raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if they both exist.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Query string parameters in the API request. See <code class="docutils literal notranslate"><span class="pre">getScalardataByLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">getScalardataByDevice</span></code>
+for more information.</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getRawdataByLocation">
+<span class="sig-name descname"><span class="pre">getRawdataByLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getRawdataByLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getRawdataByLocation" title="Link to this definition"></a></dt>
+<dd><p>Return the raw data at a given location for the given device category.</p>
+<p>A date range is optional. When not specified, data from all time will be returned
+within (possibly default) row and size limits.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/rawdata/location</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location">https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location</a>
+for usage.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getDirectRawByLocation</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request.</p>
+<p>Supported parameters are:</p>
+<ul>
+<li><p>locationCode (<strong>required</strong>)</p></li>
+<li><p>deviceCategoryCode (<strong>required</strong>)</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>rowLimit</p></li>
+<li><p>sizeLimit</p></li>
+<li><p>convertHexToDecimal</p></li>
+<li><p>outputFormat</p></li>
+<li><p>getLatest</p></li>
+<li><p>skipErrors</p></li>
+</ul>
+</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getRawdataByDevice">
+<span class="sig-name descname"><span class="pre">getRawdataByDevice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getRawdataByDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getRawdataByDevice" title="Link to this definition"></a></dt>
+<dd><p>Return the raw data for a given device.</p>
+<p>A date range is optional. When not specified, data from all time will be returned
+within (possibly default) row and size limits.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/rawdata/device</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/rawdata/device">https://data.oceannetworks.ca/OpenAPI#get-/rawdata/device</a>
+for usage.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getDirectRawByDevice</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request.</p>
+<p>Supported parameters are:</p>
+<ul>
+<li><p>deviceCode (<strong>required</strong>)</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>rowLimit</p></li>
+<li><p>sizeLimit</p></li>
+<li><p>convertHexToDecimal</p></li>
+<li><p>outputFormat</p></li>
+<li><p>getLatest</p></li>
+<li><p>skipErrors</p></li>
+</ul>
+</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getRawdata">
+<span class="sig-name descname"><span class="pre">getRawdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getRawdata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getRawdata" title="Link to this definition"></a></dt>
+<dd><p>Return the raw data by given query parameters.</p>
+<p>A helper method for getting the raw data. Whether it is by device or by location is inferred
+from the keys in the given query parameters.</p>
+<ul class="simple">
+<li><p>ByDevice requires deviceCode.</p></li>
+<li><p>ByLocation requires locationCode and deviceCategoryCode.</p></li>
+<li><p>Raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if they both exist.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Query string parameters in the API request. See <code class="docutils literal notranslate"><span class="pre">getRawdataByLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">getRawdataByDevice</span></code>
+for more information.</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getSensorCategoryCodes">
+<span class="sig-name descname"><span class="pre">getSensorCategoryCodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getSensorCategoryCodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getSensorCategoryCodes" title="Link to this definition"></a></dt>
+<dd><p>Return a list of sensor category codes.</p>
+<p>A helper method for narrowing down the sensorCategoryCodes that are of interest
+prior to the use of the scalardata service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>dict</em>) – Query string parameters in the API request.
+Use the same filters for calling <code class="docutils literal notranslate"><span class="pre">getScalardata</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>API response. Each sensor category code returned in the list is a dict with the following structure.</p>
+<ul class="simple">
+<li><p>outputFormat: str</p></li>
+<li><p>propertyCode: str</p></li>
+<li><p>sensorCategoryCode: str</p></li>
+<li><p>sensorCode: str</p></li>
+<li><p>sensorName: str</p></li>
+<li><p>unitOfMeasure: str</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NCBC&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BPR&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;seawatertemperature,totalpressure&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onc</span><span class="o">.</span><span class="n">getSensorCategoryCodes</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="go">[</span>
+<span class="go">    {</span>
+<span class="go">        &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="go">        &quot;propertyCode&quot;: &quot;totalpressure&quot;,</span>
+<span class="go">        &quot;sensorCategoryCode&quot;: &quot;pressure&quot;,</span>
+<span class="go">        &quot;sensorCode&quot;: &quot;Pressure&quot;,</span>
+<span class="go">        &quot;sensorName&quot;: &quot;Seafloor Pressure&quot;,</span>
+<span class="go">        &quot;unitOfMeasure&quot;: &quot;decibar&quot;,</span>
+<span class="go">    },</span>
+<span class="go">    {</span>
+<span class="go">        &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="go">        &quot;propertyCode&quot;: &quot;seawatertemperature&quot;,</span>
+<span class="go">        &quot;sensorCategoryCode&quot;: &quot;temperature&quot;,</span>
+<span class="go">        &quot;sensorCode&quot;: &quot;Temperature&quot;,</span>
+<span class="go">        &quot;sensorName&quot;: &quot;Housing Temperature&quot;,</span>
+<span class="go">        &quot;unitOfMeasure&quot;: &quot;C&quot;,</span>
+<span class="go">    },</span>
+<span class="go">    {</span>
+<span class="go">        &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="go">        &quot;propertyCode&quot;: &quot;seawatertemperature&quot;,</span>
+<span class="go">        &quot;sensorCategoryCode&quot;: &quot;temperature1&quot;,</span>
+<span class="go">        &quot;sensorCode&quot;: &quot;temperature1&quot;,</span>
+<span class="go">        &quot;sensorName&quot;: &quot;Temperature&quot;,</span>
+<span class="go">        &quot;unitOfMeasure&quot;: &quot;C&quot;,</span>
+<span class="go">    },</span>
+<span class="go">    {</span>
+<span class="go">        &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="go">        &quot;propertyCode&quot;: &quot;seawatertemperature&quot;,</span>
+<span class="go">        &quot;sensorCategoryCode&quot;: &quot;temperature2&quot;,</span>
+<span class="go">        &quot;sensorCode&quot;: &quot;temperature2&quot;,</span>
+<span class="go">        &quot;sensorName&quot;: &quot;P-Sensor Temperature&quot;,</span>
+<span class="go">        &quot;unitOfMeasure&quot;: &quot;C&quot;,</span>
+<span class="go">    },</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getArchivefileByLocation">
+<span class="sig-name descname"><span class="pre">getArchivefileByLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getArchivefileByLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getArchivefileByLocation" title="Link to this definition"></a></dt>
+<dd><p>Return a list of files available in Oceans 3.0 Archiving System
+for a given location code and device category code.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/archivefile/location</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location">https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location</a>
+for usage.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getListByLocation</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request.</p>
+<p>Supported parameters are:</p>
+<ul>
+<li><p>locationCode (<strong>required</strong>)</p></li>
+<li><p>deviceCategoryCode (<strong>required</strong>)</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>dateArchivedFrom</p></li>
+<li><p>dateArchivedTo</p></li>
+<li><p>fileExtension</p></li>
+<li><p>dataProductCode</p></li>
+<li><p>returnOptions</p></li>
+<li><p>rowLimit</p></li>
+<li><p>page</p></li>
+<li><p>getLatest</p></li>
+</ul>
+</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getArchivefileByDevice">
+<span class="sig-name descname"><span class="pre">getArchivefileByDevice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getArchivefileByDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getArchivefileByDevice" title="Link to this definition"></a></dt>
+<dd><p>Return a list of files available in Oceans 3.0 Archiving System
+for a given device code.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/archivefile/device</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device">https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device</a>
+for usage.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getListByDevice</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Query string parameters in the API request.</p>
+<p>Supported parameters are:</p>
+<ul>
+<li><p>deviceCode (<strong>required</strong>)</p></li>
+<li><p>dateFrom</p></li>
+<li><p>dateTo</p></li>
+<li><p>dateArchivedFrom</p></li>
+<li><p>dateArchivedTo</p></li>
+<li><p>fileExtension</p></li>
+<li><p>dataProductCode</p></li>
+<li><p>returnOptions</p></li>
+<li><p>rowLimit</p></li>
+<li><p>page</p></li>
+<li><p>getLatest</p></li>
+</ul>
+</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getArchivefile">
+<span class="sig-name descname"><span class="pre">getArchivefile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getArchivefile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getArchivefile" title="Link to this definition"></a></dt>
+<dd><p>Return a list of files available in Oceans 3.0 Archiving System by given query parameters.</p>
+<p>A helper method for getting a list of archive files. Whether it is by device or by location is inferred
+from the keys in the given query parameters.</p>
+<ul class="simple">
+<li><p>ByDevice requires deviceCode.</p></li>
+<li><p>ByLocation requires locationCode and deviceCategoryCode.</p></li>
+<li><p>Raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if they both exist.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Query string parameters in the API request.
+See <code class="docutils literal notranslate"><span class="pre">getArchivefileByLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">getArchivefileByDevice</span></code> for more information.</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getArchivefileUrls">
+<span class="sig-name descname"><span class="pre">getArchivefileUrls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joinedWithNewline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getArchivefileUrls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getArchivefileUrls" title="Link to this definition"></a></dt>
+<dd><p>Return a list of file URLs (or joined with a newline) available in Oceans 3.0 Archiving System by given query parameters.</p>
+<p>A helper method for getting a list of archive files URLs without downloading them.
+It can also return a single string that concatenates all the URLs in the list together with a newline,
+which can be useful if you are using a download manager and it supports batch downloading multiple URLs
+that expects all the URLs on a separate line from either a file or the clipboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Query string parameters in the API request.
+See <code class="docutils literal notranslate"><span class="pre">getArchivefileByLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">getArchivefileByDevice</span></code> for more information.</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+<li><p><strong>joinedWithNewline</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether it returns a list of URLs or a single string that concatenates the list with a newline.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of file URLs or a single joined string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str] | str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.getArchivefileUrl">
+<span class="sig-name descname"><span class="pre">getArchivefileUrl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.getArchivefileUrl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.getArchivefileUrl" title="Link to this definition"></a></dt>
+<dd><p>Return a file URL from Oceans 3.0 Archiving System by specifying the file name.</p>
+<p>A helper method for obtaining the archive file URL without actually downloading the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) – A valid name of a file in DMAS Archiving System.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A download URL for the given archive filename.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.downloadArchivefile">
+<span class="sig-name descname"><span class="pre">downloadArchivefile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.downloadArchivefile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.downloadArchivefile" title="Link to this definition"></a></dt>
+<dd><p>Download a file from Oceans 3.0 Archiving System by specifying the file name.</p>
+<p>The file will be downloaded without any compression.
+Many files in the archive are compressed for storage,
+uncompressing these files takes time on the server and increases data volume to transfer.</p>
+<p>The API endpoint is <code class="docutils literal notranslate"><span class="pre">/archivefile/download</span></code>.</p>
+<p>See <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download">https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download</a>
+for usage.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getFile</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) – A valid name of a file in DMAS Archiving System.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to overwrite the file if it exists. 0 size file is treated as non-existent,
+meaning it gets overwritten even when overwrite=False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict showing the error message if the filename is invalid.
+None if the download is successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="onc.ONC.downloadDirectArchivefile">
+<span class="sig-name descname"><span class="pre">downloadDirectArchivefile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allPages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/onc/onc.html#ONC.downloadDirectArchivefile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#onc.ONC.downloadDirectArchivefile" title="Link to this definition"></a></dt>
+<dd><p>Download files from Oceans 3.0 Archiving System by given query parameters.</p>
+<p>A helper method to combine <code class="docutils literal notranslate"><span class="pre">getArchivefile</span></code> and <code class="docutils literal notranslate"><span class="pre">downloadArchivefile</span></code>.
+Internally it calls <code class="docutils literal notranslate"><span class="pre">getArchivefile</span></code> to get a list of archive files,
+and <code class="docutils literal notranslate"><span class="pre">downloadArchivefile</span></code> to download all files.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">getDirectFiles</span></code> is an alias for this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Query string parameters in the API request.
+See <code class="docutils literal notranslate"><span class="pre">getArchivefileByLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">getArchivefileByDevice</span></code> for more information.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to overwrite the file if it exists.</p></li>
+<li><p><strong>allPages</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dict showing download results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

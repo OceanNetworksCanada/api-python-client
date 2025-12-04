@@ -1,0 +1,1709 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onc.onc &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">onc.onc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for onc.onc</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dateutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">parser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc.modules._OncArchive</span><span class="w"> </span><span class="kn">import</span> <span class="n">_OncArchive</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc.modules._OncDelivery</span><span class="w"> </span><span class="kn">import</span> <span class="n">_OncDelivery</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc.modules._OncDiscovery</span><span class="w"> </span><span class="kn">import</span> <span class="n">_OncDiscovery</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc.modules._OncRealTime</span><span class="w"> </span><span class="kn">import</span> <span class="n">_OncRealTime</span>
+
+
+<div class="viewcode-block" id="ONC">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ONC</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A wrapper class for Oceans 3.0 API requests.</span>
+
+<span class="sd">    All the client library&#39;s functionality is provided as methods of this class.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    token : str | None, default None</span>
+<span class="sd">        The ONC API token, which could be retrieved at https://data.oceannetworks.ca/Profile once logged in.</span>
+<span class="sd">        If None, the token is read from the environment variable ``ONC_TOKEN``.</span>
+<span class="sd">    production : boolean, default True</span>
+<span class="sd">        Whether the ONC Production server URL is used for service requests.</span>
+
+<span class="sd">        - True: Use the production server.</span>
+<span class="sd">        - False: Use the internal ONC test server (reserved for ONC staff IP addresses).</span>
+<span class="sd">    showInfo : boolean, default False</span>
+<span class="sd">        Whether verbose script messages are displayed, such as request url and processing time information.</span>
+
+<span class="sd">        - True: Print all information and debug messages (intended for debugging).</span>
+<span class="sd">        - False: Only print information messages.</span>
+<span class="sd">    showWarning : boolean, default True</span>
+<span class="sd">        Whether warning messages are displayed. Some web services have &quot;messages&quot; key in the response JSON</span>
+<span class="sd">        to indicate that something might need attention, like using a default value for a missing parameter.</span>
+<span class="sd">    outPath : str | Path, default &quot;output&quot;</span>
+<span class="sd">        The directory that files are saved to (relative to the current directory) when downloading files.</span>
+<span class="sd">        The directory will be created if it does not exist during the download.</span>
+<span class="sd">    timeout : int, default 60</span>
+<span class="sd">        Number of seconds before a request to the API is canceled due to a timeout.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from onc import ONC</span>
+<span class="sd">    &gt;&gt;&gt; onc = ONC()  # Only if you set the env variable &quot;ONC_TOKEN&quot; # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; onc = ONC(&quot;YOUR_TOKEN_HERE&quot;)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; onc = ONC(&quot;YOUR_TOKEN_HERE&quot;, showInfo=True, outPath=&quot;onc-files&quot;)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">production</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">showInfo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">showWarning</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">outPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">=</span> <span class="s2">&quot;output&quot;</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ONC_TOKEN&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;ONC API token is required. Please provide it as the first argument, &quot;</span>
+                <span class="s2">&quot;or set it as the environment variable &#39;ONC_TOKEN&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^a-zA-Z0-9\-]+&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showInfo</span> <span class="o">=</span> <span class="n">showInfo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showWarning</span> <span class="o">=</span> <span class="n">showWarning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">production</span> <span class="o">=</span> <span class="n">production</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outPath</span> <span class="o">=</span> <span class="n">outPath</span>
+
+        <span class="c1"># Create service objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span> <span class="o">=</span> <span class="n">_OncDiscovery</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span> <span class="o">=</span> <span class="n">_OncDelivery</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span> <span class="o">=</span> <span class="n">_OncRealTime</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">archive</span> <span class="o">=</span> <span class="n">_OncArchive</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">outPath</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the resolved directory path that files are saved to.</span>
+
+<span class="sd">        The setter method can take either `str` or `Path` as the parameter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_path</span>
+
+    <span class="nd">@outPath</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">outPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_out_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">outPath</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">production</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return whether the test is against the Production environment or not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_production</span>
+
+    <span class="nd">@production</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">production</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_production</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_production</span> <span class="o">=</span> <span class="n">is_production</span>
+
+        <span class="k">if</span> <span class="n">is_production</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">baseUrl</span> <span class="o">=</span> <span class="s2">&quot;https://data.oceannetworks.ca/&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">baseUrl</span> <span class="o">=</span> <span class="s2">&quot;https://qa.oceannetworks.ca/&quot;</span>
+
+<div class="viewcode-block" id="ONC.print">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.print">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pretty print a collection to the console or a file.</span>
+
+<span class="sd">        Mainly used to print the results returned by other class methods.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obj: Any</span>
+<span class="sd">            Any collection, including scalar values, dictionaries and lists (i.e. those returned by other class methods)</span>
+<span class="sd">        filename : str, default &quot;&quot;</span>
+<span class="sd">            The filename that is used when saving the json file. It is relative to ``self._out_path``.</span>
+<span class="sd">            The ``.json`` extension could be omitted.</span>
+
+<span class="sd">            - if not empty, save the output to the file.</span>
+<span class="sd">            - if empty, print the output to the console.</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; result = onc.getLocations()  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.print(result)  # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_path</span> <span class="o">/</span> <span class="n">filename</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="n">filePath</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.json&quot;</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filePath</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.formatUtc">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.formatUtc">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">formatUtc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dateString</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;now&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Format the provided date string as an ISO8601 UTC date string.</span>
+
+<span class="sd">        The ISO8601 UTC date format is required by the API.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dateString: str, default &quot;now&quot;</span>
+<span class="sd">            A string that represents a date &amp; time in any of the formats</span>
+<span class="sd">            described in http://labix.org/python-dateutil#head-c0e81a473b647dfa787dc11e8c69557ec2c3ecd2.</span>
+<span class="sd">            Examples are:</span>
+
+<span class="sd">            - &quot;2016-12-04&quot;</span>
+<span class="sd">            - &quot;2016-Dec-04, 12:00:00&quot;</span>
+<span class="sd">            - &quot;2016 Dec 04 03:00 PM&quot;</span>
+<span class="sd">            - &quot;now&quot; (returns current UTC date &amp; time)</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; onc.formatUtc(&quot;2019-Sept-09 03:00 PM&quot;)</span>
+<span class="sd">        &#39;2019-09-09T15:00:00.000Z&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dateString</span> <span class="o">==</span> <span class="s2">&quot;now&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.000Z&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">objDate</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">dateString</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">objDate</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.000Z&quot;</span></div>
+
+
+    <span class="c1"># PUBLIC METHOD WRAPPERS</span>
+
+    <span class="c1"># Discovery methods</span>
+
+<div class="viewcode-block" id="ONC.getLocations">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getLocations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getLocations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return locations.</span>
+
+<span class="sd">        The API endpoint is ``/locations``.</span>
+
+<span class="sd">        Return a list of location names and location codes.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/locations</span>
+<span class="sd">        for usage and available query string parameters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. Return all locations available if None.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode</span>
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - dataProductCode</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - locationName</span>
+<span class="sd">            - deviceCode</span>
+<span class="sd">            - includeChildren</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each location returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - deployments: int</span>
+<span class="sd">            - locationName: str</span>
+<span class="sd">            - depth: float</span>
+<span class="sd">            - bbox: dict</span>
+<span class="sd">                - bbox.maxDepth: float</span>
+<span class="sd">                - bbox.maxLat: float</span>
+<span class="sd">                - bbox.maxLon: float</span>
+<span class="sd">                - bbox.minDepth: float</span>
+<span class="sd">                - bbox.minLat: float</span>
+<span class="sd">                - bbox.minLon: float</span>
+<span class="sd">            - description: str</span>
+<span class="sd">            - hasDeviceData: bool</span>
+<span class="sd">            - lon: float</span>
+<span class="sd">            - locationCode: str</span>
+<span class="sd">            - hasPropertyData: bool</span>
+<span class="sd">            - lat: float</span>
+<span class="sd">            - dataSearchURL: str</span>
+
+<span class="sd">            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;locationCode&quot;: &quot;FGPD&quot;,</span>
+<span class="sd">        ...     &quot;dateFrom&quot;: &quot;2005-09-17T00:00:00.000Z&quot;,</span>
+<span class="sd">        ...     &quot;dateTo&quot;: &quot;2020-09-17T13:00:00.000Z&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getLocations(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;deployments&quot;: 46,</span>
+<span class="sd">                &quot;locationName&quot;: &quot;Folger Deep&quot;,</span>
+<span class="sd">                &quot;depth&quot;: 96.569761,</span>
+<span class="sd">                &quot;bbox&quot;: {</span>
+<span class="sd">                    &quot;maxDepth&quot;: 105.0,</span>
+<span class="sd">                    &quot;maxLat&quot;: 48.814029,</span>
+<span class="sd">                    &quot;maxLon&quot;: -125.274604,</span>
+<span class="sd">                    &quot;minDepth&quot;: 94.0,</span>
+<span class="sd">                    &quot;minLat&quot;: 48.813667,</span>
+<span class="sd">                    &quot;minLon&quot;: -125.28195,</span>
+<span class="sd">                },</span>
+<span class="sd">                &quot;description&quot;: &quot; Folger Deep is a deep location in Folger Passage near a pillar-like seamount, where productivity and marine mammals are observed.&quot;,</span>
+<span class="sd">                &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">                &quot;lon&quot;: -125.280572,</span>
+<span class="sd">                &quot;locationCode&quot;: &quot;FGPD&quot;,</span>
+<span class="sd">                &quot;hasPropertyData&quot;: False,</span>
+<span class="sd">                &quot;lat&quot;: 48.813795,</span>
+<span class="sd">                &quot;dataSearchURL&quot;: &quot;https://data.oceannetworks.ca/DataSearch?location=FGPD&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getLocationsTree">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getLocationsTree">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getLocationsTree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a location tree.</span>
+
+<span class="sd">        The API endpoint is ``/locations/tree``.</span>
+
+<span class="sd">        Return a hierarchical representation of the ONC Search Tree Nodes.</span>
+<span class="sd">        The Search Tree is used in Oceans 3.0 to organize instruments and variables by location</span>
+<span class="sd">        so that users can easily drill down by place name or mobile platform name</span>
+<span class="sd">        to find the instruments or properties they are interested in.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/locations/tree</span>
+<span class="sd">        for usage and available query string parameters.</span>
+
+<span class="sd">        The function ``getLocationHierarchy`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. Return a tree of all available locations if None.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode</span>
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - dataProductCode</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - locationName</span>
+<span class="sd">            - deviceCode</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each location returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - locationName: str</span>
+<span class="sd">            - children: list of dict | None</span>
+<span class="sd">            - description: string</span>
+<span class="sd">            - hasDeviceData: bool</span>
+<span class="sd">            - locationCode: str</span>
+<span class="sd">            - hasPropertyData: bool</span>
+
+<span class="sd">            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;locationCode&quot;: &quot;BACCC&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getLocationsTree(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;locationName&quot;: &quot;Coral Cliff&quot;,</span>
+<span class="sd">                &quot;children&quot;: [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &quot;locationName&quot;: &quot;ADCP 2 MHz East&quot;,</span>
+<span class="sd">                        &quot;children&quot;: None,</span>
+<span class="sd">                        &quot;description&quot;: &quot;&quot;,</span>
+<span class="sd">                        &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">                        &quot;locationCode&quot;: &quot;BACCC.A1&quot;,</span>
+<span class="sd">                        &quot;hasPropertyData&quot;: False,</span>
+<span class="sd">                    },</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &quot;locationName&quot;: &quot;ADCP 2 MHz West&quot;,</span>
+<span class="sd">                        &quot;children&quot;: None,</span>
+<span class="sd">                        &quot;description&quot;: &quot;&quot;,</span>
+<span class="sd">                        &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">                        &quot;locationCode&quot;: &quot;BACCC.A2&quot;,</span>
+<span class="sd">                        &quot;hasPropertyData&quot;: False,</span>
+<span class="sd">                    },</span>
+<span class="sd">                ],</span>
+<span class="sd">                &quot;description&quot;: &quot; The Coral Cliffs are located within Barkley Canyon. At this location, boundary layer flow near steep bathymetry, interaction of currents, and deep-sea corals are observed.&quot;,</span>
+<span class="sd">                &quot;hasDeviceData&quot;: False,</span>
+<span class="sd">                &quot;locationCode&quot;: &quot;BACCC&quot;,</span>
+<span class="sd">                &quot;hasPropertyData&quot;: True,</span>
+<span class="sd">            }</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getLocationHierarchy</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+    <span class="n">getLocationHierarchy</span> <span class="o">=</span> <span class="n">getLocationsTree</span>
+
+<div class="viewcode-block" id="ONC.getDeployments">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getDeployments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getDeployments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of device deployments.</span>
+
+<span class="sd">        The API endpoint is ``/deployments``.</span>
+
+<span class="sd">        Return all deployments defined in Oceans 3.0 which meet the filter criteria,</span>
+<span class="sd">        where a deployment is the installation of a device at a location.</span>
+<span class="sd">        The deployments service assists in knowing when and where specific types of data are available.</span>
+
+<span class="sd">        The primary purpose for the deployments service is to find the dates and locations of deployments</span>
+<span class="sd">        and use the dateFrom and dateTo datetimes when requesting a data product using the ``dataProductDelivery`` web service.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/deployments</span>
+<span class="sd">        for usage and available filters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. Return all device deployment if None.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode</span>
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - deviceCode</span>
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each deployment returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - begin: str</span>
+<span class="sd">            - citation: dict</span>
+<span class="sd">            - depth: float</span>
+<span class="sd">            - deviceCategoryCode: str</span>
+<span class="sd">            - deviceCode: str</span>
+<span class="sd">            - end: str | None</span>
+<span class="sd">            - hasDeviceData: bool</span>
+<span class="sd">            - heading: float | None</span>
+<span class="sd">            - lat: float</span>
+<span class="sd">            - locationCode: str</span>
+<span class="sd">            - lon: float</span>
+<span class="sd">            - pitch: float | None</span>
+<span class="sd">            - roll: float | None</span>
+
+<span class="sd">            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;locationCode&quot;: &quot;BACAX&quot;,</span>
+<span class="sd">        ...     &quot;deviceCategoryCode&quot;: &quot;CTD&quot;,</span>
+<span class="sd">        ...     &quot;dateFrom&quot;: &quot;2015-09-17&quot;,</span>
+<span class="sd">        ...     &quot;dateTo&quot;: &quot;2015-09-17T13:00:00.000Z&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getDeployments(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;begin&quot;: &quot;2014-05-09T15:50:42.000Z&quot;,</span>
+<span class="sd">                &quot;citation&quot;: {</span>
+<span class="sd">                    &quot;citation&quot;: &quot;Ocean Networks Canada Society. 2015. Barkley Canyon Axis Conductivity Temperature Depth Deployed 2014-05-09. Ocean Networks Canada Society. https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517.&quot;,</span>
+<span class="sd">                    &quot;doi&quot;: &quot;10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517&quot;,</span>
+<span class="sd">                    &quot;landingPageUrl&quot;: &quot;https://doi.org/10.80242/14d156f2-0146-40e5-a77e-f3637fb6b517&quot;,</span>
+<span class="sd">                    &quot;queryPid&quot;: None,</span>
+<span class="sd">                },</span>
+<span class="sd">                &quot;depth&quot;: 982.0,</span>
+<span class="sd">                &quot;deviceCategoryCode&quot;: &quot;CTD&quot;,</span>
+<span class="sd">                &quot;deviceCode&quot;: &quot;SBECTD16p6002&quot;,</span>
+<span class="sd">                &quot;end&quot;: &quot;2015-09-17T12:59:52.000Z&quot;,</span>
+<span class="sd">                &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">                &quot;heading&quot;: None,</span>
+<span class="sd">                &quot;lat&quot;: 48.316583,</span>
+<span class="sd">                &quot;locationCode&quot;: &quot;BACAX&quot;,</span>
+<span class="sd">                &quot;lon&quot;: -126.050796,</span>
+<span class="sd">                &quot;pitch&quot;: None,</span>
+<span class="sd">                &quot;roll&quot;: None,</span>
+<span class="sd">            }</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getDeployments</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getDevices">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getDevices">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of devices.</span>
+
+<span class="sd">        The API endpoint is ``/devices``.</span>
+
+<span class="sd">        Return all the devices defined in Oceans 3.0 that meet a set of filter criteria.</span>
+<span class="sd">        Devices are instruments that have one or more sensors that observe a property or phenomenon</span>
+<span class="sd">        with a goal of producing an estimate of the value of a property.</span>
+<span class="sd">        Devices are uniquely identified by a device code and can be deployed at multiple locations during their lifespan.</span>
+
+<span class="sd">        The primary purpose of the devices service is to find devices that have the data you are interested in</span>
+<span class="sd">        and use the deviceCode when requesting a data product using the ``dataProductDelivery`` web service.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/devices</span>
+<span class="sd">        for usage and available filters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. Return all devices available if None.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode</span>
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - deviceCode</span>
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each device returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - cvTerm: dict</span>
+<span class="sd">                - cvTerm.device: list of dict</span>
+<span class="sd">                    - cvTerm.device[].uri: str</span>
+<span class="sd">                    - cvTerm.device[].vocabulary: str</span>
+<span class="sd">            - dataRating: list of dict</span>
+<span class="sd">                - dataRating[].dateFrom: str</span>
+<span class="sd">                - dataRating[].dateTo: str | None</span>
+<span class="sd">                - dataRating[].samplePeriod: float</span>
+<span class="sd">                - dataRating[].sampleSize: int</span>
+<span class="sd">            - deviceCategoryCode: str</span>
+<span class="sd">            - deviceCode: str</span>
+<span class="sd">            - deviceId: int</span>
+<span class="sd">            - deviceLink: str</span>
+<span class="sd">            - deviceName: str</span>
+<span class="sd">            - hasDeviceData: bool</span>
+
+<span class="sd">            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;deviceCode&quot;: &quot;BPR-Folger-59&quot;,</span>
+<span class="sd">        ...     &quot;dateFrom&quot;: &quot;2005-09-17T00:00:00.000Z&quot;,</span>
+<span class="sd">        ...     &quot;dateTo&quot;: &quot;2020-09-17T13:00:00.000Z&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getDevices(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;cvTerm&quot;: {</span>
+<span class="sd">                    &quot;device&quot;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &quot;uri&quot;: &quot;http://vocab.nerc.ac.uk/collection/L22/current/TOOL1652/&quot;,</span>
+<span class="sd">                            &quot;vocabulary&quot;: &quot;SeaVoX Device Catalogue&quot;,</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ]</span>
+<span class="sd">                },</span>
+<span class="sd">                &quot;dataRating&quot;: [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &quot;dateFrom&quot;: &quot;2007-01-01T00:00:00.000Z&quot;,</span>
+<span class="sd">                        &quot;dateTo&quot;: None,</span>
+<span class="sd">                        &quot;samplePeriod&quot;: 1.0,</span>
+<span class="sd">                        &quot;sampleSize&quot;: 1,</span>
+<span class="sd">                    }</span>
+<span class="sd">                ],</span>
+<span class="sd">                &quot;deviceCategoryCode&quot;: &quot;BPR&quot;,</span>
+<span class="sd">                &quot;deviceCode&quot;: &quot;BPR-Folger-59&quot;,</span>
+<span class="sd">                &quot;deviceId&quot;: 21503,</span>
+<span class="sd">                &quot;deviceLink&quot;: &quot;https://data.oceannetworks.ca/DeviceListing?DeviceId=21503&quot;,</span>
+<span class="sd">                &quot;deviceName&quot;: &quot;NRCan Bottom Pressure Recorder 59&quot;,</span>
+<span class="sd">                &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">            }</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getDevices</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getDeviceCategories">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getDeviceCategories">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getDeviceCategories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of device categories</span>
+
+<span class="sd">        The API endpoint is ``/deviceCategories``.</span>
+
+<span class="sd">        Return all device categories defined in Oceans 3.0 that meet a filter criteria.</span>
+<span class="sd">        A Device Category represents an instrument type classification such as</span>
+<span class="sd">        CTD (Conductivity, Temperature &amp; Depth Instrument) or BPR (Bottom Pressure Recorder).</span>
+<span class="sd">        Devices from a category can record data for one or more properties (variables).</span>
+
+<span class="sd">        The primary purpose of this service is to find device categories that have the data you want to access;</span>
+<span class="sd">        the service provides the deviceCategoryCode you can use</span>
+<span class="sd">        when requesting a data product via the ``dataProductDelivery`` web service.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/deviceCategories</span>
+<span class="sd">        for usage and available filters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. Return all device categories available if None.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - deviceCategoryName</span>
+<span class="sd">            - description</span>
+<span class="sd">            - locationCode</span>
+<span class="sd">            - propertyCode</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each device category returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - cvTerm: dict</span>
+<span class="sd">                - cvTerm.deviceCategory: list of dict</span>
+<span class="sd">                    - cvTerm.deviceCategory[].uri: str</span>
+<span class="sd">                    - cvTerm.deviceCategory[].vocabulary: str</span>
+<span class="sd">            - description: str</span>
+<span class="sd">            - deviceCategoryCode: str</span>
+<span class="sd">            - deviceCategoryName: str</span>
+<span class="sd">            - hasDeviceData: bool</span>
+<span class="sd">            - longDescription: str</span>
+
+<span class="sd">            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;deviceCategoryCode&quot;: &quot;CTD&quot;,</span>
+<span class="sd">        ...     &quot;deviceCategoryName&quot;: &quot;Conductivity&quot;,</span>
+<span class="sd">        ...     &quot;description&quot;: &quot;Temperature&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getDeviceCategories(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;cvTerm&quot;: {</span>
+<span class="sd">                    &quot;deviceCategory&quot;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &quot;uri&quot;: &quot;http://vocab.nerc.ac.uk/collection/L05/current/130/&quot;,</span>
+<span class="sd">                            &quot;vocabulary&quot;: &quot;SeaDataNet device categories&quot;,</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ]</span>
+<span class="sd">                },</span>
+<span class="sd">                &quot;description&quot;: &quot;Conductivity Temperature (and Depth Sensor)&quot;,</span>
+<span class="sd">                &quot;deviceCategoryCode&quot;: &quot;CTD&quot;,</span>
+<span class="sd">                &quot;deviceCategoryName&quot;: &quot;Conductivity Temperature Depth&quot;,</span>
+<span class="sd">                &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">                &quot;longDescription&quot;: &quot; Conductivity Temperature Depth (CTD) is an instrument package that contains sensors for measuring the conductivity, temperature, and pressure of seawater. Salinity, sound velocity, depth and density are variables that can be derived from sensor measurements. CTDs can carry additional instruments and sensors such as oxygen sensors, turbidity sensors and fluorometers.&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getDeviceCategories</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getProperties">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getProperties">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of properties.</span>
+
+<span class="sd">        The API endpoint is ``/properties``.</span>
+
+<span class="sd">        Return all properties defined in Oceans 3.0 that meet a filter criteria.</span>
+<span class="sd">        Properties are observable phenomena (aka, variables) and are the common names given to sensor types</span>
+<span class="sd">        (i.e., oxygen, pressure, temperature, etc).</span>
+
+<span class="sd">        The primary purpose of this service is to find the available properties of the data you want to access;</span>
+<span class="sd">        the service provides the propertyCode that you can use to request a data product via the ``dataProductDelivery`` web service.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/properties</span>
+<span class="sd">        for usage and available filters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. Return all properties available if None.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - propertyName</span>
+<span class="sd">            - description</span>
+<span class="sd">            - locationCode</span>
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - deviceCode</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each property returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - cvTerm: dict</span>
+<span class="sd">                - cvTerm.property: list of dict</span>
+<span class="sd">                    - cvTerm.property[].uri: str</span>
+<span class="sd">                    - cvTerm.property[].vocabulary: str</span>
+<span class="sd">                - cvTerm.uom: list of dict</span>
+<span class="sd">                    - cvTerm.uom[].uri: str</span>
+<span class="sd">                    - cvTerm.uom[].vocabulary: str</span>
+<span class="sd">            - description: str</span>
+<span class="sd">            - hasDeviceData: bool</span>
+<span class="sd">            - hasPropertyData: bool</span>
+<span class="sd">            - propertyCode: str</span>
+<span class="sd">            - propertyName: str</span>
+<span class="sd">            - uom: str</span>
+
+<span class="sd">            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;propertyCode&quot;: &quot;conductivity&quot;,</span>
+<span class="sd">        ...     &quot;locationCode&quot;: &quot;BACAX&quot;,</span>
+<span class="sd">        ...     &quot;deviceCategoryCode&quot;: &quot;CTD&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getProperties(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;cvTerm&quot;: {</span>
+<span class="sd">                    &quot;property&quot;: [],</span>
+<span class="sd">                    &quot;uom&quot;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &quot;uri&quot;: &quot;http://vocab.nerc.ac.uk/collection/P06/current/UECA/&quot;,</span>
+<span class="sd">                            &quot;vocabulary&quot;: &quot;BODC data storage units&quot;,</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ],</span>
+<span class="sd">                },</span>
+<span class="sd">                &quot;description&quot;: &quot;Conductivity: siemens per metre&quot;,</span>
+<span class="sd">                &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">                &quot;hasPropertyData&quot;: True,</span>
+<span class="sd">                &quot;propertyCode&quot;: &quot;conductivity&quot;,</span>
+<span class="sd">                &quot;propertyName&quot;: &quot;Conductivity&quot;,</span>
+<span class="sd">                &quot;uom&quot;: &quot;S/m&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getProperties</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getDataProducts">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getDataProducts">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getDataProducts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of data products.</span>
+
+<span class="sd">        The API endpoint is ``/dataProducts``.</span>
+
+<span class="sd">        Return all data products defined in Oceans 3.0 that meet a filter criteria.</span>
+<span class="sd">        Data Products are downloadable representations of ONC observational data,</span>
+<span class="sd">        provided in formats that can be easily ingested by analytical or visualization software.</span>
+
+<span class="sd">        The primary purpose of this service is to identify which data products and formats (file extensions)</span>
+<span class="sd">        are available for the locations, devices, device categories or properties of interest.</span>
+<span class="sd">        Use the `dataProductCode` and `extension` when requesting a data product via the ``dataProductDelivery`` web service.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/dataProducts</span>
+<span class="sd">        for usage and available filters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. Return all data products available if None.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - dataProductCode</span>
+<span class="sd">            - extension</span>
+<span class="sd">            - dataProductName</span>
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - locationCode</span>
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - deviceCode</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each data product returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - dataProductCode: str</span>
+<span class="sd">            - dataProductName: str</span>
+<span class="sd">            - dataProductOptions: list of dict</span>
+<span class="sd">                - dataProductOptions[].allowableRange: list of dict | None</span>
+<span class="sd">                    - dataProductOptions[].allowableRange.lowerBound: str</span>
+<span class="sd">                    - dataProductOptions[].allowableRange.onlyIntegers: bool</span>
+<span class="sd">                    - dataProductOptions[].allowableRange.unitOfMeasure: str | None</span>
+<span class="sd">                    - dataProductOptions[].allowableRange.upperBound: str</span>
+<span class="sd">                - dataProductOptions[].allowableValues: list of str</span>
+<span class="sd">                - dataProductOptions[].defaultValues: str</span>
+<span class="sd">                - dataProductOptions[].documentation: list of str</span>
+<span class="sd">                - dataProductOptions[].option: str</span>
+<span class="sd">                - dataProductOptions[].suboptions: list of dict | None</span>
+<span class="sd">            - extension: str</span>
+<span class="sd">            - hasDeviceData: bool</span>
+<span class="sd">            - hasPropertyData: bool</span>
+<span class="sd">            - helpDocument: str</span>
+
+<span class="sd">            Check https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms for more information.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;dataProductCode&quot;: &quot;SHV&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getDataProducts(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;dataProductCode&quot;: &quot;SHV&quot;,</span>
+<span class="sd">                &quot;dataProductName&quot;: &quot;Spectrogram For Hydrophone Viewer&quot;,</span>
+<span class="sd">                &quot;dataProductOptions&quot;: [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &quot;allowableRange&quot;: {</span>
+<span class="sd">                            &quot;lowerBound&quot;: &quot;-160.0&quot;,</span>
+<span class="sd">                            &quot;onlyIntegers&quot;: False,</span>
+<span class="sd">                            &quot;unitOfMeasure&quot;: None,</span>
+<span class="sd">                            &quot;upperBound&quot;: &quot;140.0&quot;,</span>
+<span class="sd">                        },</span>
+<span class="sd">                        &quot;allowableValues&quot;: [&quot;-1000&quot;],</span>
+<span class="sd">                        &quot;defaultValue&quot;: &quot;-1000&quot;,</span>
+<span class="sd">                        &quot;documentation&quot;: [</span>
+<span class="sd">                            &quot;https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options&quot;</span>
+<span class="sd">                        ],</span>
+<span class="sd">                        &quot;option&quot;: &quot;dpo_lowerColourLimit&quot;,</span>
+<span class="sd">                        &quot;suboptions&quot;: None,</span>
+<span class="sd">                    },</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &quot;allowableRange&quot;: None,</span>
+<span class="sd">                        &quot;allowableValues&quot;: [&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;],</span>
+<span class="sd">                        &quot;defaultValue&quot;: &quot;0&quot;,</span>
+<span class="sd">                        &quot;documentation&quot;: [</span>
+<span class="sd">                            &quot;https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options&quot;</span>
+<span class="sd">                        ],</span>
+<span class="sd">                        &quot;option&quot;: &quot;dpo_spectrogramColourPalette&quot;,</span>
+<span class="sd">                        &quot;suboptions&quot;: None,</span>
+<span class="sd">                    },</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &quot;allowableRange&quot;: {</span>
+<span class="sd">                            &quot;lowerBound&quot;: &quot;-160.0&quot;,</span>
+<span class="sd">                            &quot;onlyIntegers&quot;: False,</span>
+<span class="sd">                            &quot;unitOfMeasure&quot;: None,</span>
+<span class="sd">                            &quot;upperBound&quot;: &quot;140.0&quot;,</span>
+<span class="sd">                        },</span>
+<span class="sd">                        &quot;allowableValues&quot;: [&quot;-1000&quot;],</span>
+<span class="sd">                        &quot;defaultValue&quot;: &quot;-1000&quot;,</span>
+<span class="sd">                        &quot;documentation&quot;: [</span>
+<span class="sd">                            &quot;https://wiki.oceannetworks.ca/display/DP/Spectrogram+Plot+Options&quot;</span>
+<span class="sd">                        ],</span>
+<span class="sd">                        &quot;option&quot;: &quot;dpo_upperColourLimit&quot;,</span>
+<span class="sd">                        &quot;suboptions&quot;: None,</span>
+<span class="sd">                    },</span>
+<span class="sd">                ],</span>
+<span class="sd">                &quot;extension&quot;: &quot;png&quot;,</span>
+<span class="sd">                &quot;hasDeviceData&quot;: True,</span>
+<span class="sd">                &quot;hasPropertyData&quot;: False,</span>
+<span class="sd">                &quot;helpDocument&quot;: &quot;https://wiki.oceannetworks.ca/display/DP/146&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getDataProducts</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getDataAvailability">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getDataAvailability">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getDataAvailability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return information about which data products are available at a given time.</span>
+
+<span class="sd">        The API endpoint is ``/dataAvailability/dataproducts``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/dataAvailability/dataproducts</span>
+<span class="sd">        for usage and available filters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode</span>
+<span class="sd">            - deviceCategoryCode</span>
+<span class="sd">            - deviceCode</span>
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - dataProductCode</span>
+<span class="sd">            - extension</span>
+<span class="sd">            - minimumCoverage</span>
+<span class="sd">            - maximumCoverage</span>
+<span class="sd">            - getLatest</span>
+<span class="sd">            - groupBy</span>
+<span class="sd">            - mergeGaps</span>
+<span class="sd">            - includeEmptyDays</span>
+<span class="sd">            - rowLimit</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;locationCode&quot;: &quot;NCBC&quot;,</span>
+<span class="sd">        ...     &quot;deviceCategoryCode&quot;: &quot;BPR&quot;,</span>
+<span class="sd">        ...     &quot;dateFrom&quot;: &quot;2019-11-23&quot;,</span>
+<span class="sd">        ...     &quot;dateTo&quot;: &quot;2019-11-30&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getDataAvailability(params)  # doctest: +SKIP</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;availableDataProducts&quot;: [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;averageFileCoverage&quot;: 0.875,</span>
+<span class="sd">                    &quot;dataProductCode&quot;: &quot;LF&quot;,</span>
+<span class="sd">                    &quot;dateFrom&quot;: &quot;2019-11-23T00:00:00.000Z&quot;,</span>
+<span class="sd">                    &quot;dateTo&quot;: &quot;2019-12-01T00:00:00.000Z&quot;,</span>
+<span class="sd">                    &quot;deviceCode&quot;: &quot;BPR-Folger-59&quot;,</span>
+<span class="sd">                    &quot;extension&quot;: &quot;txt&quot;,</span>
+<span class="sd">                    &quot;fileCount&quot;: 7,</span>
+<span class="sd">                    &quot;maxFileCoverage&quot;: 1.0,</span>
+<span class="sd">                    &quot;maxFileCoverageDate&quot;: &quot;2019-11-23T00:00:00.000Z&quot;,</span>
+<span class="sd">                    &quot;minFileCoverage&quot;: 0.0,</span>
+<span class="sd">                    &quot;minFileCoverageDate&quot;: &quot;2019-11-30T00:00:00.000Z&quot;,</span>
+<span class="sd">                    &quot;totalFileSize&quot;: 8707618,</span>
+<span class="sd">                    &quot;totalUncompressedFileSize&quot;: 33868912,</span>
+<span class="sd">                }</span>
+<span class="sd">            ],</span>
+<span class="sd">            &quot;messages&quot;: [],</span>
+<span class="sd">            &quot;next&quot;: None,</span>
+<span class="sd">            &quot;queryUrl&quot;: &quot;https://data.oceannetworks.ca/api/dataAvailability/dataproducts?locationCode=NCBC&amp;deviceCategoryCode=BPR&amp;dateFrom=2019-11-23&amp;dateTo=2019-11-30&amp;token=ONC_TOKEN&quot;,</span>
+<span class="sd">        }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovery</span><span class="o">.</span><span class="n">getDataAvailability</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+    <span class="c1"># Delivery methods</span>
+
+<div class="viewcode-block" id="ONC.orderDataProduct">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.orderDataProduct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">orderDataProduct</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">maxRetries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">downloadResultsOnly</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">includeMetadataFile</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span><span class="o">.</span><span class="n">orderDataProduct</span><span class="p">(</span>
+            <span class="n">filters</span><span class="p">,</span> <span class="n">maxRetries</span><span class="p">,</span> <span class="n">downloadResultsOnly</span><span class="p">,</span> <span class="n">includeMetadataFile</span><span class="p">,</span> <span class="n">overwrite</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.requestDataProduct">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.requestDataProduct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">requestDataProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span><span class="o">.</span><span class="n">requestDataProduct</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.checkDataProduct">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.checkDataProduct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checkDataProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpRequestId</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check status of a requested data product.</span>
+
+<span class="sd">        The API endpoint is ``/dataProductDelivery/status``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/status</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dpRequestId : int</span>
+<span class="sd">            A dpRequestId returned from calling ``requestDataProduct``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span><span class="o">.</span><span class="n">checkDataProduct</span><span class="p">(</span><span class="n">dpRequestId</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.runDataProduct">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.runDataProduct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">runDataProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpRequestId</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">waitComplete</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span><span class="o">.</span><span class="n">runDataProduct</span><span class="p">(</span><span class="n">dpRequestId</span><span class="p">,</span> <span class="n">waitComplete</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.cancelDataProduct">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.cancelDataProduct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cancelDataProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpRequestId</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cancel a running data product.</span>
+
+<span class="sd">        The API endpoint is ``/dataProductDelivery/cancel``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/cancel</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dpRequestId : int</span>
+<span class="sd">            A dpRequestId returned from calling ``requestDataProduct``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each status returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - dpRunId: int</span>
+<span class="sd">            - status: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span><span class="o">.</span><span class="n">cancelDataProduct</span><span class="p">(</span><span class="n">dpRequestId</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.restartDataProduct">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.restartDataProduct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">restartDataProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpRequestId</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">waitComplete</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restart a cancelled data product.</span>
+
+<span class="sd">        The API endpoint is ``/dataProductDelivery/restart``.</span>
+
+<span class="sd">        Restart searches cancelled by calling the ``cancelDataProduct`` method.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/restart</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dpRequestId : int</span>
+<span class="sd">            A dpRequestId returned from calling ``requestDataProduct``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each status returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - dpRunId: int</span>
+<span class="sd">            - status: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span><span class="o">.</span><span class="n">restartDataProduct</span><span class="p">(</span><span class="n">dpRequestId</span><span class="p">,</span> <span class="n">waitComplete</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.downloadDataProduct">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.downloadDataProduct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">downloadDataProduct</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">runId</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">maxRetries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">downloadResultsOnly</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">includeMetadataFile</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delivery</span><span class="o">.</span><span class="n">downloadDataProduct</span><span class="p">(</span>
+            <span class="n">runId</span><span class="p">,</span> <span class="n">maxRetries</span><span class="p">,</span> <span class="n">downloadResultsOnly</span><span class="p">,</span> <span class="n">includeMetadataFile</span><span class="p">,</span> <span class="n">overwrite</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># Real-time methods</span>
+
+<div class="viewcode-block" id="ONC.getScalardataByLocation">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getScalardataByLocation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getScalardataByLocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return scalar data in JSON format by given location code and device category code.</span>
+
+<span class="sd">        The API endpoint is ``/scalardata/location``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        The function ``getDirectByLocation`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode (**required**)</span>
+<span class="sd">            - deviceCategoryCode (**required**)</span>
+<span class="sd">            - propertyCode</span>
+<span class="sd">            - sensorCategoryCodes</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - metadata</span>
+<span class="sd">            - rowLimit</span>
+<span class="sd">            - outputFormat</span>
+<span class="sd">            - returnOptions</span>
+<span class="sd">            - getLatest</span>
+<span class="sd">            - qualityControl</span>
+<span class="sd">            - resampleType</span>
+<span class="sd">            - resamplePeriod</span>
+<span class="sd">            - fillGaps</span>
+<span class="sd">            - sensorsToInclude</span>
+
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span><span class="o">.</span><span class="n">getScalardataByLocation</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+    <span class="n">getDirectByLocation</span> <span class="o">=</span> <span class="n">getScalardataByLocation</span>
+
+<div class="viewcode-block" id="ONC.getScalardataByDevice">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getScalardataByDevice">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getScalardataByDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return scalar data in JSON format by given device code.</span>
+
+<span class="sd">        The API endpoint is ``/scalardata/device``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/scalardata/device</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        The function ``getDirectByDevice`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - deviceCode (**required**)</span>
+<span class="sd">            - sensorCategoryCodes</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - rowLimit</span>
+<span class="sd">            - outputFormat</span>
+<span class="sd">            - returnOptions</span>
+<span class="sd">            - getLatest</span>
+<span class="sd">            - qualityControl</span>
+<span class="sd">            - resampleType</span>
+<span class="sd">            - resamplePeriod</span>
+<span class="sd">            - fillGaps</span>
+<span class="sd">            - sensorsToInclude</span>
+
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span><span class="o">.</span><span class="n">getScalardataByDevice</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+    <span class="n">getDirectByDevice</span> <span class="o">=</span> <span class="n">getScalardataByDevice</span>
+
+<div class="viewcode-block" id="ONC.getScalardata">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getScalardata">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getScalardata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return scalar data in JSON format by given query parameters.</span>
+
+<span class="sd">        A helper method for getting scalar data. Whether it is by device or by location is inferred</span>
+<span class="sd">        from the keys in the given query parameters.</span>
+
+<span class="sd">        - ByDevice requires deviceCode.</span>
+<span class="sd">        - ByLocation requires locationCode and deviceCategoryCode.</span>
+<span class="sd">        - Raise ``ValueError`` if they both exist.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. See ``getScalardataByLocation`` and ``getScalardataByDevice``</span>
+<span class="sd">            for more information.</span>
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span><span class="o">.</span><span class="n">getScalardata</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getRawdataByLocation">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getRawdataByLocation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getRawdataByLocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the raw data at a given location for the given device category.</span>
+
+<span class="sd">        A date range is optional. When not specified, data from all time will be returned</span>
+<span class="sd">        within (possibly default) row and size limits.</span>
+
+<span class="sd">        The API endpoint is ``/rawdata/location``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        The function ``getDirectRawByLocation`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode (**required**)</span>
+<span class="sd">            - deviceCategoryCode (**required**)</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - rowLimit</span>
+<span class="sd">            - sizeLimit</span>
+<span class="sd">            - convertHexToDecimal</span>
+<span class="sd">            - outputFormat</span>
+<span class="sd">            - getLatest</span>
+<span class="sd">            - skipErrors</span>
+
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span><span class="o">.</span><span class="n">getRawdataByLocation</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+    <span class="n">getDirectRawByLocation</span> <span class="o">=</span> <span class="n">getRawdataByLocation</span>
+
+<div class="viewcode-block" id="ONC.getRawdataByDevice">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getRawdataByDevice">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getRawdataByDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the raw data for a given device.</span>
+
+<span class="sd">        A date range is optional. When not specified, data from all time will be returned</span>
+<span class="sd">        within (possibly default) row and size limits.</span>
+
+<span class="sd">        The API endpoint is ``/rawdata/device``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/rawdata/device</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        The function ``getDirectRawByDevice`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - deviceCode (**required**)</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - rowLimit</span>
+<span class="sd">            - sizeLimit</span>
+<span class="sd">            - convertHexToDecimal</span>
+<span class="sd">            - outputFormat</span>
+<span class="sd">            - getLatest</span>
+<span class="sd">            - skipErrors</span>
+
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span><span class="o">.</span><span class="n">getRawdataByDevice</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+    <span class="n">getDirectRawByDevice</span> <span class="o">=</span> <span class="n">getRawdataByDevice</span>
+
+<div class="viewcode-block" id="ONC.getRawdata">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getRawdata">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getRawdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the raw data by given query parameters.</span>
+
+<span class="sd">        A helper method for getting the raw data. Whether it is by device or by location is inferred</span>
+<span class="sd">        from the keys in the given query parameters.</span>
+
+<span class="sd">        - ByDevice requires deviceCode.</span>
+<span class="sd">        - ByLocation requires locationCode and deviceCategoryCode.</span>
+<span class="sd">        - Raise ``ValueError`` if they both exist.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request. See ``getRawdataByLocation`` and ``getRawdataByDevice``</span>
+<span class="sd">            for more information.</span>
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span><span class="o">.</span><span class="n">getRawdata</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getSensorCategoryCodes">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getSensorCategoryCodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getSensorCategoryCodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of sensor category codes.</span>
+
+<span class="sd">        A helper method for narrowing down the sensorCategoryCodes that are of interest</span>
+<span class="sd">        prior to the use of the scalardata service.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict</span>
+<span class="sd">            Query string parameters in the API request.</span>
+<span class="sd">            Use the same filters for calling ``getScalardata``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            API response. Each sensor category code returned in the list is a dict with the following structure.</span>
+
+<span class="sd">            - outputFormat: str</span>
+<span class="sd">            - propertyCode: str</span>
+<span class="sd">            - sensorCategoryCode: str</span>
+<span class="sd">            - sensorCode: str</span>
+<span class="sd">            - sensorName: str</span>
+<span class="sd">            - unitOfMeasure: str</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {</span>
+<span class="sd">        ...     &quot;locationCode&quot;: &quot;NCBC&quot;,</span>
+<span class="sd">        ...     &quot;deviceCategoryCode&quot;: &quot;BPR&quot;,</span>
+<span class="sd">        ...     &quot;propertyCode&quot;: &quot;seawatertemperature,totalpressure&quot;,</span>
+<span class="sd">        ... }  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; onc.getSensorCategoryCodes(params)  # doctest: +SKIP</span>
+<span class="sd">        [</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="sd">                &quot;propertyCode&quot;: &quot;totalpressure&quot;,</span>
+<span class="sd">                &quot;sensorCategoryCode&quot;: &quot;pressure&quot;,</span>
+<span class="sd">                &quot;sensorCode&quot;: &quot;Pressure&quot;,</span>
+<span class="sd">                &quot;sensorName&quot;: &quot;Seafloor Pressure&quot;,</span>
+<span class="sd">                &quot;unitOfMeasure&quot;: &quot;decibar&quot;,</span>
+<span class="sd">            },</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="sd">                &quot;propertyCode&quot;: &quot;seawatertemperature&quot;,</span>
+<span class="sd">                &quot;sensorCategoryCode&quot;: &quot;temperature&quot;,</span>
+<span class="sd">                &quot;sensorCode&quot;: &quot;Temperature&quot;,</span>
+<span class="sd">                &quot;sensorName&quot;: &quot;Housing Temperature&quot;,</span>
+<span class="sd">                &quot;unitOfMeasure&quot;: &quot;C&quot;,</span>
+<span class="sd">            },</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="sd">                &quot;propertyCode&quot;: &quot;seawatertemperature&quot;,</span>
+<span class="sd">                &quot;sensorCategoryCode&quot;: &quot;temperature1&quot;,</span>
+<span class="sd">                &quot;sensorCode&quot;: &quot;temperature1&quot;,</span>
+<span class="sd">                &quot;sensorName&quot;: &quot;Temperature&quot;,</span>
+<span class="sd">                &quot;unitOfMeasure&quot;: &quot;C&quot;,</span>
+<span class="sd">            },</span>
+<span class="sd">            {</span>
+<span class="sd">                &quot;outputFormat&quot;: &quot;array&quot;,</span>
+<span class="sd">                &quot;propertyCode&quot;: &quot;seawatertemperature&quot;,</span>
+<span class="sd">                &quot;sensorCategoryCode&quot;: &quot;temperature2&quot;,</span>
+<span class="sd">                &quot;sensorCode&quot;: &quot;temperature2&quot;,</span>
+<span class="sd">                &quot;sensorName&quot;: &quot;P-Sensor Temperature&quot;,</span>
+<span class="sd">                &quot;unitOfMeasure&quot;: &quot;C&quot;,</span>
+<span class="sd">            },</span>
+<span class="sd">        ]</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">realTime</span><span class="o">.</span><span class="n">getSensorCategoryCodes</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+
+    <span class="c1"># Archive file methods</span>
+
+<div class="viewcode-block" id="ONC.getArchivefileByLocation">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getArchivefileByLocation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getArchivefileByLocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of files available in Oceans 3.0 Archiving System</span>
+<span class="sd">        for a given location code and device category code.</span>
+
+<span class="sd">        The API endpoint is ``/archivefile/location``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/archivefile/location</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        The function ``getListByLocation`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - locationCode (**required**)</span>
+<span class="sd">            - deviceCategoryCode (**required**)</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - dateArchivedFrom</span>
+<span class="sd">            - dateArchivedTo</span>
+<span class="sd">            - fileExtension</span>
+<span class="sd">            - dataProductCode</span>
+<span class="sd">            - returnOptions</span>
+<span class="sd">            - rowLimit</span>
+<span class="sd">            - page</span>
+<span class="sd">            - getLatest</span>
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getArchivefileByLocation</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+    <span class="n">getListByLocation</span> <span class="o">=</span> <span class="n">getArchivefileByLocation</span>
+
+<div class="viewcode-block" id="ONC.getArchivefileByDevice">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getArchivefileByDevice">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getArchivefileByDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of files available in Oceans 3.0 Archiving System</span>
+<span class="sd">        for a given device code.</span>
+
+<span class="sd">        The API endpoint is ``/archivefile/device``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/archivefile/device</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        The function ``getListByDevice`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+
+<span class="sd">            Supported parameters are:</span>
+
+<span class="sd">            - deviceCode (**required**)</span>
+<span class="sd">            - dateFrom</span>
+<span class="sd">            - dateTo</span>
+<span class="sd">            - dateArchivedFrom</span>
+<span class="sd">            - dateArchivedTo</span>
+<span class="sd">            - fileExtension</span>
+<span class="sd">            - dataProductCode</span>
+<span class="sd">            - returnOptions</span>
+<span class="sd">            - rowLimit</span>
+<span class="sd">            - page</span>
+<span class="sd">            - getLatest</span>
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getArchivefileByDevice</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+    <span class="n">getListByDevice</span> <span class="o">=</span> <span class="n">getArchivefileByDevice</span>
+
+<div class="viewcode-block" id="ONC.getArchivefile">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getArchivefile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getArchivefile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of files available in Oceans 3.0 Archiving System by given query parameters.</span>
+
+<span class="sd">        A helper method for getting a list of archive files. Whether it is by device or by location is inferred</span>
+<span class="sd">        from the keys in the given query parameters.</span>
+
+<span class="sd">        - ByDevice requires deviceCode.</span>
+<span class="sd">        - ByLocation requires locationCode and deviceCategoryCode.</span>
+<span class="sd">        - Raise ``ValueError`` if they both exist.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+<span class="sd">            See ``getArchivefileByLocation`` and ``getArchivefileByDevice`` for more information.</span>
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            API response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getArchivefile</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.getArchivefileUrls">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getArchivefileUrls">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getArchivefileUrls</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">joinedWithNewline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of file URLs (or joined with a newline) available in Oceans 3.0 Archiving System by given query parameters.</span>
+
+<span class="sd">        A helper method for getting a list of archive files URLs without downloading them.</span>
+<span class="sd">        It can also return a single string that concatenates all the URLs in the list together with a newline,</span>
+<span class="sd">        which can be useful if you are using a download manager and it supports batch downloading multiple URLs</span>
+<span class="sd">        that expects all the URLs on a separate line from either a file or the clipboard.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+<span class="sd">            See ``getArchivefileByLocation`` and ``getArchivefileByDevice`` for more information.</span>
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+<span class="sd">        joinedWithNewline: bool, default False</span>
+<span class="sd">            Whether it returns a list of URLs or a single string that concatenates the list with a newline.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[str] | str</span>
+<span class="sd">            A list of file URLs or a single joined string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="n">file_urls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getArchivefileUrls</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">joinedWithNewline</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_urls</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">file_urls</span></div>
+
+
+<div class="viewcode-block" id="ONC.getArchivefileUrl">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.getArchivefileUrl">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getArchivefileUrl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a file URL from Oceans 3.0 Archiving System by specifying the file name.</span>
+
+<span class="sd">        A helper method for obtaining the archive file URL without actually downloading the file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, default &quot;&quot;</span>
+<span class="sd">            A valid name of a file in DMAS Archiving System.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str:</span>
+<span class="sd">            A download URL for the given archive filename.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getArchivefileUrl</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ONC.downloadArchivefile">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.downloadArchivefile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">downloadArchivefile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download a file from Oceans 3.0 Archiving System by specifying the file name.</span>
+
+<span class="sd">        The file will be downloaded without any compression.</span>
+<span class="sd">        Many files in the archive are compressed for storage,</span>
+<span class="sd">        uncompressing these files takes time on the server and increases data volume to transfer.</span>
+
+<span class="sd">        The API endpoint is ``/archivefile/download``.</span>
+
+<span class="sd">        See https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download</span>
+<span class="sd">        for usage.</span>
+
+<span class="sd">        The function ``getFile`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, default &quot;&quot;</span>
+<span class="sd">            A valid name of a file in DMAS Archiving System.</span>
+<span class="sd">        overwrite : bool, default False</span>
+<span class="sd">            Whether to overwrite the file if it exists. 0 size file is treated as non-existent,</span>
+<span class="sd">            meaning it gets overwritten even when overwrite=False.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict | None</span>
+<span class="sd">            dict showing the error message if the filename is invalid.</span>
+<span class="sd">            None if the download is successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">downloadArchivefile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">)</span></div>
+
+
+    <span class="n">getFile</span> <span class="o">=</span> <span class="n">downloadArchivefile</span>
+
+<div class="viewcode-block" id="ONC.downloadDirectArchivefile">
+<a class="viewcode-back" href="../../autoapi/onc/index.html#onc.ONC.downloadDirectArchivefile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">downloadDirectArchivefile</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">allPages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download files from Oceans 3.0 Archiving System by given query parameters.</span>
+
+<span class="sd">        A helper method to combine ``getArchivefile`` and ``downloadArchivefile``.</span>
+<span class="sd">        Internally it calls ``getArchivefile`` to get a list of archive files,</span>
+<span class="sd">        and ``downloadArchivefile`` to download all files.</span>
+
+<span class="sd">        The function ``getDirectFiles`` is an alias for this function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filters : dict, optional</span>
+<span class="sd">            Query string parameters in the API request.</span>
+<span class="sd">            See ``getArchivefileByLocation`` and ``getArchivefileByDevice`` for more information.</span>
+<span class="sd">        overwrite : bool, default False</span>
+<span class="sd">            Whether to overwrite the file if it exists.</span>
+<span class="sd">        allPages : bool, default False</span>
+<span class="sd">            Whether the response concatenates data on all pages if there are more than one page due to rowLimit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dict showing download results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">downloadDirectArchivefile</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">,</span> <span class="n">allPages</span><span class="p">)</span></div>
+
+
+    <span class="n">getDirectFiles</span> <span class="o">=</span> <span class="n">downloadDirectArchivefile</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

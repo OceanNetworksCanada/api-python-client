@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discover Locations &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Discover Devices" href="Discover_Devices.html" />
+    <link rel="prev" title="Code Examples" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Code Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Discover Locations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#locations">/locations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations">Get all locations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-the-location-for-a-specific-location-code">Get the location for a specific location code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-including-and-underneath-a-location-in-the-oceans-3-0-data-search-tree">Get all locations, including and underneath a location in the Oceans 3.0 Data Search Tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-with-instruments-of-a-specific-device-category-including-and-below-a-location-in-the-oceans-3-0-data-search-tree">Get all locations with instruments of a specific device category, including and below a location in the Oceans 3.0 Data Search Tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-which-have-a-certain-word-in-the-location-name">Get all locations which have a certain word in the location name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-with-instruments-from-a-specific-device-category">Get all locations with instruments from a specific device category</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-with-instruments-that-have-a-specific-property-code">Get all locations with instruments that have a specific property code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-with-instruments-that-have-a-specific-device-category-and-a-specific-property">Get all locations with instruments that have a specific device category and a specific property</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-where-a-specific-device-has-been-deployed">Get all locations where a specific device has been deployed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-with-instruments-that-support-a-specific-data-product-code">Get all locations with instruments that support a specific data product code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-with-instruments-deployed-between-two-dates">Get all locations with instruments deployed between two dates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-all-locations-with-instruments-deployed-between-two-dates-with-a-sensor-for-a-specific-property">Get all locations with instruments deployed between two dates, with a sensor for a specific property</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#locations-tree">/locations/tree</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-location-hierarchy-including-and-below-a-specific-location">Get location hierarchy including and below a specific location</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Devices.html">Discover Devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Deployments.html">Discover Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Device_Categories.html">Discover Device Categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Properties.html">Discover Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Data_Products.html">Discover Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Discover_Data_Availability.html">Discover Data Availability for Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Download_Data_Products.html">Download Data Products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Request_Real_Time_Data.html">Request (Near) Real-Time Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Download_Archived_Files.html">Download Archived Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Code Examples</a></li>
+      <li class="breadcrumb-item active">Discover Locations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Code_Examples/Discover_Locations.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="discover-locations">
+<h1>Discover Locations<a class="headerlink" href="#discover-locations" title="Link to this heading"></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the token from your Oceans 3.0 profile page</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ONC</span>
+
+<span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="locations">
+<h2><a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/locations">/locations</a><a class="headerlink" href="#locations" title="Link to this heading"></a></h2>
+<section id="get-all-locations">
+<h3>Get all locations<a class="headerlink" href="#get-all-locations" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="get-the-location-for-a-specific-location-code">
+<h3>Get the location for a specific location code<a class="headerlink" href="#get-the-location-for-a-specific-location-code" title="Link to this heading"></a></h3>
+<p>Return the location with the <em>locationCode</em> “<strong>BACAX</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BACAX&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-including-and-underneath-a-location-in-the-oceans-3-0-data-search-tree">
+<h3>Get all locations, including and underneath a location in the Oceans 3.0 Data Search Tree<a class="headerlink" href="#get-all-locations-including-and-underneath-a-location-in-the-oceans-3-0-data-search-tree" title="Link to this heading"></a></h3>
+<p>Return all locations including and below location Northeast Pacific (locationCode:”<strong>NEP</strong>”) in the Oceans
+3.0 <a class="reference external" href="https://data.oceannetworks.ca/DataSearch?locationCode=NEP">Data Search Tree</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NEP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;includeChildren&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-with-instruments-of-a-specific-device-category-including-and-below-a-location-in-the-oceans-3-0-data-search-tree">
+<h3>Get all locations with instruments of a specific device category, including and below a location in the Oceans 3.0 Data Search Tree<a class="headerlink" href="#get-all-locations-with-instruments-of-a-specific-device-category-including-and-below-a-location-in-the-oceans-3-0-data-search-tree" title="Link to this heading"></a></h3>
+<p>Return all locations in Northeast Pacific (locationCode:”<strong>NEP</strong>”) with hydrophones deployed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NEP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;HYDROPHONE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;includeChildren&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-which-have-a-certain-word-in-the-location-name">
+<h3>Get all locations which have a certain word in the location name<a class="headerlink" href="#get-all-locations-which-have-a-certain-word-in-the-location-name" title="Link to this heading"></a></h3>
+<p>Return all locations with “<strong>underwater</strong>” as part of the name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationName&quot;</span><span class="p">:</span> <span class="s2">&quot;underwater&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-with-instruments-from-a-specific-device-category">
+<h3>Get all locations with instruments from a specific device category<a class="headerlink" href="#get-all-locations-with-instruments-from-a-specific-device-category" title="Link to this heading"></a></h3>
+<p>Return all locations which have at least one instrument for the <em>deviceCategoryCode</em> “<strong>ADCP150KHZ</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;ADCP150KHZ&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-with-instruments-that-have-a-specific-property-code">
+<h3>Get all locations with instruments that have a specific property code<a class="headerlink" href="#get-all-locations-with-instruments-that-have-a-specific-property-code" title="Link to this heading"></a></h3>
+<p>Return all locations that have instruments that measures the property “<strong>totalpressure</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;totalpressure&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-with-instruments-that-have-a-specific-device-category-and-a-specific-property">
+<h3>Get all locations with instruments that have a specific device category and a specific property<a class="headerlink" href="#get-all-locations-with-instruments-that-have-a-specific-device-category-and-a-specific-property" title="Link to this heading"></a></h3>
+<p>Return all locations with at least one instrument that has the device category “<strong>BPR</strong>” and property code.
+“<strong>totalpressure</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BPR&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;totalpressure&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-where-a-specific-device-has-been-deployed">
+<h3>Get all locations where a specific device has been deployed<a class="headerlink" href="#get-all-locations-where-a-specific-device-has-been-deployed" title="Link to this heading"></a></h3>
+<p>Return all locations where a device with the unique <em>deviceCode</em> “<strong>NORTEKAQDPRO8398</strong>” has been deployed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;deviceCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NORTEKAQDPRO8398&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-with-instruments-that-support-a-specific-data-product-code">
+<h3>Get all locations with instruments that support a specific data product code<a class="headerlink" href="#get-all-locations-with-instruments-that-support-a-specific-data-product-code" title="Link to this heading"></a></h3>
+<p>Return all Locations with instruments that support the <em>dataProductCode</em> “<strong>IBPP</strong>” (“Ice Buoy Profile Plots”).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dataProductCode&quot;</span><span class="p">:</span> <span class="s2">&quot;IBPP&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-with-instruments-deployed-between-two-dates">
+<h3>Get all locations with instruments deployed between two dates<a class="headerlink" href="#get-all-locations-with-instruments-deployed-between-two-dates" title="Link to this heading"></a></h3>
+<p>Return all locations with instruments that were deployed between 1 July 2010 and 30 June 2011.
+Check <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Glossary+of+Terms#GlossaryofTerms-ISO8601Duration">here</a> for additional
+information about the supported dates/times format.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2010-07-01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2011-06-30T23:59:59.999Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-all-locations-with-instruments-deployed-between-two-dates-with-a-sensor-for-a-specific-property">
+<h3>Get all locations with instruments deployed between two dates, with a sensor for a specific property<a class="headerlink" href="#get-all-locations-with-instruments-deployed-between-two-dates-with-a-sensor-for-a-specific-property" title="Link to this heading"></a></h3>
+<p>Return all locations with instruments that were deployed between 1 July 2010 and 30 June 2011, and have a sensor for the
+<em>propertyCode</em> “<strong>seawatertemperature</strong>”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;seawatertemperature&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2010-07-01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2011-06-30T23:59:59.999Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="locations-tree">
+<h2><a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/locations/tree">/locations/tree</a><a class="headerlink" href="#locations-tree" title="Link to this heading"></a></h2>
+<section id="get-location-hierarchy-including-and-below-a-specific-location">
+<h3>Get location hierarchy including and below a specific location<a class="headerlink" href="#get-location-hierarchy-including-and-below-a-specific-location" title="Link to this heading"></a></h3>
+<p>Return the location hierarchy from the “<strong>MOBP</strong>” (“Mobile Platforms”) node and below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;MOBP&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocationsTree</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Alias method name</span>
+<span class="c1"># onc.getLocationHierarchy(params)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Code Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Discover_Devices.html" class="btn btn-neutral float-right" title="Discover Devices" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

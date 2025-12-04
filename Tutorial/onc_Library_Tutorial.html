@@ -1,0 +1,1841 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onc library tutorial &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Code Examples" href="../Code_Examples/index.html" />
+    <link rel="prev" title="Oceans 3.0 API tutorial" href="Oceans_3.0_API_Tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Oceans_3.0_API_Tutorial.html">Oceans 3.0 API tutorial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">onc library tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#searching-with-discovery-services">1. Searching with discovery services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-device-categories-are-available-here-at-the-location-nc89">What device categories are available here at the location NC89?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-properties-are-available-for-the-device-category-ctd-at-this-location-nc89">What properties are available for the device category CTD at this location NC89?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-data-product-types-are-available-for-the-device-category-ctd-at-this-location-nc89">What data product types are available for the device category CTD at this location NC89?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#downloading-data">2. Downloading data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#near-real-time-scalar-data-download">2.1 Near real-time scalar data download</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#near-real-time-raw-data-readings">2.2 Near real-time raw data readings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#downloading-archived-files">2.3. Downloading archived files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#downloading-data-products">2.4 Downloading data products</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">onc library tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Tutorial/onc_Library_Tutorial.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="onc-library-tutorial">
+<h1>onc library tutorial<a class="headerlink" href="#onc-library-tutorial" title="Link to this heading"></a></h1>
+<p>The <em>onc</em> library is developed based on the Python <em>requests</em> library, which is a popular library for making HTTP requests. In fact, you can use <em>requests</em> directly to interact with the Oceans 3.0 API. But there are cases when you will find the <em>onc</em> library useful (helper methods including boolean parse, one-click data product download, and ability to automatically download all pages). For more information you can check the <a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html">Oceans 3.0 API guide</a>.</p>
+<p>This tutorial will demonstrate both approaches.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This is a Jupyter notebook. You can download the file <a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/blob/main/doc/source/Tutorial/onc_Library_Tutorial.ipynb">here</a>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install some libraries</span>
+
+<span class="c1"># 1. onc: this is an onc library tutorial, right?</span>
+<span class="c1"># 2. request: an alternative (vanilla) way to make HTTP requests to Oceans 3.0 API.</span>
+<span class="c1"># 3. pandas: because it&#39;s useful and fun!</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="o">!{</span>sys.executable<span class="o">}</span><span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>requests<span class="w"> </span>pandas<span class="w"> </span>onc
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: requests in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (2.32.5)
+Requirement already satisfied: pandas in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (2.3.3)
+Requirement already satisfied: onc in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (2.6.0)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from requests) (3.4.4)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from requests) (3.11)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from requests) (2.5.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from requests) (2025.11.12)
+Requirement already satisfied: numpy&gt;=1.22.4 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from pandas) (2.2.6)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from pandas) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from pandas) (2025.2)
+Requirement already satisfied: humanize in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from onc) (4.14.0)
+Requirement already satisfied: six&gt;=1.5 in /opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>To begin using the library, you need to create an instance from the <code class="docutils literal notranslate"><span class="pre">ONC</span></code> class, which is a wrapper class for Oceans 3.0 API requests.
+All the library’s functionality is provided as methods of this class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setting up onc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">onc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ONC</span>
+
+<span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Besides the token parameter, there are several other parameters you can modify to change the behavior of the <code class="docutils literal notranslate"><span class="pre">ONC</span></code> class. For example, you can use</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN&quot;</span><span class="p">,</span> <span class="n">showInfo</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outPath</span><span class="o">=</span><span class="s2">&quot;YOUR_DIRECTORY&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to indicate that you want to see verbose messages after running each method, and you want the download directory to be “./YOUR_DIRECTORY” instead of the default “./output” when calling methods that involve downloading files like <code class="docutils literal notranslate"><span class="pre">orderDataProduct</span></code> and <code class="docutils literal notranslate"><span class="pre">downloadArchivefile</span></code>.</p>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">onc</span> <span class="pre">=</span> <span class="pre">ONC()</span></code> if you have set the env variable “ONC_TOKEN”.</p>
+<p>For more information, check the API reference of the <a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client/autoapi/onc/index.html#onc.ONC">ONC</a> class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setting up requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<span class="n">token</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">token</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setting up pandas</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># For not overflowing the max-width of sphinx-rtd-theme. Can be safely ignored.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_colwidth&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_rows&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="searching-with-discovery-services">
+<h2>1. Searching with discovery services<a class="headerlink" href="#searching-with-discovery-services" title="Link to this heading"></a></h2>
+<p>To download data from Ocean Networks Canada’s database (Oceans 3.0) , you need to specify the type of data you are interested in and where in particular (i.e. location, from specific instrument (device)) it originates from.</p>
+<p>In the Oceans 3.0 API, there are a unique codes that identify every location, device, property, data product type, etc. You include these codes in a group of filters to retrieve the information you’re interested in.</p>
+<p>The Oceans 3.0 API <strong>Discovery services</strong> allow you to explore the hierarchy of ONC’s database to obtain the codes required for your filters to obtain the information/data you are interested in (they work like a “search” function).</p>
+<p>The example below uses the <em>getLocations</em> method, which is querying the locations database tables that include <em>“Bullseye”</em> in their name (i.e. <em>“Clayoquot Slope Bullseye Vent”</em>).
+It returns a list with all locations that match the search filters provided.</p>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationName&quot;</span><span class="p">:</span> <span class="s2">&quot;Bullseye&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;bbox&#39;: {&#39;maxDepth&#39;: 1260.0,
+   &#39;maxLat&#39;: 48.671024,
+   &#39;maxLon&#39;: -126.847007,
+   &#39;minDepth&#39;: 1253.0,
+   &#39;minLat&#39;: 48.669525,
+   &#39;minLon&#39;: -126.85184},
+  &#39;dataSearchURL&#39;: &#39;https://data.oceannetworks.ca/DataSearch?location=NC89&#39;,
+  &#39;deployments&#39;: 39,
+  &#39;depth&#39;: 1256.830769,
+  &#39;description&#39;: &#39; Bullseye is a location at Clayoquot Slope, where gas hydrates, seafloor cold seeps, and hydrate dynamics are observed.&#39;,
+  &#39;hasDeviceData&#39;: True,
+  &#39;hasPropertyData&#39;: False,
+  &#39;lat&#39;: 48.670626,
+  &#39;locationCode&#39;: &#39;NC89&#39;,
+  &#39;locationName&#39;: &#39;Bullseye&#39;,
+  &#39;lon&#39;: -126.848013}]
+</pre></div>
+</div>
+</div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationName&quot;</span><span class="p">:</span> <span class="s2">&quot;Bullseye&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://data.oceannetworks.ca/api/locations&quot;</span>
+
+<span class="c1"># 3. Run your request</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_requests</span><span class="p">)</span>
+
+<span class="c1"># 4. Parse the json file</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;bbox&#39;: {&#39;maxDepth&#39;: 1260.0,
+   &#39;maxLat&#39;: 48.671024,
+   &#39;maxLon&#39;: -126.847007,
+   &#39;minDepth&#39;: 1253.0,
+   &#39;minLat&#39;: 48.669525,
+   &#39;minLon&#39;: -126.85184},
+  &#39;dataSearchURL&#39;: &#39;https://data.oceannetworks.ca/DataSearch?location=NC89&#39;,
+  &#39;deployments&#39;: 39,
+  &#39;depth&#39;: 1256.830769,
+  &#39;description&#39;: &#39; Bullseye is a location at Clayoquot Slope, where gas hydrates, seafloor cold seeps, and hydrate dynamics are observed.&#39;,
+  &#39;hasDeviceData&#39;: &#39;true&#39;,
+  &#39;hasPropertyData&#39;: &#39;false&#39;,
+  &#39;lat&#39;: 48.670626,
+  &#39;locationCode&#39;: &#39;NC89&#39;,
+  &#39;locationName&#39;: &#39;Bullseye&#39;,
+  &#39;lon&#39;: -126.848013}]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each entry of this list contains more meta data information for that location, e.g. the locationName, the geographical coordinates and depth, a description field and the URL for <strong>Oceans 3.0 Data Search tool</strong>.
+The parameter <strong>locationCode</strong> contains the string “NC89”, which is needed for the next steps.</p>
+<section id="what-device-categories-are-available-here-at-the-location-nc89">
+<h3>What device categories are available here at the location NC89?<a class="headerlink" href="#what-device-categories-are-available-here-at-the-location-nc89" title="Link to this heading"></a></h3>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getDeviceCategories</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># 3. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cvTerm</th>
+      <th>description</th>
+      <th>...</th>
+      <th>hasDeviceData</th>
+      <th>longDescription</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Acoustic Doppler Current P...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>Acoustic Doppler Current ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Acoustic Doppler Current P...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>Acoustic Doppler Current ...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Tiltmeter</td>
+      <td>...</td>
+      <td>True</td>
+      <td>A tiltmeter is a sensitiv...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Video Camera</td>
+      <td>...</td>
+      <td>True</td>
+      <td>Video cameras record vide...</td>
+    </tr>
+  </tbody>
+</table>
+<p>12 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://data.oceannetworks.ca/api/deviceCategories&quot;</span>
+
+<span class="c1"># 3. Run your request</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_requests</span><span class="p">)</span>
+
+<span class="c1"># 4. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cvTerm</th>
+      <th>description</th>
+      <th>...</th>
+      <th>hasDeviceData</th>
+      <th>longDescription</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Acoustic Doppler Current P...</td>
+      <td>...</td>
+      <td>true</td>
+      <td>Acoustic Doppler Current ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Acoustic Doppler Current P...</td>
+      <td>...</td>
+      <td>true</td>
+      <td>Acoustic Doppler Current ...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Tiltmeter</td>
+      <td>...</td>
+      <td>true</td>
+      <td>A tiltmeter is a sensitiv...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>{'deviceCategory': [{'uri'...</td>
+      <td>Video Camera</td>
+      <td>...</td>
+      <td>true</td>
+      <td>Video cameras record vide...</td>
+    </tr>
+  </tbody>
+</table>
+<p>12 rows × 6 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="what-properties-are-available-for-the-device-category-ctd-at-this-location-nc89">
+<h3>What properties are available for the device category CTD at this location NC89?<a class="headerlink" href="#what-properties-are-available-for-the-device-category-ctd-at-this-location-nc89" title="Link to this heading"></a></h3>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getProperties</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># 3. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cvTerm</th>
+      <th>description</th>
+      <th>...</th>
+      <th>propertyName</th>
+      <th>uom</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Conductivity: siemens per ...</td>
+      <td>...</td>
+      <td>Conductivity</td>
+      <td>S/m</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Density</td>
+      <td>...</td>
+      <td>Density</td>
+      <td>kg/m3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Sigma-theta</td>
+      <td>...</td>
+      <td>Sigma-theta</td>
+      <td>kg/m3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Sound Speed: sound velocit...</td>
+      <td>...</td>
+      <td>Sound Speed</td>
+      <td>m/s</td>
+    </tr>
+  </tbody>
+</table>
+<p>9 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://data.oceannetworks.ca/api/properties&quot;</span>
+
+<span class="c1"># 3. Run your request</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_requests</span><span class="p">)</span>
+
+<span class="c1"># 4. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cvTerm</th>
+      <th>description</th>
+      <th>...</th>
+      <th>propertyName</th>
+      <th>uom</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Conductivity: siemens per ...</td>
+      <td>...</td>
+      <td>Conductivity</td>
+      <td>S/m</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Density</td>
+      <td>...</td>
+      <td>Density</td>
+      <td>kg/m3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Sigma-theta</td>
+      <td>...</td>
+      <td>Sigma-theta</td>
+      <td>kg/m3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>{'property': [], 'uom': [{...</td>
+      <td>Sound Speed: sound velocit...</td>
+      <td>...</td>
+      <td>Sound Speed</td>
+      <td>m/s</td>
+    </tr>
+  </tbody>
+</table>
+<p>9 rows × 7 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="what-data-product-types-are-available-for-the-device-category-ctd-at-this-location-nc89">
+<h3>What data product types are available for the device category CTD at this location NC89?<a class="headerlink" href="#what-data-product-types-are-available-for-the-device-category-ctd-at-this-location-nc89" title="Link to this heading"></a></h3>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getDataProducts</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># 3. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataProductCode</th>
+      <th>dataProductName</th>
+      <th>...</th>
+      <th>hasPropertyData</th>
+      <th>helpDocument</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AF</td>
+      <td>Annotation File</td>
+      <td>...</td>
+      <td>False</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CSPPD</td>
+      <td>Cast Scalar Profile Plot a...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>TSSTD</td>
+      <td>Time Series Scalar Thomson...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>TSSTD</td>
+      <td>Time Series Scalar Thomson...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+  </tbody>
+</table>
+<p>26 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://data.oceannetworks.ca/api/dataProducts&quot;</span>
+
+<span class="c1"># 3. Run your request</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_requests</span><span class="p">)</span>
+
+<span class="c1"># 4. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataProductCode</th>
+      <th>dataProductName</th>
+      <th>...</th>
+      <th>hasPropertyData</th>
+      <th>helpDocument</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AF</td>
+      <td>Annotation File</td>
+      <td>...</td>
+      <td>False</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CSPPD</td>
+      <td>Cast Scalar Profile Plot a...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>TSSTD</td>
+      <td>Time Series Scalar Thomson...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>TSSTD</td>
+      <td>Time Series Scalar Thomson...</td>
+      <td>...</td>
+      <td>True</td>
+      <td>https://wiki.oceannetworks...</td>
+    </tr>
+  </tbody>
+</table>
+<p>26 rows × 7 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="downloading-data">
+<h2>2. Downloading data<a class="headerlink" href="#downloading-data" title="Link to this heading"></a></h2>
+<p>Once you determine the exact filters that identify the information you are interested in, there are different methods available to download data.</p>
+<ol class="arabic simple">
+<li><p>Near real-time scalar data sensor readings for a given timeframe</p></li>
+<li><p>Near real-time raw data for a given timeframe</p></li>
+<li><p>Download archived files containing raw data or processed data</p></li>
+<li><p>Download data products that are also available via Oceans 3.0 Data Search Tool</p></li>
+</ol>
+<section id="near-real-time-scalar-data-download">
+<h3>2.1 Near real-time scalar data download<a class="headerlink" href="#near-real-time-scalar-data-download" title="Link to this heading"></a></h3>
+<p>In this example we want to download 10 seconds of <strong>Pressure</strong> sensor data from a <strong>CTD</strong> at location “Bullseye” (locationCode: <strong>NC89</strong>)</p>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:10.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getScalardata</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  <span class="c1"># getScalardataByLocation(params) also works</span>
+
+<span class="c1"># 3. Return the dictionary keys (fields) of the query to get a sense what is contained in your returned message</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># 4. Read the data from parameter field &quot;sensorData&quot; it into a DataFrame - this is the data from your requested &quot;Pressure&quot; sensor</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;sensorData&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+<span class="n">pressure</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;citations&#39;, &#39;messages&#39;, &#39;next&#39;, &#39;parameters&#39;, &#39;qaqcFlagInfo&#39;, &#39;queryUrl&#39;, &#39;sensorData&#39;])
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>qaqcFlags</th>
+      <th>sampleTimes</th>
+      <th>values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:00.025Z</td>
+      <td>1270.733</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:00.275Z</td>
+      <td>1270.741</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:09.525Z</td>
+      <td>1270.734</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:09.775Z</td>
+      <td>1270.736</td>
+    </tr>
+  </tbody>
+</table>
+<p>40 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter to obtain scalar data for 10 seconds</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:10.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://data.oceannetworks.ca/api/scalardata/location&quot;</span>
+
+<span class="c1"># 3. Run your request</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params_requests</span><span class="p">)</span>
+
+<span class="c1"># 4. Return the dictionary keys (fields) of the query to get a sense what is contained in your returned message. Note this is a JSON object for this method.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># 5. Read the data from parameter field &quot;sensorData&quot; it into a DataFrame - this is the data from your requested &quot;Pressure&quot; sensor</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;sensorData&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+<span class="n">pressure</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;citations&#39;, &#39;messages&#39;, &#39;next&#39;, &#39;parameters&#39;, &#39;qaqcFlagInfo&#39;, &#39;queryUrl&#39;, &#39;sensorData&#39;])
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>qaqcFlags</th>
+      <th>sampleTimes</th>
+      <th>values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:00.025Z</td>
+      <td>1270.733</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:00.275Z</td>
+      <td>1270.741</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:09.525Z</td>
+      <td>1270.734</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>1</td>
+      <td>2017-01-20T00:00:09.775Z</td>
+      <td>1270.736</td>
+    </tr>
+  </tbody>
+</table>
+<p>40 rows × 3 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="near-real-time-raw-data-readings">
+<h3>2.2 Near real-time raw data readings<a class="headerlink" href="#near-real-time-raw-data-readings" title="Link to this heading"></a></h3>
+<p>In this example we want to download 10 seconds of raw data from a <strong>CTD</strong> at location “Bullseye” (locationCode: <strong>NC89</strong>)</p>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:10.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getRawdata</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  <span class="c1"># getRawdataByLocation(params) also works</span>
+
+<span class="c1"># 3. Return the dictionary keys (fields) of the query to get a sense what is contained in your returned message</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># 4. Read the content of parameter field data it into a DataFrame. The column &quot;readings&quot; contains the raw data and column &quot;times&quot; the Oceans 3.0 timestamps associated with each data reading.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;citations&#39;, &#39;data&#39;, &#39;messages&#39;, &#39;metadata&#39;, &#39;next&#39;, &#39;outputFormat&#39;, &#39;queryUrl&#39;])
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lineTypes</th>
+      <th>readings</th>
+      <th>times</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.025Z</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.275Z</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:09.525Z</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:09.775Z</td>
+    </tr>
+  </tbody>
+</table>
+<p>40 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:10.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://data.oceannetworks.ca/api/rawdata/location&quot;</span>
+
+<span class="c1"># 3. Run your request</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params_requests</span><span class="p">)</span>
+
+<span class="c1"># 4. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lineTypes</th>
+      <th>readings</th>
+      <th>times</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.025Z</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.275Z</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:09.525Z</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:09.775Z</td>
+    </tr>
+  </tbody>
+</table>
+<p>40 rows × 3 columns</p>
+</div></div></div>
+</div>
+<section id="downloading-more-data">
+<h4>2.2.1. Downloading more data<a class="headerlink" href="#downloading-more-data" title="Link to this heading"></a></h4>
+<div class="note admonition">
+<p class="admonition-title">Pagination of response due to too many data rows</p>
+<p>If the row of the data is above 100,000, not all the data will be returned. The rest of the data can be queried based on the <em>next</em> key in the response.</p>
+<ol class="arabic simple">
+<li><p>If you use <strong>onc</strong>.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">getRawdata</span></code> supports a boolean <code class="docutils literal notranslate"><span class="pre">allPages</span></code> parameter. When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, it will try to retrieve all the pages.</p>
+<ol class="arabic simple" start="2">
+<li><p>If you use <strong>requests</strong>.</p></li>
+</ol>
+<p>You have to manually query the next pages until the <code class="docutils literal notranslate"><span class="pre">next</span></code> key in the response json is <code class="docutils literal notranslate"><span class="pre">None</span></code>, and concatenate all the data together.</p>
+</div>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter with a longer date range (1 day of data)</span>
+<span class="n">params_longer_range</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-21T00:00:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getRawdata</span><span class="p">(</span>
+    <span class="n">params_longer_range</span><span class="p">,</span> <span class="n">allPages</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>  <span class="c1"># getRawdataByLocation(params_longer_range, allPages=True) also works</span>
+
+<span class="c1"># 3. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data quantity is greater than the row limit and will be downloaded in multiple pages.
+Downloading time for the first page: 2 seconds
+Estimated approx. 4 pages in total.
+Estimated approx. 6 seconds to complete for the rest of the pages.
+
+   (100000 samples) Downloading page 2...
+   (200000 samples) Downloading page 3...
+   (300000 samples) Downloading page 4...
+   (345597 samples) Completed in 11 seconds.
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lineTypes</th>
+      <th>readings</th>
+      <th>times</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.025Z</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.275Z</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>345595</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T23:59:59.528Z</td>
+    </tr>
+    <tr>
+      <th>345596</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T23:59:59.777Z</td>
+    </tr>
+  </tbody>
+</table>
+<p>345597 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter with a longer date range</span>
+<span class="n">params_requests_longer_range</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-21T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://data.oceannetworks.ca/api/rawdata/location&quot;</span>
+
+<span class="c1"># 3. Run your request (the url is still the same)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params_requests_longer_range</span><span class="p">)</span>
+
+<span class="c1"># 4. Read it into a DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lineTypes</th>
+      <th>readings</th>
+      <th>times</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.025Z</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T00:00:00.275Z</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>99998</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T06:56:39.765Z</td>
+    </tr>
+    <tr>
+      <th>99999</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T06:56:40.015Z</td>
+    </tr>
+  </tbody>
+</table>
+<p>100000 rows × 3 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="now-check-the-parameter-field-next">
+<h4>Now check the parameter field “next”<a class="headerlink" href="#now-check-the-parameter-field-next" title="Link to this heading"></a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;next&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;parameters&#39;: {&#39;dateTo&#39;: &#39;2017-01-21T00:00:00.000Z&#39;,
+  &#39;locationCode&#39;: &#39;NC89&#39;,
+  &#39;deviceCategoryCode&#39;: &#39;CTD&#39;,
+  &#39;dateFrom&#39;: &#39;2017-01-20T06:56:40.016Z&#39;,
+  &#39;token&#39;: &#39;YOUR_TOKEN&#39;},
+ &#39;url&#39;: &#39;https://data.oceannetworks.ca/api/rawdata/location?dateTo=2017-01-21T00%3A00%3A00.000Z&amp;locationCode=NC89&amp;deviceCategoryCode=CTD&amp;dateFrom=2017-01-20T06%3A56%3A40.016Z&amp;token=YOUR_TOKEN&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<section id="update-the-datefrom-parameter-to-get-the-next-page">
+<h5>Update the <strong>dateFrom</strong> parameter to get the next page<a class="headerlink" href="#update-the-datefrom-parameter-to-get-the-next-page" title="Link to this heading"></a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params_requests_longer_range</span><span class="p">[</span><span class="s2">&quot;dateFrom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;next&quot;</span><span class="p">][</span><span class="s2">&quot;parameters&quot;</span><span class="p">][</span><span class="s2">&quot;dateFrom&quot;</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params_requests_longer_range</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lineTypes</th>
+      <th>readings</th>
+      <th>times</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T06:56:40.264Z</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T06:56:40.514Z</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>99998</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T13:53:20.038Z</td>
+    </tr>
+    <tr>
+      <th>99999</th>
+      <td></td>
+      <td>&lt;?xml version="1.0"?&gt;&lt;data...</td>
+      <td>2017-01-20T13:53:20.290Z</td>
+    </tr>
+  </tbody>
+</table>
+<p>100000 rows × 3 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h4>Now check the parameter field “next”<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;next&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;parameters&#39;: {&#39;dateTo&#39;: &#39;2017-01-21T00:00:00.000Z&#39;, &#39;locationCode&#39;: &#39;NC89&#39;, &#39;deviceCategoryCode&#39;: &#39;CTD&#39;, &#39;dateFrom&#39;: &#39;2017-01-20T13:53:20.291Z&#39;, &#39;token&#39;: &#39;YOUR_TOKEN&#39;}, &#39;url&#39;: &#39;https://data.oceannetworks.ca/api/rawdata/location?dateTo=2017-01-21T00%3A00%3A00.000Z&amp;locationCode=NC89&amp;deviceCategoryCode=CTD&amp;dateFrom=2017-01-20T13%3A53%3A20.291Z&amp;token=YOUR_TOKEN&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="downloading-archived-files">
+<h3>2.3. Downloading archived files<a class="headerlink" href="#downloading-archived-files" title="Link to this heading"></a></h3>
+<p>A faster way to download data products and processed data files that are available in Oceans 3.0 (if it suits your needs) is to leverage how ONC scripts auto-generate and archive data products of different types at set time intervals. You can directly download these data product files from our files archive, as long as you know their unique filename.</p>
+<p>In the following example, we get the list of archived files available for a camera (deviceCategoryCode: <strong>VIDEOCAM</strong>) at Ridley Island (locationCode:<strong>RISS</strong>) for 5-minute timerange.</p>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;RISS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;VIDEOCAM&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-12-01T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-12-01T00:05:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getArchivefile</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  <span class="c1"># getArchivefileByLocation(params) also works</span>
+
+<span class="c1"># 3. This is the list of archived files:</span>
+<span class="n">r</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;AXISQ6044PTZACCC8E334C53_20161201T000000.000Z.mp4&#39;,
+ &#39;AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;RISS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;VIDEOCAM&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-12-01T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-12-01T00:05:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url_location</span> <span class="o">=</span> <span class="s2">&quot;https://data.oceannetworks.ca/api/archivefile/location&quot;</span>
+
+<span class="c1"># 3. Run your request</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_location</span><span class="p">,</span> <span class="n">params_requests</span><span class="p">)</span>
+
+<span class="c1"># 4. This is the list of archived files:</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;files&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;AXISQ6044PTZACCC8E334C53_20161201T000000.000Z.mp4&#39;,
+ &#39;AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we have the file names, you can use the method <code class="docutils literal notranslate"><span class="pre">downloadArchivefile()</span></code> to download individual files:</p>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Call methods in the onc library with the filename. The file is downloaded in the output folder by default,</span>
+<span class="c1"># which can be customized in the outPath parameter of the ONC class.</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">downloadArchivefile</span><span class="p">(</span>
+    <span class="s2">&quot;AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;url&#39;: &#39;https://data.oceannetworks.ca/api/archivefile/download?token=YOUR_TOKEN&amp;filename=AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg&#39;,
+ &#39;status&#39;: &#39;completed&#39;,
+ &#39;size&#39;: 113511,
+ &#39;downloadTime&#39;: 0.048,
+ &#39;file&#39;: &#39;AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter with the filename</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Define your base url for this query</span>
+<span class="n">url_location</span> <span class="o">=</span> <span class="s2">&quot;https://data.oceannetworks.ca/api/archivefile/download&quot;</span>
+
+<span class="c1"># 3. Run your request (the url is still the same)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_location</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># 4. Save the file</span>
+<span class="c1"># with open(params[&quot;filename&quot;], &quot;wb&quot;) as f:</span>
+<span class="c1">#     f.write(r.content)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="downloading-data-products">
+<h3>2.4 Downloading data products<a class="headerlink" href="#downloading-data-products" title="Link to this heading"></a></h3>
+<p>Other than using Oceans 3.0 <a class="reference external" href="https://data.oceannetworks.ca/DataSearch">Data Search</a>, we can request the ONC server to generate a <strong>data product</strong>. This is done through the data product delivery services methods.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>This service should <strong>ONLY</strong> be used when the requested files are not already provided using the <strong>ArchiveFiles</strong> services (see <strong>2.3</strong> above). The data product delivery services will re-generate files using ONC’s web machines and this process can often take very long time to generate these results. If you request data files for very long-time ranges and large file sizes, ONCs system will sometimes slow down and stall and requires some manual actions.</p>
+<p>We therefore encourage you to check other services before requesting data through this service. If you are unsure what to use feel free to contact u.</p>
+</div>
+<p><strong>This process will require three steps before you will be able to see the downloaded data product on your computer:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Request</strong> the data.</p></li>
+<li><p><strong>Run</strong> the Request.</p></li>
+<li><p><strong>Download</strong> the data.</p></li>
+</ol>
+<p>The following example downloads two <strong>PNG</strong> files with plots for 30 minutes of data from a CTD (find them in the <strong>“output”</strong> folder beside this jupyter notebook). The filter includes codes for <strong>location</strong>, <strong>deviceCategory</strong>, and <strong>dataProduct</strong>, as well as the file <strong>extension</strong> and a time interval. They also include a couple of filters to configure this specific data product type (starting with the <strong>“dpo_”</strong> prefix) which can be obtained from the <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Available+Data+Products">Data Product Options documentation</a>. You can download more than 120 different types of data products including audio &amp; video.</p>
+<p><font color=#2E8B57>Using ONC library</font></p>
+<p>The helper method <code class="docutils literal notranslate"><span class="pre">orderDataProduct</span></code> in onc library contains all three steps (methods) in one call. So this is the preferred library to use over the requests library.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define your filter parameter</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataProductCode&quot;</span><span class="p">:</span> <span class="s2">&quot;TSSP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;png&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-19T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-19T00:30:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dpo_qualityControl&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dpo_resample&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># 2. Call methods in the onc library</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">orderDataProduct</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Request Id: 28892270
+Estimated File Size: 151 kB
+Estimated Processing Time: 20 s
+To cancel the running data product, run &#39;onc.cancelDataProduct(28892270)&#39;
+
+Downloading data product files with runId 56070464...
+
+   Generating
+.
+
+   Running
+.
+
+   Running... getting data for time segment 1 of 1.
+.
+.
+.
+.
+.
+.
+.
+
+   Running... writing data products, time range 1 of 1.
+.
+.
+.
+
+   Generating
+
+Total run time: a moment
+Total download Time: 0.049 seconds
+2 files (122.1 KiB) downloaded
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;downloadResults&#39;: [{&#39;url&#39;: &#39;https://data.oceannetworks.ca/api/dataProductDelivery/download?token=YOUR_TOKEN&amp;dpRunId=56070464&amp;index=1&#39;,
+   &#39;status&#39;: &#39;complete&#39;,
+   &#39;size&#39;: 114081,
+   &#39;file&#39;: &#39;ClayoquotSlope_Bullseye_ConductivityTemperatureDepth_20170119T000000Z_20170119T003000Z-clean.png&#39;,
+   &#39;index&#39;: &#39;1&#39;,
+   &#39;downloaded&#39;: True,
+   &#39;requestCount&#39;: 17,
+   &#39;fileDownloadTime&#39;: 0.049},
+  {&#39;url&#39;: &#39;https://data.oceannetworks.ca/api/dataProductDelivery/download?token=YOUR_TOKEN&amp;dpRunId=56070464&amp;index=meta&#39;,
+   &#39;status&#39;: &#39;complete&#39;,
+   &#39;size&#39;: 10972,
+   &#39;file&#39;: &#39;ClayoquotSlope_Bullseye_ConductivityTemperatureDepth_20170119T000000Z_20170119T003000Z-clean_PNG_META.xml&#39;,
+   &#39;index&#39;: &#39;meta&#39;,
+   &#39;downloaded&#39;: True,
+   &#39;requestCount&#39;: 2,
+   &#39;fileDownloadTime&#39;: 0.0}],
+ &#39;stats&#39;: {&#39;runTime&#39;: 0.323,
+  &#39;downloadTime&#39;: 0.049,
+  &#39;requestCount&#39;: 20,
+  &#39;totalSize&#39;: 125053}}
+</pre></div>
+</div>
+</div>
+</div>
+<p><font color=#2E8B57>Using requests library</font></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Request the data</span>
+
+<span class="c1"># Define your base url for this query</span>
+<span class="n">url_request</span> <span class="o">=</span> <span class="s2">&quot;https://data.oceannetworks.ca/api/dataProductDelivery/request&quot;</span>
+
+<span class="c1"># Define your filter parameter</span>
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataProductCode&quot;</span><span class="p">:</span> <span class="s2">&quot;TSSP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;png&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-19T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-19T00:30:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dpo_qualityControl&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dpo_resample&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_request</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_requests</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;citations&#39;: [{&#39;citation&#39;: &#39;Ocean Networks Canada Society. 2016. Bullseye Conductivity Temperature Depth Deployed 2016-06-24. Ocean Networks Canada Society. https://doi.org/10.34943/e4166edb-4ce0-4b57-9856-acf4198fad53. Subset Query: 33282795. Accessed 2025-12-04.&#39;,
+   &#39;doi&#39;: &#39;10.34943/e4166edb-4ce0-4b57-9856-acf4198fad53&#39;,
+   &#39;landingPageUrl&#39;: &#39;https://doi.org/10.34943/e4166edb-4ce0-4b57-9856-acf4198fad53&#39;,
+   &#39;queryPid&#39;: 33282795}],
+ &#39;disclaimer&#39;: &#39;Software Developers are implementing estimates of processing times and file sizes for data requests. These are extremely rough to begin with, but bear with us. We expect these estimates will gradually improve.&#39;,
+ &#39;dpRequestId&#39;: 28892274,
+ &#39;estimatedFileSize&#39;: &#39;151 kB&#39;,
+ &#39;estimatedProcessingTime&#39;: &#39;20 s&#39;,
+ &#39;messages&#39;: [],
+ &#39;queryPids&#39;: [33282795],
+ &#39;queryURL&#39;: &#39;https://data.oceannetworks.ca/api/dataProductDelivery/request?locationCode=NC89&amp;deviceCategoryCode=CTD&amp;dataProductCode=TSSP&amp;extension=png&amp;dateFrom=2017-01-19T00%3A00%3A00.000Z&amp;dateTo=2017-01-19T00%3A30%3A00.000Z&amp;token=YOUR_TOKEN&amp;dpo_resample=none&amp;dpo_qualityControl=1&amp;dpo_resample=none&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##### requests continued #####</span>
+
+<span class="c1"># 2. Run the request</span>
+
+<span class="c1"># Note: you have to execute this cell multiple times until the return shows the &quot;status&quot;: &quot;complete&quot;</span>
+<span class="c1"># Note: Depending on your request, you can have more than one file (&#39;fileCount&#39;).</span>
+<span class="c1">#       You will need to individually download these files by using the index parameter.</span>
+
+<span class="n">url_run</span> <span class="o">=</span> <span class="s2">&quot;https://data.oceannetworks.ca/api/dataProductDelivery/run&quot;</span>
+
+<span class="n">requestID</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;dpRequestId&quot;</span><span class="p">]</span>
+
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dpRequestId&quot;</span><span class="p">:</span> <span class="n">requestID</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_run</span><span class="p">,</span> <span class="n">params_requests</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;dpRunId&#39;: 56070469, &#39;fileCount&#39;: 0, &#39;status&#39;: &#39;data product running&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##### requests continued #####</span>
+
+<span class="c1"># Find the RunID for the next step</span>
+<span class="n">RunId</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;dpRunId&quot;</span><span class="p">]</span>
+<span class="n">RunId</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56070469
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##### requests continued #####</span>
+
+<span class="c1"># 3. Download the data</span>
+
+<span class="n">url_download</span> <span class="o">=</span> <span class="s2">&quot;https://data.oceannetworks.ca/api/dataProductDelivery/download&quot;</span>
+
+<span class="n">params_requests</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dpRunId&quot;</span><span class="p">:</span> <span class="n">RunId</span><span class="p">,</span>
+    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+    <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_download</span><span class="p">,</span> <span class="n">params_requests</span><span class="p">)</span>
+<span class="n">r</span>  <span class="c1"># Rerun this cell until the response code is 200.</span>
+
+<span class="c1"># r.headers[&quot;Content-Disposition&quot;] has the format &quot;attachement; filename=XXX.png&quot;</span>
+<span class="c1"># with open(r.headers[&quot;Content-Disposition&quot;][22:], &#39;wb&#39;) as f:</span>
+<span class="c1">#     f.write(r.content)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Response [202]&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Another option to get the data</p>
+<p>Obtain your downloads from your user FTP directory (More -&gt; User Directory) in Oceans 3.0.
+Navigate to the folder that contains the runId: You will see the files in this folder.</p>
+<p><img alt="UserDirectory.png" src="../_images/UserDirectory.png" /></p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Oceans_3.0_API_Tutorial.html" class="btn btn-neutral float-left" title="Oceans 3.0 API tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Code_Examples/index.html" class="btn btn-neutral float-right" title="Code Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

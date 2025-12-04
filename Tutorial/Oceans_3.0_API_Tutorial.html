@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oceans 3.0 API tutorial &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="onc library tutorial" href="onc_Library_Tutorial.html" />
+    <link rel="prev" title="Tutorial" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Oceans 3.0 API tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction-to-onc-web-services-api">Introduction to ONC Web Services/API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-onc-web-services">What are ONC Web Services?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#documentation-page">Documentation page</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#a-practical-user-case">A practical user case</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-find-information-about-a-location">Step 1: Find information about a location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-find-information-about-devices-instruments-at-a-given-location">Step 2: Find information about devices/instruments at a given location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-find-all-deployments-of-a-bottom-pressure-recorder-at-nc89">Step 3: Find all deployments of a Bottom-Pressure Recorder at NC89.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-get-raw-archived-instrument-data-for-the-bpr-at-nc89-for-a-given-time-range">Step 4: Get raw archived instrument data for the BPR at NC89 for a given time-range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-get-archived-scalar-data-for-the-bpr-at-nc89-for-a-given-time-range">Step 5: Get archived scalar data for the BPR at NC89 for a given time-range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-request-an-image-file-download-for-a-daily-plot-of-bpr-data-from-nc89">Step 6: Request an image file download for a daily plot of BPR data from NC89</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="onc_Library_Tutorial.html">onc library tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">Oceans 3.0 API tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Tutorial/Oceans_3.0_API_Tutorial.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="oceans-3-0-api-tutorial">
+<h1>Oceans 3.0 API tutorial<a class="headerlink" href="#oceans-3-0-api-tutorial" title="Link to this heading"></a></h1>
+<p><strong>Before we begin</strong>:</p>
+<ul class="simple">
+<li><p>You’ll need an Oceans 3.0 account to get a token.</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">How to get a token?</p>
+<ol class="arabic simple">
+<li><p>Register for an Oceans 3.0 account at <a class="reference external" href="https://data.oceannetworks.ca/Registration">https://data.oceannetworks.ca/Registration</a>.</p></li>
+<li><p>Log into your account at <a class="reference external" href="https://data.oceannetworks.ca">https://data.oceannetworks.ca</a> by clicking the <em>Log In</em> link.</p></li>
+<li><p>Click the <em>Profile</em> link (top right corner) to access your account profile.</p></li>
+<li><p>Access the <em>Web Services API</em> tab and click <em>Copy Token</em>.</p></li>
+<li><p>If you forget your token, you can always find it in your Oceans 3.0 account profile.</p></li>
+</ol>
+</div>
+<div class="note admonition">
+<p class="admonition-title">There are two ways to make an HTTP GET request:</p>
+<ol class="arabic simple">
+<li><p>With token in the url: <a class="reference external" href="https://data.oceannetworks.ca/api/locations?&locationCode=NC89&token=YOUR_TOKEN">https://data.oceannetworks.ca/api/locations?&locationCode=NC89&token=YOUR_TOKEN</a>.</p></li>
+<li><p>Without token in the url: <a class="reference external" href="https://data.oceannetworks.ca/apiproxy/locations?locationCode=NC89">https://data.oceannetworks.ca/apiproxy/locations?locationCode=NC89</a>.
+Calls made this way do not require a token and use the Oceans 3.0 login instead.</p></li>
+</ol>
+<p>This tutorial will use the second method for demonstration purposes and to not expose the token.
+When developing your own scripts, please follow the first method.</p>
+</div>
+<section id="introduction-to-onc-web-services-api">
+<h2>Introduction to ONC Web Services/API<a class="headerlink" href="#introduction-to-onc-web-services-api" title="Link to this heading"></a></h2>
+<section id="what-are-onc-web-services">
+<h3>What are ONC Web Services?<a class="headerlink" href="#what-are-onc-web-services" title="Link to this heading"></a></h3>
+<p>A group of public web services that can be used to explore and download ONC data.</p>
+</section>
+<section id="documentation-page">
+<h3>Documentation page<a class="headerlink" href="#documentation-page" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Oceans+3.0+API+Home">https://wiki.oceannetworks.ca/display/O2A/Oceans+3.0+API+Home</a></p>
+<p><a class="reference external" href="https://data.oceannetworks.ca/OpenAPI">https://data.oceannetworks.ca/OpenAPI</a></p>
+<p><img alt="API_Services.png" src="../_images/API_Services.png" /></p>
+<p><img alt="API_Codes_Scheme.png" src="../_images/API_Codes_Scheme.png" /></p>
+</section>
+</section>
+<section id="a-practical-user-case">
+<h2>A practical user case<a class="headerlink" href="#a-practical-user-case" title="Link to this heading"></a></h2>
+<p><img alt="Discovery.png" src="../_images/Discovery.png" /></p>
+<section id="step-1-find-information-about-a-location">
+<h3>Step 1: Find information about a location<a class="headerlink" href="#step-1-find-information-about-a-location" title="Link to this heading"></a></h3>
+<p>Query the <strong>Locations Discovery Service</strong>.</p>
+<p>The primary purpose of the locations discovery service is to query locations in ONCs database that have instruments data you are interested.
+For these queries you need to use the parameter <strong>locationCode</strong>
+when requesting data or information with the different available services.</p>
+<p>Check the API <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/locations+Discovery+Service">documentation</a> and also the
+<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/locations">OpenAPI page</a> for more information.</p>
+<p>Here are some web services examples for how to use the location discovery services.</p>
+<ol class="arabic simple">
+<li><p>Return all available locations:
+<a class="reference external" href="https://data.oceannetworks.ca/apiproxy/locations">https://data.oceannetworks.ca/apiproxy/locations</a></p></li>
+<li><p>Return a specific location by using the locationCode parameter (Clayoquot Slope Bullseye - <strong>locationCode</strong>: NC89):
+<a class="reference external" href="https://data.oceannetworks.ca/apiproxy/locations?locationCode=NC89">https://data.oceannetworks.ca/apiproxy/locations?locationCode=NC89</a></p></li>
+</ol>
+<p>You probably get something like this after running the second example:</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>It is recommended that you install a JSON converter extension in your browser if not default
+as this helps with readability.</p>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;deployments&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">38</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;locationName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bullseye&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;depth&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1256.863158</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;maxDepth&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1260.0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;maxLat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">48.671024</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;maxLon&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-126.847007</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;minDepth&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1253.0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;minLat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">48.669268</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;minLon&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-126.85184</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; Bullseye is a location at Clayoquot Slope, where gas hydrates, seafloor cold seeps, and hydrate dynamics are observed.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hasDeviceData&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lon&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-126.848028</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;locationCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hasPropertyData&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">48.670589</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dataSearchURL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://data.oceannetworks.ca/DataSearch?location=NC89&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-find-information-about-devices-instruments-at-a-given-location">
+<h3>Step 2: Find information about devices/instruments at a given location<a class="headerlink" href="#step-2-find-information-about-devices-instruments-at-a-given-location" title="Link to this heading"></a></h3>
+<p>Query the <strong>Device Categories Discovery Service</strong>.</p>
+<p>Check the API <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/deviceCategories+Discovery+Service">documentation</a> and
+<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/deviceCategories">OpenAPI page</a> for more information.</p>
+<p>Here are some web services examples for how to use the device categories discovery service.</p>
+<ol class="arabic simple">
+<li><p>Return all devices installed at NC89 (Clayoquot Slope - Bullseye):
+<a class="reference external" href="https://data.oceannetworks.ca/apiproxy/deviceCategories?locationCode=NC89">https://data.oceannetworks.ca/apiproxy/deviceCategories?locationCode=NC89</a></p></li>
+<li><p>Return all devices that have a specific property (e.g. “Pressure”)
+<a class="reference external" href="https://data.oceannetworks.ca/apiproxy/deviceCategories?deviceCategoryName=pressure">https://data.oceannetworks.ca/apiproxy/deviceCategories?deviceCategoryName=pressure</a></p></li>
+</ol>
+<p>After running the second example, we can find one instrument: <strong>Bottom-Pressure Recorder -&gt; deviceCategoryCode=BPR</strong>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Another option to quickly search for a specific deviceCategoryCode</p>
+<p>Oceans 3.0 <a class="reference external" href="https://data.oceannetworks.ca/DataSearch?location=NC89&deviceCategory=BPR">Data Search</a></p>
+<p><img alt="dataSearch_NC89_Explained.PNG" src="../_images/dataSearch_NC89_Explained.PNG" /></p>
+</div>
+</section>
+<section id="step-3-find-all-deployments-of-a-bottom-pressure-recorder-at-nc89">
+<h3>Step 3: Find all deployments of a Bottom-Pressure Recorder at NC89.<a class="headerlink" href="#step-3-find-all-deployments-of-a-bottom-pressure-recorder-at-nc89" title="Link to this heading"></a></h3>
+<p>Query the <strong>Deployments Discovery Service</strong>:</p>
+<p>Check the API <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/deployments+Discovery+Service">documentation</a> and
+<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/deployments">OpenAPI page</a> for more information.</p>
+<p>After running
+<a class="reference external" href="https://data.oceannetworks.ca/apiproxy/deployments?locationCode=NC89&deviceCategoryCode=BPR">https://data.oceannetworks.ca/apiproxy/deployments?locationCode=NC89&deviceCategoryCode=BPR</a>, the following will be returned:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;begin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2009-09-06T15:05:58.000Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;depth&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1258.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceCategoryCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BPR&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BPR_889&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;end&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-08-04T19:16:37.000Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hasDeviceData&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;heading&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">48.670835</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;locationCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lon&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-126.847965</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;roll&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;begin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-08-04T23:38:03.000Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;depth&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1257.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceCategoryCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BPR&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RBRQUARTZ3BPR203659&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;end&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hasDeviceData&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;heading&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">48.670826</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;locationCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NC89&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lon&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-126.847987</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;roll&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><img alt="RealTime.png" src="../_images/RealTime.png" /></p>
+</section>
+<section id="step-4-get-raw-archived-instrument-data-for-the-bpr-at-nc89-for-a-given-time-range">
+<h3>Step 4: Get raw archived instrument data for the BPR at NC89 for a given time-range<a class="headerlink" href="#step-4-get-raw-archived-instrument-data-for-the-bpr-at-nc89-for-a-given-time-range" title="Link to this heading"></a></h3>
+<p>Query the <strong>Rawdata Service</strong>:</p>
+<p>Check the API <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/rawdata+service">documentation</a> and
+<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/rawdata/location">OpenAPI page</a> for more information.</p>
+<p>There are two methods to get rawdata:</p>
+<ol class="arabic">
+<li><p><strong>by location</strong></p>
+<p>that requires:</p>
+<ul class="simple">
+<li><p>locationCode</p></li>
+<li><p>deviceCategoryCode</p></li>
+</ul>
+</li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/rawdata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z">https://data.oceannetworks.ca/apiproxy/rawdata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;lineTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;readings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E288C0BA7A759558AE00&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E388C0BAA275955B4700&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E488C0BB3975955B1600&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E588C0BA127595592A00&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E688C0BA96759559B400&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;times&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:00.493Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:01.495Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:02.494Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:03.496Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:04.494Z&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;locationName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bullseye&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;outputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;queryUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://data.oceannetworks.ca/api/rawdata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p><strong>by device</strong></p>
+<p>that requires:</p>
+<ul class="simple">
+<li><p>deviceCode</p></li>
+</ul>
+</li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/rawdata/device?deviceCode=BPR_889&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z">https://data.oceannetworks.ca/apiproxy/rawdata/device?deviceCode=BPR_889&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;lineTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;readings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E288C0BA7A759558AE00&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E388C0BAA275955B4700&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E488C0BB3975955B1600&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E588C0BA127595592A00&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;3C5496E688C0BA96759559B400&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;times&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:00.493Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:01.495Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:02.494Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:03.496Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;2020-01-28T00:00:04.494Z&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;outputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;queryUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://data.oceannetworks.ca/api/rawdata/device?deviceCode=BPR_889&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">How to find the deviceCode?</p>
+<p>The second method requires deviceCode. Given that we know deviceCategory (BPR) and location (NC89),
+there are two ways to find the related deviceCode:</p>
+<ol class="arabic simple">
+<li><p>By going to <a class="reference external" href="https://data.oceannetworks.ca/DeviceListing?DeviceId=22503">Device Details</a> in Oceans 3.0 portal.</p></li>
+</ol>
+<p>This page can be accessed by clicking <em>details</em> under <strong>devices</strong> in the pop-up window in
+<a class="reference external" href="https://data.oceannetworks.ca/DataSearch?deviceCategoryCode=BPR&locationCode=NC89">Data Search</a>.</p>
+<p><img alt="DeviceCode_Details.PNG" src="../_images/DeviceCode_Details.PNG" /></p>
+<ol class="arabic simple" start="2">
+<li><p>By using the <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/devices">Device Discovery Services</a>.</p></li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/devices?deviceCategoryCode=BPR&locationCode=NC89&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z">https://data.oceannetworks.ca/apiproxy/devices?deviceCategoryCode=BPR&locationCode=NC89&dateFrom=2020-01-28T00:00:00.000Z&dateTo=2020-01-28T00:00:05.000Z</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;cvTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://vocab.nerc.ac.uk/collection/L22/current/TOOL1652/&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;vocabulary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SeaVoX Device Catalogue&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;dataRating&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;dateFrom&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2018-04-25T09:21:06.000Z&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;dateTo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;samplePeriod&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;sampleSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;deviceCategoryCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BPR&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BPR_889&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">22503</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceLink&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://data.oceannetworks.ca/DeviceListing?DeviceId=22503&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deviceName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NRCan Bottom Pressure Recorder 88&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hasDeviceData&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-5-get-archived-scalar-data-for-the-bpr-at-nc89-for-a-given-time-range">
+<h3>Step 5: Get archived scalar data for the BPR at NC89 for a given time-range<a class="headerlink" href="#step-5-get-archived-scalar-data-for-the-bpr-at-nc89-for-a-given-time-range" title="Link to this heading"></a></h3>
+<p>Query the <strong>Scalardata Service</strong>.</p>
+<p>Check the API <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/scalardata+service">documentation</a> and
+<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/scalardata/location">OpenAPI page</a> for more information.</p>
+<p>Again there are two methods to get scalar data:</p>
+<ul class="simple">
+<li><p>by location (<em>locationCode</em> + <em>deviceCategoryCode</em>)</p></li>
+<li><p>by device (<em>deviceCode</em>)</p></li>
+</ul>
+<p>Let’s use location (<em>locationCode</em> and <em>deviceCategoryCode</em>) as an example.</p>
+<ol class="arabic simple">
+<li><p>Request all sensor data for a BPR at location NC89 (Bullseye) for the time range of five seconds on January, 28th 2021 after midnight:</p></li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/scalardata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2021-01-28T00:00:00.000Z&dateTo=2021-01-28T00:00:05.000Z">https://data.oceannetworks.ca/apiproxy/scalardata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2021-01-28T00:00:00.000Z&dateTo=2021-01-28T00:00:05.000Z</a></p>
+<ol class="arabic simple" start="2">
+<li><p>The query returns more than one sensor: Now we narrow down our search by only querying the sensor <em>dart_pressure_residual</em>.</p></li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/scalardata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2021-01-28T00:00:00.000Z&dateTo=2021-01-28T00:00:05.000Z&sensorCategoryCodes=dart_pressure_residual">https://data.oceannetworks.ca/apiproxy/scalardata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2021-01-28T00:00:00.000Z&dateTo=2021-01-28T00:00:05.000Z&sensorCategoryCodes=dart_pressure_residual</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;messages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="c1">// not shown</span>
+<span class="w">  </span><span class="nt">&quot;queryUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://data.oceannetworks.ca/api/scalardata/location?locationCode=NC89&deviceCategoryCode=BPR&dateFrom=2021-01-28T00:00:00.000Z&dateTo=2021-01-28T00:00:05.000Z&sensorCategoryCodes=dart_pressure_residual&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sensorData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;actualSamples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;qaqcFlags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;sampleTimes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="s2">&quot;2021-01-28T00:00:00.227Z&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;2021-01-28T00:00:01.229Z&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;2021-01-28T00:00:02.230Z&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;2021-01-28T00:00:03.230Z&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;2021-01-28T00:00:04.229Z&quot;</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">-0.005514044963092601</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.00482414655402863</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.003632743404523353</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">-0.005756540188485815</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.00605069544167236</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;outputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;sensorCategoryCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dart_pressure_residual&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;sensorCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dart_pressure_residual&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;sensorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DART Pressure Residual&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;unitOfMeasure&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;decibar&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><img alt="DataProduct.png" src="../_images/DataProduct.png" /></p>
+<p><img alt="Delivery Services.png" src="../_images/Services.png" /></p>
+<p><strong><em>Some important information before we go into Data Product Delivery Service</em></strong>:</p>
+<div class="tip admonition">
+<p class="admonition-title">Consider using archivefile service</p>
+<p>Most data files can be downloaded using the <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/archivefiles"><em>archivefiles services</em></a> (<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/archivefile/download">OpenAPI page</a>).
+Some data examples include <em>.txt, .fft, .wav, .mp3, .mp4, .flac, .rdi, etc</em>.
+That will be lighter on our servers and get the data faster and easier for you!</p>
+</div>
+<ul class="simple">
+<li><p>Downloading a data product is a <strong>three-step</strong> process:</p>
+<ol class="arabic simple">
+<li><p>Request a data product generation/compilation using the <em>request</em> method.</p>
+<ul>
+<li><p>Validates request parameters, creates a new request definition, and provides performance estimates.</p>
+<ul>
+<li><p><em>What</em>: device category and/or property.</p></li>
+<li><p><em>Where</em>: location or device.</p></li>
+<li><p><em>When</em>: dateFrom and dateTo date/time.</p></li>
+<li><p><em>How</em>: data product, extension, and data product options.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Run the data product request using the <em>run</em> method.</p>
+<ul>
+<li><p>Starts the data product generation/compilation process by adding the request to the internal Task Queue.</p></li>
+</ul>
+</li>
+<li><p>Download the data product using the <em>download</em> method.</p>
+<ul>
+<li><p>Attempts to download a data product file at an index. If the file at that index is not ready for download
+at the time of the download request, the service returns information about the status of the process.
+The client application must continue refreshing the download request until the file is ready,
+or an error message is returned.</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="step-6-request-an-image-file-download-for-a-daily-plot-of-bpr-data-from-nc89">
+<h3>Step 6: Request an image file download for a daily plot of BPR data from NC89<a class="headerlink" href="#step-6-request-an-image-file-download-for-a-daily-plot-of-bpr-data-from-nc89" title="Link to this heading"></a></h3>
+<p>Query the <strong>Data Product Delivery Service</strong>.</p>
+<p>Check the API <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/dataProductDelivery+Service">documentation</a> and
+<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/dataProductDelivery/request">OpenAPI page</a> for more information.</p>
+<ol class="arabic simple">
+<li><p>Request the download of the data product: Time-series Scalar Data Plot (<strong>TSSP</strong>) with extension <strong>png</strong></p></li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/dataProductDelivery/request?locationCode=NC89&deviceCategoryCode=BPR&dataProductCode=TSSP&extension=png&dateFrom=2021-01-11T00:00:00.000Z&dateTo=2021-01-12T00:00:00.000Z&dpo_qualityControl=1&dpo_resample=none">https://data.oceannetworks.ca/apiproxy/dataProductDelivery/request?locationCode=NC89&deviceCategoryCode=BPR&dataProductCode=TSSP&extension=png&dateFrom=2021-01-11T00:00:00.000Z&dateTo=2021-01-12T00:00:00.000Z&dpo_qualityControl=1&dpo_resample=none</a></p>
+<p>Copy the <span style="color:#00008B;"><strong>dpRequestId</strong></span> when completed into the next method step.</p>
+<ol class="arabic simple" start="2">
+<li><p>Request the status of the product (optional step)</p></li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/dataProductDelivery/status?dpRequestId=%5BYOUR_REQUEST_ID_HERE%5D">https://data.oceannetworks.ca/apiproxy/dataProductDelivery/status?dpRequestId=[YOUR_REQUEST_ID_HERE]</a></p>
+<ol class="arabic simple" start="3">
+<li><p>Run the Request job of the data product generation.</p></li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/dataProductDelivery/run?dpRequestId=%5BYOUR_REQUEST_ID_HERE%5D">https://data.oceannetworks.ca/apiproxy/dataProductDelivery/run?dpRequestId=[YOUR_REQUEST_ID_HERE]</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Refresh the browser until you see <code class="docutils literal notranslate"><span class="pre">status:</span> <span class="pre">&quot;complete&quot;</span></code>.</p>
+</div>
+<p>Copy the <span style="color:#00008B;"><strong>dpRunId</strong></span> when completed into the next method step.</p>
+<ol class="arabic simple" start="4">
+<li><p>Download the generate data product (run).</p></li>
+</ol>
+<p>The file will be downloaded automatically into your download folder setup via your browser.</p>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/dataProductDelivery/download?dpRunId=%5BYOUR_RUN_ID_HERE%5D&index=1">https://data.oceannetworks.ca/apiproxy/dataProductDelivery/download?dpRunId=[YOUR_RUN_ID_HERE]&index=1</a></p>
+<ol class="arabic simple" start="5">
+<li><p>Download the metadata file only (optional step).</p></li>
+</ol>
+<p><a class="reference external" href="https://data.oceannetworks.ca/apiproxy/dataProductDelivery/download?dpRunId=%5BYOUR_RUN_ID_HERE%5D&index=meta">https://data.oceannetworks.ca/apiproxy/dataProductDelivery/download?dpRunId=[YOUR_RUN_ID_HERE]&index=meta</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="onc_Library_Tutorial.html" class="btn btn-neutral float-right" title="onc library tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

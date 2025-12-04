@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Guide" href="API_Guide.html" />
+    <link rel="prev" title="Download Archived Files" href="Code_Examples/Download_Archived_Files.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fix-bugs-implement-features">Fix Bugs / Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commit">Commit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-a-development-environment">Set up a development environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-virtual-environment">Creating a virtual environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#about-the-tests">About the tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#formatter">Formatter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linter">Linter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-a-development-environment-for-documentation">Set up a development environment for documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-virtual-environment-for-documentation">Creating a virtual environment for documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-doc">Building doc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jupyter-notebooks">Jupyter notebooks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#make-a-pull-request">Make a pull request</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#before-making-a-pull-request">Before making a pull request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#after-making-the-pull-request">After making the pull request</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Contributing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/contributing.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h1>
+<p>All contributions are welcome and appreciated! Credits will be given in the changelog file.</p>
+<section id="types-of-contributions">
+<h2>Types of Contributions<a class="headerlink" href="#types-of-contributions" title="Link to this heading"></a></h2>
+<section id="report-bugs">
+<h3>Report Bugs<a class="headerlink" href="#report-bugs" title="Link to this heading"></a></h3>
+<p>Bugs can come from Oceans 3.0 API (backend) or the onc library.
+When reporting an issue, please include some descriptions
+(code snippet, expected behavior, actual behavior, etc.) to help us reproduce the bug.</p>
+<p>Bugs from the backend can also be reported at <a class="reference external" href="https://data.oceannetworks.ca/DataPreview">Oceans 3.0 Data Portal</a>
+from the request support form located in the top-right corner.</p>
+</section>
+<section id="fix-bugs-implement-features">
+<h3>Fix Bugs / Implement Features<a class="headerlink" href="#fix-bugs-implement-features" title="Link to this heading"></a></h3>
+<p>These are issues labeled with “bug” / “enhancement”.
+Any issue that has no assignee is open to whoever wants to implement it.</p>
+</section>
+<section id="write-documentation">
+<h3>Write Documentation<a class="headerlink" href="#write-documentation" title="Link to this heading"></a></h3>
+<p>Documentation is important for users to understand the library.
+You are welcome to raise an issue if you find something that is outdated or can be improved.</p>
+<p>For docstring, the <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">numpy style</a> is used.</p>
+</section>
+<section id="commit">
+<h3>Commit<a class="headerlink" href="#commit" title="Link to this heading"></a></h3>
+<p>We use <a class="reference external" href="https://www.conventionalcommits.org/">conventional commits</a> for commit messages.
+Most of the time it is as simple as adding a type before the message.</p>
+<p>The general format is as follows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;type&gt;[optional scope]: short description
+
+[optional body: long description]
+
+[optional footer]
+</pre></div>
+</div>
+<p>Types can be <em>fix, feat (short for feature), refactor, style, docs, test, etc</em>. Some examples are:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>feat: allow users to cancel a running data product
+
+test: add tests for cancelling a running data product
+
+docs: add docstrings for discovery methods
+</pre></div>
+</div>
+<p>Check <a class="reference external" href="https://py-pkgs.org/07-releasing-versioning#automatic-version-bumping">py-pkgs open source book</a> for an introduction.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="set-up-a-development-environment">
+<h2>Set up a development environment<a class="headerlink" href="#set-up-a-development-environment" title="Link to this heading"></a></h2>
+<p>Here is a setup for the local development.</p>
+<section id="creating-a-virtual-environment">
+<h3>Creating a virtual environment<a class="headerlink" href="#creating-a-virtual-environment" title="Link to this heading"></a></h3>
+<p>Make sure the Python version meets the minimum version requirement defined in pyproject.toml.
+This step can be simplified if you are using <a class="reference external" href="https://code.visualstudio.com/docs/python/environments">VS Code</a>
+or <a class="reference external" href="https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html#python_create_virtual_env">PyCharm</a>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a virtual environment</span>
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+
+<span class="c1"># Activate the venv</span>
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<span class="c1"># For Windows, use .venv\Scripts\activate</span>
+
+<span class="c1"># Install onc library and dev dependencies in editable mode</span>
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="about-the-tests">
+<h3>About the tests<a class="headerlink" href="#about-the-tests" title="Link to this heading"></a></h3>
+<p>Tests are organized based on the structure of the <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI">OpenAPI</a> page.
+Test files are named based on the API end point.
+For example, <code class="docutils literal notranslate"><span class="pre">/location/tree</span></code> is tested in the test_location_tree.py file under discover_locations directory.</p>
+<p>Before running the tests, create a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file under the root directory and put TOKEN variable in the file.
+If you are on Windows, make sure the encoding of <code class="docutils literal notranslate"><span class="pre">.env</span></code> file is UTF-8 after using the command below.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">TOKEN</span><span class="o">=</span><span class="si">${</span><span class="nv">YOUR_TOKEN</span><span class="si">}</span><span class="w"> </span>&gt;<span class="w"> </span>.env
+</pre></div>
+</div>
+<p>The default testing environment is PROD. If you are an internal developer,
+add the following line to <code class="docutils literal notranslate"><span class="pre">.env</span></code> so that the tests are running against QA environment.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">ONC_ENV</span><span class="o">=</span>QA<span class="w"> </span>&gt;&gt;<span class="w"> </span>.env
+</pre></div>
+</div>
+<p>If testing in PROD is desired, change ONC_ENV value from QA to PROD, or simply removing the line.</p>
+<p>To run all tests, run</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pytest<span class="w">  </span><span class="c1"># or pytest --cov=onc to get a coverage report</span>
+</pre></div>
+</div>
+<p>Or use tox</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py310<span class="w">  </span><span class="c1"># py39, py311, py312. Make sure the specified python version is installed.</span>
+</pre></div>
+</div>
+<p>To run specific tests, refer to <a class="reference external" href="https://docs.pytest.org/en/stable/how-to/usage.html#specifying-which-tests-to-run">how to invoke pytest</a>.
+You can also use the built-in testing support of IDEs like <a class="reference external" href="https://code.visualstudio.com/docs/python/testing#_run-tests">VS Code</a>
+or <a class="reference external" href="https://www.jetbrains.com/help/pycharm/pytest.html#run-pytest-test">PyCharm</a>.</p>
+</section>
+<section id="formatter">
+<h3>Formatter<a class="headerlink" href="#formatter" title="Link to this heading"></a></h3>
+<p>The code is formatted using <a class="reference external" href="https://black.readthedocs.io/en/stable/">black</a>
+and <a class="reference external" href="https://pycqa.github.io/isort/">isort</a>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>black<span class="w"> </span>src<span class="w"> </span>tests
+$<span class="w"> </span>isort<span class="w"> </span>src<span class="w"> </span>tests
+</pre></div>
+</div>
+<p>Or use tox</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>format<span class="w"> </span><span class="c1"># This also formats doc folder</span>
+</pre></div>
+</div>
+</section>
+<section id="linter">
+<h3>Linter<a class="headerlink" href="#linter" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://docs.astral.sh/ruff/">Ruff</a> is used for linting.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>src<span class="w"> </span>tests
+</pre></div>
+</div>
+<p>Or use tox</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>lint
+</pre></div>
+</div>
+<p>Sometimes ruff can fix the error.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>--fix<span class="w"> </span>src<span class="w"> </span>tests
+</pre></div>
+</div>
+<p>Or use tox (check <a class="reference external" href="https://tox.wiki/en/latest/config.html#substitutions-for-positional-arguments-in-commands">tox positional arguments</a> for more information)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>lint<span class="w"> </span>--<span class="w"> </span>--fix<span class="w"> </span>src<span class="w"> </span>tests
+</pre></div>
+</div>
+</section>
+</section>
+<section id="set-up-a-development-environment-for-documentation">
+<h2>Set up a development environment for documentation<a class="headerlink" href="#set-up-a-development-environment-for-documentation" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a> is used for documentation, with several extensions.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://myst-parser.readthedocs.io">MyST</a>: Parse markdown files.</p></li>
+<li><p><a class="reference external" href="https://myst-nb.readthedocs.io">MyST_NB</a>: Compile jupyter notebooks.</p></li>
+<li><p><a class="reference external" href="https://sphinx-autoapi.readthedocs.io/">AutoAPI</a>: Auto generate API documentation.</p></li>
+<li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon</a>: Support NumPy style docstrings.</p></li>
+<li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/viewcode.html">viewcode</a>: Add links to source code.</p></li>
+<li><p><a class="reference external" href="https://sphinx-copybutton.readthedocs.io/">copybutton</a>: Add a copy button for code blocks.</p></li>
+</ul>
+<section id="creating-a-virtual-environment-for-documentation">
+<h3>Creating a virtual environment for documentation<a class="headerlink" href="#creating-a-virtual-environment-for-documentation" title="Link to this heading"></a></h3>
+<p>Follow the same step in “Set up a development environment”,
+and install dependencies for <em>doc</em> instead of <em>dev</em>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install onc library and doc dependencies in editable mode</span>
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>doc<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="building-doc">
+<h3>Building doc<a class="headerlink" href="#building-doc" title="Link to this heading"></a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sphinx-build<span class="w"> </span>-W<span class="w"> </span>doc/source<span class="w"> </span>doc/build/html
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">-W</span></code> makes the build stop at the first warning.
+Another useful flag is <code class="docutils literal notranslate"><span class="pre">-E</span></code>, which forces rebuilding the structure caching all references completely.</p>
+<p>There is a Sphinx extension called <a class="reference external" href="https://github.com/executablebooks/sphinx-autobuild">sphinx-autobuild</a>
+to watch a Sphinx directory and rebuild the documentation when a change is detected.
+It also includes a live-reload web server.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sphinx-autobuild<span class="w"> </span>-W<span class="w"> </span>doc/source<span class="w"> </span>doc/build/html<span class="w"> </span>--watch<span class="w"> </span><span class="s2">&quot;*.md&quot;</span><span class="w"> </span>--watch<span class="w"> </span>src
+</pre></div>
+</div>
+<p>Or use tox</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>doc-autobuild
+</pre></div>
+</div>
+</section>
+<section id="jupyter-notebooks">
+<h3>Jupyter notebooks<a class="headerlink" href="#jupyter-notebooks" title="Link to this heading"></a></h3>
+<p>Jupyter notebooks are formatted using <a class="reference external" href="https://black.readthedocs.io/en/stable/">black</a>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>black<span class="w"> </span>doc
+</pre></div>
+</div>
+<p>Or use tox</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>format<span class="w"> </span><span class="c1"># This also formats src and tests folder</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://myst-nb.readthedocs.io">MyST_NB</a> supports executing jupyter notebooks when building the documentation.
+This is turned off in <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> for faster local development and enabled in GitHub Actions.
+Currently, only <code class="docutils literal notranslate"><span class="pre">onc_Library_Tutorial.ipynb</span></code> will be run during the build.</p>
+<p>For a better git diff, all the outputs are cleared in the jupyter notebooks.</p>
+</section>
+</section>
+<section id="make-a-pull-request">
+<h2>Make a pull request<a class="headerlink" href="#make-a-pull-request" title="Link to this heading"></a></h2>
+<p>The GitHub Actions services will automatically run formatter, linter,
+and test suite (<em>ci.yml</em>) after you make a pull request.</p>
+<p>Our test uses an Actions secret called TOKEN. For security reasons,
+GitHub will not pass Actions secrets to workflows that are triggered by a pull request from a fork.
+If you are an outside contributor working on a fork,
+this means all your checks will fail on the upstream.
+It would be helpful if you could add an Action secret called TOKEN on your fork,
+and manually trigger the “Formatting, Linting and Testing” workflow for your feature branch,
+so we can check the test results on your fork instead of the upstream.</p>
+<p>The actual tox environments to run are specified in the <a class="reference external" href="https://github.com/tox-dev/tox-gh#basic-example">[gh]</a> section of <em>tox.ini</em>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">gh</span><span class="p">]</span>
+<span class="n">python</span> <span class="o">=</span>
+    <span class="mf">3.10</span> <span class="o">=</span> <span class="n">py310</span><span class="p">,</span> <span class="nb">format</span><span class="o">-</span><span class="n">check</span><span class="p">,</span> <span class="n">lint</span>
+    <span class="mf">3.11</span> <span class="o">=</span> <span class="n">py311</span>
+    <span class="mf">3.12</span> <span class="o">=</span> <span class="n">py312</span>
+    <span class="mf">3.13</span> <span class="o">=</span> <span class="n">py313</span>
+</pre></div>
+</div>
+<p>In the config above, tox will run different sets of tox environments on different Python versions.</p>
+<ul class="simple">
+<li><p>on Python 3.10 job, tox runs <code class="docutils literal notranslate"><span class="pre">py310</span></code>, <code class="docutils literal notranslate"><span class="pre">format-check</span></code> and <code class="docutils literal notranslate"><span class="pre">lint</span></code> environments,</p></li>
+<li><p>on Python 3.11 job, tox runs <code class="docutils literal notranslate"><span class="pre">py311</span></code> environment,</p></li>
+<li><p>on Python 3.12 job, tox runs <code class="docutils literal notranslate"><span class="pre">py312</span></code> environment.</p></li>
+<li><p>on Python 3.13 job, tox runs <code class="docutils literal notranslate"><span class="pre">py313</span></code> environment.</p></li>
+</ul>
+<p><em>ci.yml</em> uses a matrix strategy for operating systems.
+So for each Python version, it will run three times for Windows, Ubuntu, and Mac OS.</p>
+<section id="before-making-a-pull-request">
+<h3>Before making a pull request<a class="headerlink" href="#before-making-a-pull-request" title="Link to this heading"></a></h3>
+<p>It is recommended to</p>
+<ol class="arabic simple">
+<li><p>Incorporate other people’s changes from <em>main</em>.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sync the main first if you are on a fork.</span>
+$<span class="w"> </span>git<span class="w"> </span>fetch
+$<span class="w"> </span>git<span class="w"> </span>rebase<span class="w"> </span>origin/main
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Install the minimum Python version specified in <em>pyproject.toml</em> and run <code class="docutils literal notranslate"><span class="pre">tox</span></code>.
+This will run environments defined in <code class="docutils literal notranslate"><span class="pre">env_list</span></code> in <em>tox.ini</em>.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>If you are working on a fork, add an Actions secret called TOKEN,
+and manually trigger the “Formatting, Linting and Testing” workflow for your feature branch
+after pushing your commits.</p></li>
+<li><p>If you make changes to any jupyter notebooks, make sure to clear all the outputs and run <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">black</span> <span class="pre">doc</span></code>.</p></li>
+</ol>
+</section>
+<section id="after-making-the-pull-request">
+<h3>After making the pull request<a class="headerlink" href="#after-making-the-pull-request" title="Link to this heading"></a></h3>
+<p>If you find that some GitHub checks failed, you can check the log in the Actions tab to see what went wrong.</p>
+<p>Since a successful test run relies on both the backend and the client library,
+if your local <code class="docutils literal notranslate"><span class="pre">tox</span></code> run passed but GitHub Action checks failed,
+it’s probably because some temporary issues have happened to our backend server
+(especially with a 500 server error).
+You can have confidence in your commit and rerun the failed jobs.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Code_Examples/Download_Archived_Files.html" class="btn btn-neutral float-left" title="Download Archived Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="API_Guide.html" class="btn btn-neutral float-right" title="API Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

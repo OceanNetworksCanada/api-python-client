@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="autoapi/index.html" />
+    <link rel="prev" title="API Guide" href="API_Guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API_Guide.html">API Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v2-6-0-2025-12-04">v2.6.0 (2025-12-04)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enhancements">Enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixes">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-5-1-2025-07-12">v2.5.1 (2025-07-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-5-0-2025-02-13">v2.5.0 (2025-02-13)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Contributors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reviewers-panel">Reviewers panel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-4-1-2024-09-24">v2.4.1 (2024-09-24)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Contributors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Reviewers panel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-4-0-2024-05-30">v2.4.0 (2024-05-30)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests">Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Contributors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Reviewers panel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-3-5-2019-12-12-and-before">v2.3.5 (2019-12-12) and before</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/changelog.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading"></a></h1>
+<section id="v2-6-0-2025-12-04">
+<h2>v2.6.0 (2025-12-04)<a class="headerlink" href="#v2-6-0-2025-12-04" title="Link to this heading"></a></h2>
+<section id="enhancements">
+<h3>Enhancements<a class="headerlink" href="#enhancements" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Bump the minimum Python version from 3.9 to 3.10.</p>
+<p>This is in alignment with the <a class="reference external" href="https://devguide.python.org/versions/">status of Python versions</a>.</p>
+</li>
+<li><p>ONC class can get the token by checking an environment variable called <code class="docutils literal notranslate"><span class="pre">ONC_TOKEN</span></code>.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/pull/67">#67</a>).</p>
+<p>This means users can use <code class="docutils literal notranslate"><span class="pre">onc</span> <span class="pre">=</span> <span class="pre">ONC()</span></code> if <code class="docutils literal notranslate"><span class="pre">ONC_TOKEN</span></code> is set correctly (probably in a .env file)</p>
+</li>
+<li><p>Added a new method called <code class="docutils literal notranslate"><span class="pre">getDataAvailability</span></code>, which matches the new OpenAPI end point
+<a class="reference external" href="https://data.oceannetworks.ca/OpenAPI#get-/dataAvailability/dataproducts"><code class="docutils literal notranslate"><span class="pre">/dataAvailability/dataproducts</span></code></a>.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/pull/70">#70</a>).</p></li>
+<li><p>Change the default value of <code class="docutils literal notranslate"><span class="pre">showWarning</span></code> to be <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix 0 file size in the print message when calling <code class="docutils literal notranslate"><span class="pre">orderDataProduct</span></code>
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/pull/64">#64</a>).</p></li>
+</ul>
+</section>
+<section id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/kan-fu">Kan Fu</a></p></li>
+</ul>
+</section>
+</section>
+<section id="v2-5-1-2025-07-12">
+<h2>v2.5.1 (2025-07-12)<a class="headerlink" href="#v2-5-1-2025-07-12" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Enhancements<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Change the default value of <code class="docutils literal notranslate"><span class="pre">showWarning</span></code> to be <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Ignore timezone when parsing non-standard datetime like “YYYY-MM-DD”.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/60">#60</a>)</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Contributors<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/kan-fu">Kan Fu</a></p></li>
+</ul>
+</section>
+</section>
+<section id="v2-5-0-2025-02-13">
+<h2>v2.5.0 (2025-02-13)<a class="headerlink" href="#v2-5-0-2025-02-13" title="Link to this heading"></a></h2>
+<section id="id4">
+<h3>Enhancements<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">getArchivefileUrl</span></code> and <code class="docutils literal notranslate"><span class="pre">getArchivefileUrls</span></code> to only return the download links of
+the requested archive files.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/56">#56</a>)</p>
+<p>This is useful because users can use them in their favorite download manager.
+Check the <a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Archived_Files.html#download-archived-files-using-a-download-manager">Code Example</a>
+for more information.</p>
+</li>
+<li><p>Added warning messages if the response has a “messages” key with a non-empty list value.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/pull/58">#58</a>)</p>
+<p>This feature can be turned off by using <code class="docutils literal notranslate"><span class="pre">onc</span> <span class="pre">=</span> <span class="pre">ONC(token=TOKEN,</span> <span class="pre">showWarning=False)</span></code>.</p>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>Fixes<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Reverted back the incremental downloading files because it might generate invalid files
+with partial file size (before it was zero file size).
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/54">#54</a>)</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Contributors<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/kan-fu">Kan Fu</a></p></li>
+</ul>
+</section>
+<section id="reviewers-panel">
+<h3>Reviewers panel<a class="headerlink" href="#reviewers-panel" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/aschlesin">Angela Schlesinger</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eliferguson">Eli Ferguson</a></p></li>
+<li><p><a class="reference external" href="https://github.com/spencerwplovie">Spencer Plovie</a></p></li>
+</ul>
+</section>
+</section>
+<section id="v2-4-1-2024-09-24">
+<h2>v2.4.1 (2024-09-24)<a class="headerlink" href="#v2-4-1-2024-09-24" title="Link to this heading"></a></h2>
+<section id="id7">
+<h3>Fixes<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed duplicate downloading issues when the downloaded file exists and the overwrite parameter is False
+in <code class="docutils literal notranslate"><span class="pre">downloadArchivefile</span></code>, <code class="docutils literal notranslate"><span class="pre">downloadDataProduct</span></code>, and <code class="docutils literal notranslate"><span class="pre">orderDataProduct</span></code>.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/41">#41</a>)</p></li>
+<li><p>Fixed incorrect time estimation when downloading scalardata in multiple pages.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/45">#45</a>)</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Contributors<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/kan-fu">Kan Fu</a></p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>Reviewers panel<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/aschlesin">Angela Schlesinger</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eliferguson">Eli Ferguson</a></p></li>
+</ul>
+</section>
+</section>
+<section id="v2-4-0-2024-05-30">
+<h2>v2.4.0 (2024-05-30)<a class="headerlink" href="#v2-4-0-2024-05-30" title="Link to this heading"></a></h2>
+<section id="id10">
+<h3>Enhancements<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Improved package setup (pyproject.toml, linting and formatter).
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/1">#1</a>)</p>
+<p>Now you can import the ONC class using <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">onc</span> <span class="pre">import</span> <span class="pre">ONC</span></code> instead of <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">onc.onc</span> <span class="pre">import</span> <span class="pre">ONC</span></code>.
+The longer version still works.</p>
+</li>
+<li><p>Added support of Path type for outPath (instance variable in ONC class).
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/12">#12</a>)</p></li>
+<li><p>Added GitHub Actions for continuous integration.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/19">#19</a>)</p></li>
+<li><p>Added Sphinx for generating documentation.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/7">#7</a>)</p></li>
+<li><p>Improved exception types raised and caught.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/17">#17</a>)</p></li>
+<li><p>Added new public methods (<code class="docutils literal notranslate"><span class="pre">checkDataProduct</span></code>, <code class="docutils literal notranslate"><span class="pre">cancelDataProduct</span></code>, <code class="docutils literal notranslate"><span class="pre">restartDataProduct</span></code>, <code class="docutils literal notranslate"><span class="pre">getSensorCategoryCodes</span></code>) to match backend API update.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/26">#26</a>)</p></li>
+<li><p>Renamed some public methods (old names are still available) to make the naming more consistent with the api end points.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/33">#33</a>)</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>API End Point</p></th>
+<th class="head"><p>Old Name</p></th>
+<th class="head"><p>New Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/locations/tree</p></td>
+<td><p>getLocationHierarchy</p></td>
+<td><p>getLocationsTree</p></td>
+</tr>
+<tr class="row-odd"><td><p>/scalardata/location</p></td>
+<td><p>getDirectByLocation</p></td>
+<td><p>getScalardataByLocation</p></td>
+</tr>
+<tr class="row-even"><td><p>/scalardata/device</p></td>
+<td><p>getDirectByDevice</p></td>
+<td><p>getScalardataByDevice</p></td>
+</tr>
+<tr class="row-odd"><td><p>/rawdata/location</p></td>
+<td><p>getDirectRawByLocation</p></td>
+<td><p>getRawdataByLocation</p></td>
+</tr>
+<tr class="row-even"><td><p>/rawdata/device</p></td>
+<td><p>getDirectRawByDevice</p></td>
+<td><p>getRawdataByDevice</p></td>
+</tr>
+<tr class="row-odd"><td><p>/archivefile/location</p></td>
+<td><p>getListByLocation</p></td>
+<td><p>getArchivefileByLocation</p></td>
+</tr>
+<tr class="row-even"><td><p>/archivefile/device</p></td>
+<td><p>getListByDevice</p></td>
+<td><p>getArchivefileByDevice</p></td>
+</tr>
+<tr class="row-odd"><td><p>/archivefile/download</p></td>
+<td><p>getFile</p></td>
+<td><p>downloadArchivefile</p></td>
+</tr>
+<tr class="row-even"><td><p>N/A</p></td>
+<td><p>getDirectFiles</p></td>
+<td><p>downloadDirectArchivefile</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p>Added helper methods to combine <code class="docutils literal notranslate"><span class="pre">getXXXByLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">getXXXByDevice</span></code> into <code class="docutils literal notranslate"><span class="pre">getXXX</span></code>.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/33">#33</a>)</p>
+<p>Namely, <code class="docutils literal notranslate"><span class="pre">getScalardata</span></code>, <code class="docutils literal notranslate"><span class="pre">getRawdata</span></code> and <code class="docutils literal notranslate"><span class="pre">getArchivefile</span></code>.</p>
+</li>
+</ul>
+</section>
+<section id="id11">
+<h3>Fixes<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Removed unused modules (onc/ags.py, onc/dap.py, onc/nerc.py, onc/sos.py).
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/1">#1</a>)</p></li>
+</ul>
+</section>
+<section id="tests">
+<h3>Tests<a class="headerlink" href="#tests" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added support using .env file for storing the token when running tests.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/2">#2</a>)</p></li>
+<li><p>Replaced robot framework with pytest.
+(<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/issues/10">#10</a>)</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>Contributors<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/Jacob-Stevens-Haas">Jacob Stevens-Haas</a></p></li>
+<li><p><a class="reference external" href="https://github.com/kan-fu">Kan Fu</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Renfu-Li">Renfu Li</a></p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>Reviewers panel<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/aschlesin">Angela Schlesinger</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eliferguson">Eli Ferguson</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Jacob-Stevens-Haas">Jacob Stevens-Haas</a></p></li>
+<li><p><a class="reference external" href="https://github.com/spencerwplovie">Spencer Plovie</a></p></li>
+</ul>
+</section>
+</section>
+<section id="v2-3-5-2019-12-12-and-before">
+<h2>v2.3.5 (2019-12-12) and before<a class="headerlink" href="#v2-3-5-2019-12-12-and-before" title="Link to this heading"></a></h2>
+<section id="id14">
+<h3>Contributors<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/danyalejandro">Dany Alejandro Cabrera</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="API_Guide.html" class="btn btn-neutral float-left" title="API Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoapi/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

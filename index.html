@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onc: client library for accessing Oceans 3.0 API &mdash; onc 2.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="https://data.oceannetworks.ca/favicon.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ae39cb24"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="Tutorial/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            onc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">onc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">onc: client library for accessing Oceans 3.0 API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1 align="center">
+<img src="https://www.oceannetworks.ca/svg/logo.svg" width="300">
+</h1><br>
+<section id="onc-client-library-for-accessing-oceans-3-0-api">
+<h1>onc: client library for accessing Oceans 3.0 API<a class="headerlink" href="#onc-client-library-for-accessing-oceans-3-0-api" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://pypi.org/project/onc/"><img alt="PyPI Latest Release" src="https://img.shields.io/pypi/v/onc.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/onc/"><img alt="PyPI Supported Versions" src="https://img.shields.io/pypi/pyversions/onc.svg" /></a>
+<a class="reference external" href="https://github.com/OceanNetworksCanada/api-python-client/blob/main/LICENSE.txt"><img alt="License - Apache 2.0" src="https://img.shields.io/pypi/l/onc.svg" /></a>
+<a class="reference external" href="https://doi.org/10.3389/fmars.2022.806452"><img alt="Frontiers in Marine Science Paper" src="https://img.shields.io/badge/DOI-10.3389%2Ffmars.2022.806452-blue" /></a></p>
+<p>onc is a Python client library that facilitates access to scientific data hosted by <a class="reference external" href="https://oceannetworks.ca">Ocean Networks Canada</a>
+through the <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI">Oceans 3.0 API</a> public web services.
+It can help you explore and download our data, by consuming our
+<em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#discovery-methods">discovery</a></em>,
+<em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#data-product-download-methods">data product download</a></em>,
+<em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#archive-file-download-methods">archive file download</a></em>, and
+<em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#near-real-time-data-access-methods">near real-time data access</a></em> services.</p>
+</section>
+<section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>onc can be installed from PyPI:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>onc
+</pre></div>
+</div>
+</section>
+<section id="obtaining-a-token">
+<h2>Obtaining a token<a class="headerlink" href="#obtaining-a-token" title="Link to this heading"></a></h2>
+<p>A unique Oceans 3.0 API token is required to access our data.
+To obtain a token, follow the steps below:</p>
+<ol class="arabic simple">
+<li><p>Register for an Oceans 3.0 account at <a class="reference external" href="https://data.oceannetworks.ca/Registration">https://data.oceannetworks.ca/Registration</a>.</p></li>
+<li><p>Log into your account at <a class="reference external" href="https://data.oceannetworks.ca">https://data.oceannetworks.ca</a> by clicking the Log In link.</p></li>
+<li><p>Click the <em>Profile</em> link (top right corner) to access your account profile.</p></li>
+<li><p>Access the <em>Web Services API</em> tab and click <em>Copy Token</em>.</p></li>
+<li><p>If you forget your token, you can always find it again in your Oceans 3.0 account profile.</p></li>
+</ol>
+</section>
+<section id="searching-with-discovery-methods">
+<h2>Searching with discovery methods<a class="headerlink" href="#searching-with-discovery-methods" title="Link to this heading"></a></h2>
+<p>To download ONC data, you need to specify the type of data you require
+and where in particular (i.e. location, device) it originates from.</p>
+<p>In the Oceans 3.0 API, there’s a unique code that identifies every location, device, property, data product type, etc.
+Include these codes in a group of filters (these will be used as URL parameters when making HTTP requests)
+that determine the data you’re interested in.</p>
+<p>Discovery methods allow you to explore the hierarchy of the ONC database to obtain the codes for your filters
+(they work like a “search” function).</p>
+<p>The example below uses the <code class="docutils literal notranslate"><span class="pre">getLocations</span></code> method to search for locations that include “Burrard” in their name (i.e. “Burrard Inlet”):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">onc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ONC</span>
+
+<span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">(</span><span class="s2">&quot;YOUR_TOKEN&quot;</span><span class="p">)</span>
+<span class="n">onc</span> <span class="o">=</span> <span class="n">ONC</span><span class="p">()</span> <span class="c1"># This works if the env variable &quot;ONC_TOKEN&quot; is set</span>
+
+<span class="n">onc</span><span class="o">.</span><span class="n">getLocations</span><span class="p">({</span><span class="s2">&quot;locationName&quot;</span><span class="p">:</span> <span class="s2">&quot;Burrard&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The previous code prints a list with locations that match the search filters provided.
+Each location in the list includes a <em>dataSearchURL</em> that points to the Data Search Tool,
+and a <em>locationCode</em> (“BIPP” and “BISS” in this example) that can be used to continue searching “inside” it,
+as in the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">onc</span><span class="o">.</span><span class="n">getDeviceCategories</span><span class="p">({</span><span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BIIP&quot;</span><span class="p">})</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getDataProducts</span><span class="p">({</span><span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BIIP&quot;</span><span class="p">,</span> <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Check more on the <em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#discovery-methods">discovery methods guide</a></em>
+and <em><a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client/Code_Examples/index.html">code examples</a></em>.</p>
+</section>
+<section id="downloading-data-products">
+<h2>Downloading data products<a class="headerlink" href="#downloading-data-products" title="Link to this heading"></a></h2>
+<p>Once you determine the exact dictionary of filters that identifies the data you are interested in,
+there are multiple methods to download it.</p>
+<p>One method is to request the ONC servers to generate a custom data product with the data.
+This is done through the data product download methods.</p>
+<p>The following example downloads two PNG files with plots for 30 seconds of data from a CTD in Campbell River:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BIIP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataProductCode&quot;</span><span class="p">:</span> <span class="s2">&quot;TSSP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;png&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-20T00:30:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dpo_qualityControl&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dpo_resample&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">orderDataProduct</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">includeMetadataFile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The filters above include codes for location, deviceCategory, and dataProduct,
+as well as the file extension and a time interval (in UTC).
+They also include a couple of filters to configure this specific data product type (starting with the “dpo_” prefix),
+which can be obtained from the <a class="reference external" href="https://wiki.oceannetworks.ca/display/DP/Data+Product+Options">Data Product Options</a> documentation.
+You can download more than 120 different <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Available+Data+Products">types of data products</a> including audio &amp; video.</p>
+<p>Check more on the <em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#data-product-download-methods">data product download methods guide</a></em>
+and <em><a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Data_Products.html">code examples</a></em>.</p>
+</section>
+<section id="obtaining-sensor-readings-in-near-real-time">
+<h2>Obtaining sensor readings in (near) real-time<a class="headerlink" href="#obtaining-sensor-readings-in-near-real-time" title="Link to this heading"></a></h2>
+<p>Another method to obtain ONC data is by directly obtaining a time series of sensor readings
+(available as soon as they reach our database).</p>
+<p>In the following example, we obtain 5 seconds of conductivity readings from the CTD at Burrard Inlet:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;BIIP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;CTD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;propertyCode&quot;</span><span class="p">:</span> <span class="s2">&quot;conductivity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-20T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-06-20T00:00:05.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">getScalardata</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Longer method name</span>
+<span class="c1"># onc.getScalardataByLocation(params)</span>
+</pre></div>
+</div>
+<p>The result includes matching lists of “values” and “sampleTimes” (increases performance for long time ranges).
+We also use the property code “conductivity” to limit results to a specific property available in this CTD.</p>
+<p>Check more on the <em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#near-real-time-data-access-methods">near real-time data access methods guide</a></em>
+and <em><a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Request_Real_Time_Data.html">code examples</a></em>.</p>
+</section>
+<section id="downloading-archived-files">
+<h2>Downloading archived files<a class="headerlink" href="#downloading-archived-files" title="Link to this heading"></a></h2>
+<p>ONC scripts auto-generate and archive data products of different types at set time intervals.
+You can directly download these data product files from our files archive, as long as you know their unique filename.</p>
+<p>In the following example, we get a list of archived files available for a camera at Ridley Island (in a certain time span),
+and download one of the files:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;locationCode&quot;</span><span class="p">:</span> <span class="s2">&quot;RISS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deviceCategoryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;VIDEOCAM&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-12-01T00:00:00.000Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dateTo&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-12-01T00:05:00.000Z&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">onc</span><span class="o">.</span><span class="n">getArchivefile</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">allPages</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Longer method name</span>
+<span class="c1"># result = onc.getArchivefileByLocation(params, allPages=True)</span>
+
+<span class="c1"># Download one of the files from result[&quot;files&quot;]</span>
+<span class="n">onc</span><span class="o">.</span><span class="n">downloadArchivefile</span><span class="p">(</span><span class="s2">&quot;AXISQ6044PTZACCC8E334C53_20161201T000001.000Z.jpg&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can use the method <code class="docutils literal notranslate"><span class="pre">downloadArchivefile()</span></code> as above to download individual files or the method <code class="docutils literal notranslate"><span class="pre">downloadDirectArchivefile()</span></code>
+to download all the files that match your filters.</p>
+<p>Alternatively, if you prefer using a download manager like <a class="reference external" href="https://aria2.github.io/">aria2</a> or <a class="reference external" href="https://www.freedownloadmanager.org/">Free Download Manager</a>, <code class="docutils literal notranslate"><span class="pre">getArchivefileUrls</span></code> and <code class="docutils literal notranslate"><span class="pre">getArchivefileUrl</span></code> can return the download URLs of the archivefile
+without downloading the files.</p>
+<p>Check more on the <em><a class="reference external" href="https://oceannetworkscanada.github.io/Oceans3.0-API/API_Guide.html#archive-file-download-methods">archive file download methods guide</a></em>
+and <em><a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client/Code_Examples/Download_Archived_Files.html">code examples</a></em>.</p>
+</section>
+</section>
+<section id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h1>
+<p>The client library documentation is hosted on <a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client">GitHub Pages</a>.
+For documentation and examples about Oceans 3.0 API, visit the <a class="reference external" href="https://wiki.oceannetworks.ca/display/O2A/Oceans+3.0+API+Home">wiki</a>
+and <a class="reference external" href="https://data.oceannetworks.ca/OpenAPI">OpenAPI</a> page on the Oceans 3.0 Data Portal website.</p>
+</section>
+<section id="multithreading-issue">
+<h1>Multithreading issue<a class="headerlink" href="#multithreading-issue" title="Link to this heading"></a></h1>
+<p>We kindly ask users to <strong>not</strong> use too many threads when using threading/multiprocessing libraries on download tasks.
+It can cause issues for both server and client and may not appreciably increase download speeds.</p>
+</section>
+<section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h1>
+<p>All contributions are welcome and appreciated!
+Please refer to the <a class="reference external" href="https://oceannetworkscanada.github.io/api-python-client/contributing.html">Contributing guide</a> before submitting any issues or pull requests.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Code_Examples/index.html">Code Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API_Guide.html">API Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Tutorial/index.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ONC Data Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
