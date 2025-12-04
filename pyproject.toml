@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "onc"
-version = "2.5.1"
+version = "2.6.0"
 description = "Oceans 3.0 API Python Client Library"
 readme = "README.md"
 authors = [

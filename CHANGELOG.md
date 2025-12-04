@@ -1,5 +1,33 @@
 # Changelog
 
+## v2.6.0 (2025-12-04)
+
+### Enhancements
+
+- Bump the minimum Python version from 3.9 to 3.10.
+  
+  This is in alignment with the [status of Python versions](https://devguide.python.org/versions/).
+
+- ONC class can get the token by checking an environment variable called `ONC_TOKEN`.
+  ([#67](https://github.com/OceanNetworksCanada/api-python-client/pull/67)).
+
+  This means users can use `onc = ONC()` if `ONC_TOKEN` is set correctly (probably in a .env file)
+
+- Added a new method called `getDataAvailability`, which matches the new OpenAPI end point
+  [`/dataAvailability/dataproducts`](https://data.oceannetworks.ca/OpenAPI#get-/dataAvailability/dataproducts).
+  ([#70](https://github.com/OceanNetworksCanada/api-python-client/pull/70)).
+
+- Change the default value of `showWarning` to be `True`.
+
+### Fixes
+
+- Fix 0 file size in the print message when calling `orderDataProduct`
+  ([#64](https://github.com/OceanNetworksCanada/api-python-client/pull/64)).
+
+### Contributors
+
+- [Kan Fu](https://github.com/kan-fu)
+
 ## v2.5.1 (2025-07-12)
 
 ### Enhancements
