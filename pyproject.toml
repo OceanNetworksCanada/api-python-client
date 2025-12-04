@@ -11,7 +11,7 @@ authors = [
     { name = "ONC Data Team", email = "api_support@oceannetworks.ca" },
 ]
 license = { file = 'LICENSE.txt' }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "requests",
     'python-dateutil',
