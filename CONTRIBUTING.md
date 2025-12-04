@@ -238,18 +238,18 @@ The actual tox environments to run are specified in the [[gh]](https://github.co
 ```
 [gh]
 python =
-    3.9 = py39
     3.10 = py310, format-check, lint
     3.11 = py311
     3.12 = py312
+    3.13 = py313
 ```
 
 In the config above, tox will run different sets of tox environments on different Python versions.
 
-- on Python 3.9 job, tox runs `py39` environment,
 - on Python 3.10 job, tox runs `py310`, `format-check` and `lint` environments,
 - on Python 3.11 job, tox runs `py311` environment,
 - on Python 3.12 job, tox runs `py312` environment.
+- on Python 3.13 job, tox runs `py313` environment.
 
 _ci.yml_ uses a matrix strategy for operating systems.
 So for each Python version, it will run three times for Windows, Ubuntu, and Mac OS.

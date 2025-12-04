@@ -9,7 +9,7 @@
 project = "onc"
 copyright = "2025, ONC Data Team"
 author = "ONC Data Team"
-release = "2.5.1"
+release = "2.6.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
