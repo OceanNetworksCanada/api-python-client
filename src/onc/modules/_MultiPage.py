@@ -19,12 +19,18 @@ from onc.modules._Messages import (setup_logger, MULTIPAGE_MSG,
 
 # Handles data multi-page downloads (scalardata, rawdata, archivefiles)
 class _MultiPage:
-    def __init__(self, parent: object, verbosity: bool, raise_http_errors: bool):
+    def __init__(self, parent: object):
         self.parent = weakref.ref(parent)
         self.result = None
-        self.raise_http_errors = raise_http_errors
-        self.__log = setup_logger('onc-multi', verbosity)
+        self._log = setup_logger('onc.multi', self._config('verbosity') or 'INFO')
 
+    def _config(self, key):
+        p = self.parent()
+        if p is None:
+            return None
+        if hasattr(p, '_config'):
+            return p._config(key)
+        return getattr(p, key, None)
 
     def getAllPages(self, service: str, url: str, filters: dict):
         """
@@ -46,7 +52,7 @@ class _MultiPage:
             rNext = response["next"]
 
             if rNext is not None:
-                self.__log.info("The requested data quantity is greater than the supplied "
+                self._log.info("The requested data quantity is greater than the supplied "
                                 "row limit and will be downloaded over multiple requests.")
 
                 pageCount = 1
@@ -54,16 +60,16 @@ class _MultiPage:
                 if pageEstimate > 0:
                     # Exclude the first page when calculating the time estimation
                     timeEstimate = _formatDuration((pageEstimate - 1) * responseTime)
-                    self.__log.debug(f'Download time for page {pageCount}: {round(responseTime,2)} seconds')
-                    self.__log.info(f'Est. number of pages remaining for download: {pageEstimate-1}')
-                    self.__log.info(f'Est. number of seconds to download remaining data: {timeEstimate}')
+                    self._log.info(f'Download time for page {pageCount}: {round(responseTime,2)} seconds')
+                    self._log.info(f'Est. number of pages remaining for download: {pageEstimate-1}')
+                    self._log.info(f'Est. number of seconds to download remaining data: {timeEstimate}')
 
                 # keep downloading pages until next is None
                 while rNext is not None:
                     pageCount += 1
                     rowCount = self._rowCount(response, service)
 
-                    self.__log.debug(f"Submitting request for page {pageCount} ({rowCount} samples)...")
+                    self._log.info(f"   Submitting request for page {pageCount} ({rowCount} samples)...")
 
                     nextResponse, nextTime = self._doPageRequest(
                         url, rNext["parameters"], service, extension
@@ -75,7 +81,7 @@ class _MultiPage:
 
                 totalTime = _formatDuration(time() - start)
 
-                self.__log.info(f"Downloaded {self._rowCount(response, service):d} total samples in {totalTime}.")
+                self._log.info(f"   Downloaded {self._rowCount(response, service):d} total samples in {totalTime}.")
                 response["next"] = None
 
         return response

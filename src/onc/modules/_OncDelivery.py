@@ -16,8 +16,8 @@ class _OncDelivery(_OncService):
     Methods that wrap the API data product delivery services
     """
 
-    def __init__(self, parent: object, verbosity: str, redact_token: str, raise_http_errors: bool):
-        super().__init__(parent, verbosity, redact_token, raise_http_errors)
+    def __init__(self, parent: object):
+        super().__init__(parent)
 
         # Default seconds to wait between consecutive download tries of a file
         # (when no estimate processing time is available)
@@ -56,7 +56,6 @@ class _OncDelivery(_OncService):
                     )
                 )
 
-            print("")
             self._printProductOrderStats(fileList, runData)
 
         return self._formatResult(fileList, runData)
@@ -88,9 +87,9 @@ class _OncDelivery(_OncService):
         Return a dictionary with information of the run process.
         """
         status = ""
-        log = _PollLog(True)
-        print(
-            f"To cancel the running data product, run 'onc.cancelDataProduct({dpRequestId})'"  # noqa: E501
+        log = _PollLog(self._config("verbosity"))
+        self._log.info(
+            f"To cancel the running data product, run 'onc.cancelDataProduct({dpRequestId})'"
         )
         url = f"{self._config('baseUrl')}api/dataProductDelivery/run"
         runResult = {"runIds": [], "fileCount": 0, "runTime": 0, "requestCount": 0}
@@ -111,7 +110,9 @@ class _OncDelivery(_OncService):
             if response.ok:
                 data = response.json()
             else:
-                raise requests.HTTPError(_createErrorMessage(response))
+                from ._Messages import build_error_message
+                self._log.error(build_error_message(response, self._config("redact_token")))
+                response.raise_for_status()
 
             if waitComplete:
                 status = data[0]["status"]
@@ -127,10 +128,6 @@ class _OncDelivery(_OncService):
         # print('got filecount {}'.format(data[0]['fileCount']))
         runResult["fileCount"] = data[0]["fileCount"]
         runResult["runTime"] = time() - start
-
-        # print a new line after the process finishes
-        if waitComplete:
-            print("")
 
         # gather a list of runIds
         for run in data:
@@ -192,9 +189,9 @@ class _OncDelivery(_OncService):
         # keep increasing index until fileCount or until we get 404
         doLoop = True
         timeout = self._config("timeout")
-        print(f"\nDownloading data product files with runId {runId}...")
+        self._log.info(f"Downloading data product files with runId {runId}...")
 
-        dpf = _DataProductFile(runId, str(index), baseUrl, token)
+        dpf = _DataProductFile(runId, str(index), baseUrl, token, self._config("verbosity"))
 
         # loop thorugh file indexes
         while doLoop:
@@ -211,7 +208,7 @@ class _OncDelivery(_OncService):
                 # file was downloaded (200), or skipped before downloading (777)
                 fileList.append(dpf.getInfo())
                 index += 1
-                dpf = _DataProductFile(runId, str(index), baseUrl, token)
+                dpf = _DataProductFile(runId, str(index), baseUrl, token, self._config("verbosity"))
 
             elif status != 202 or (fileCount > 0 and index >= fileCount):
                 # no more files to download
@@ -219,7 +216,7 @@ class _OncDelivery(_OncService):
 
         # get metadata if required
         if getMetadata:
-            dpf = _DataProductFile(runId, "meta", baseUrl, token)
+            dpf = _DataProductFile(runId, "meta", baseUrl, token, self._config("verbosity"))
             try:
                 status = dpf.download(
                     timeout,
@@ -248,8 +245,8 @@ class _OncDelivery(_OncService):
         Returned rows will have the same structure as those returned by
         _DataProductFile.getInfo().
         """
-        print(
-            f"\nObtaining download information for data product files with runId {dpRunId}..."  # noqa: E501
+        self._log.info(
+            f"Obtaining download information for data product files with runId {dpRunId}..."
         )
 
         # If we don't know the fileCount, get it from the server (takes longer)
@@ -268,6 +265,7 @@ class _OncDelivery(_OncService):
                 index=str(index),
                 baseUrl=self._config("baseUrl"),
                 token=self._config("token"),
+                verbosity=self._config("verbosity"),
             )
             dpf.setComplete()
             fileList.append(dpf.getInfo())
@@ -304,7 +302,7 @@ class _OncDelivery(_OncService):
                 filters["index"] += 1
                 n += 1
 
-        print(f"   {n} files available for download")
+        self._log.info(f"   {n} files available for download")
         return n
 
     def _printProductRequest(self, response):
@@ -315,19 +313,19 @@ class _OncDelivery(_OncService):
         product source (archive or generated on the fly).
         """
         isGenerated = "estimatedFileSize" in response
-        print(f"Request Id: {response['dpRequestId']}")
+        self._log.info(f"Request Id: {response['dpRequestId']}")
 
         if isGenerated:
             size = response["estimatedFileSize"]  # API returns it as a formatted string
-            print(f"Estimated File Size: {size}")
+            self._log.info(f"Estimated File Size: {size}")
             if "estimatedProcessingTime" in response:
-                print(
+                self._log.info(
                     f"Estimated Processing Time: {response['estimatedProcessingTime']}"
                 )
         else:
             size = _formatSize(response["fileSize"])
-            print(f"File Size: {size}")
-            print("Data product is ready for download.")
+            self._log.info(f"File Size: {size}")
+            self._log.info("Data product is ready for download.")
 
     def _estimatePollPeriod(self, response):
         """
@@ -373,7 +371,7 @@ class _OncDelivery(_OncService):
 
         # Print run time
         runTime = timedelta(seconds=runInfo["runTime"])
-        print(f"Total run time: {humanize.naturaldelta(runTime)}")
+        self._log.info(f"Total run time: {humanize.naturaldelta(runTime)}")
 
         if downloadCount > 0:
             # Print download time
@@ -381,13 +379,13 @@ class _OncDelivery(_OncService):
                 txtDownTime = f"{downloadTime:.3f} seconds"
             else:
                 txtDownTime = humanize.naturaldelta(downloadTime)
-            print(f"Total download Time: {txtDownTime}")
+            self._log.info(f"Total download Time: {txtDownTime}")
 
             # Print size and count of files
             natural_size = humanize.naturalsize(size, binary=True)
-            print(f"{downloadCount} files ({natural_size}) downloaded")
+            self._log.info(f"{downloadCount} files ({natural_size}) downloaded")
         else:
-            print("No files downloaded.")
+            self._log.info("No files downloaded.")
 
     def _formatResult(self, fileList: list, runInfo: dict):
         size = 0

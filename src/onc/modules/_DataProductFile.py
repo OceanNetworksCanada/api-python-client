@@ -15,11 +15,15 @@ class MaxRetriesException(RuntimeError):
 
 class _DataProductFile:
     """
-    Donwloads a single data product file
+    Downloads a single data product file
     Is able to poll and wait if required
     """
 
-    def __init__(self, dpRunId: int, index: str, baseUrl: str, token: str):
+    def __init__(self, dpRunId: int, index: str, baseUrl: str, token: str, verbosity: str = "INFO"):
+        self.verbosity = verbosity
+        # Use child logger 'onc.poll' consistent with _PollLog
+        from ._Messages import setup_logger
+        self._log = setup_logger('onc.poll', verbosity)
         self._retries = 0
         self._status = 202
         self._downloaded = False
@@ -50,7 +54,7 @@ class _DataProductFile:
         Can poll, wait and retry if the file is not ready to download
         Return the file information
         """
-        log = _PollLog(True)
+        log = _PollLog(self.verbosity)
         self._status = 202
         while self._status == 202:
             # Run timed request
@@ -74,9 +78,7 @@ class _DataProductFile:
                         response, outPath, filename, overwrite
                     )
                 except FileExistsError:
-                    if self._retries > 1:
-                        print("")
-                    print(f'   Skipping "{self._filePath}": File already exists.')
+                    self._log.info(f'   Skipping "{self._filePath}": File already exists.')
                     self._status = 777
 
             elif self._status == 202:  # Still processing, wait and retry
@@ -84,10 +86,9 @@ class _DataProductFile:
                 sleep(pollPeriod)
 
             elif self._status == 204:  # No data found
-                print("   No data found.")
+                self._log.info("   No data found.")
 
             elif self._status == 404:  # Index too high, no more files to download
-                log.printNewLine()
                 pass
 
             elif self._status == 410:  # Status 410: gone (file deleted from FTP)
@@ -98,7 +99,8 @@ class _DataProductFile:
                     stacklevel=2,
                 )
             else:
-                raise requests.HTTPError(_createErrorMessage(response))
+                self._log.error(_createErrorMessage(response))
+                response.raise_for_status()
 
         return self._status
 
