@@ -8,7 +8,7 @@ import requests
 from ._DataProductFile import _DataProductFile
 from ._OncService import _OncService
 from ._PollLog import _PollLog
-from ._util import _createErrorMessage, _formatSize
+from ._util import _formatSize
 
 
 class _OncDelivery(_OncService):
@@ -111,7 +111,10 @@ class _OncDelivery(_OncService):
                 data = response.json()
             else:
                 from ._Messages import build_error_message
-                self._log.error(build_error_message(response, self._config("redact_token")))
+
+                self._log.error(
+                    build_error_message(response, self._config("redact_token"))
+                )
                 response.raise_for_status()
 
             if waitComplete:
@@ -191,7 +194,9 @@ class _OncDelivery(_OncService):
         timeout = self._config("timeout")
         self._log.info(f"Downloading data product files with runId {runId}...")
 
-        dpf = _DataProductFile(runId, str(index), baseUrl, token, self._config("verbosity"))
+        dpf = _DataProductFile(
+            runId, str(index), baseUrl, token, self._config("verbosity")
+        )
 
         # loop thorugh file indexes
         while doLoop:
@@ -208,7 +213,9 @@ class _OncDelivery(_OncService):
                 # file was downloaded (200), or skipped before downloading (777)
                 fileList.append(dpf.getInfo())
                 index += 1
-                dpf = _DataProductFile(runId, str(index), baseUrl, token, self._config("verbosity"))
+                dpf = _DataProductFile(
+                    runId, str(index), baseUrl, token, self._config("verbosity")
+                )
 
             elif status != 202 or (fileCount > 0 and index >= fileCount):
                 # no more files to download
@@ -216,7 +223,9 @@ class _OncDelivery(_OncService):
 
         # get metadata if required
         if getMetadata:
-            dpf = _DataProductFile(runId, "meta", baseUrl, token, self._config("verbosity"))
+            dpf = _DataProductFile(
+                runId, "meta", baseUrl, token, self._config("verbosity")
+            )
             try:
                 status = dpf.download(
                     timeout,

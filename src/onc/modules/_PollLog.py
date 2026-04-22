@@ -1,5 +1,6 @@
 from onc.modules._Messages import setup_logger
 
+
 class _PollLog:
     """
     A helper for DataProductFile
@@ -8,13 +9,16 @@ class _PollLog:
 
     def __init__(self, verbosity: str):
         """
-        @param verbosity standard logging level string
+        Parameters
+        ----------
+        verbosity : str
+            Standard logging level string.
         """
         self._messages = []  # unique messages returned during the product order
         self._runStart = 0.0  # {float} timestamp (seconds)
         self._runEnd = 0.0
         self._verbosity = verbosity
-        self._log = setup_logger('onc.poll', level=verbosity)
+        self._log = setup_logger("onc.poll", level=verbosity)
         self._doLogFileCount = True
 
     def logMessage(self, response):
@@ -38,7 +42,9 @@ class _PollLog:
             if origin == "run":
                 fileCount = response[0]["fileCount"]
                 if self._doLogFileCount and fileCount > 0:
-                    self._log.info(f"   {fileCount} files generated for this data product")
+                    self._log.info(
+                        f"   {fileCount} files generated for this data product"
+                    )
                     self._doLogFileCount = False
 
             self._messages.append(msg)

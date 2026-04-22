@@ -6,12 +6,12 @@ import re
 from pathlib import Path
 
 from dateutil import parser
+from onc.modules._Messages import setup_logger
 from onc.modules._OncArchive import _OncArchive
 from onc.modules._OncDelivery import _OncDelivery
 from onc.modules._OncDiscovery import _OncDiscovery
 from onc.modules._OncRealTime import _OncRealTime
 
-from onc.modules._Messages import setup_logger
 
 class ONC:
     """
@@ -62,6 +62,7 @@ class ONC:
     ):
         if "showInfo" in kwargs or "showWarning" in kwargs:
             import warnings
+
             warnings.warn(
                 "showInfo and showWarning are deprecated. Use verbosity instead.",
                 DeprecationWarning,
@@ -84,7 +85,7 @@ class ONC:
         self.verbosity = verbosity
         self.redact_token = redact_token
         self.raise_http_errors = raise_http_errors
-        self._log = setup_logger('onc', self.verbosity)
+        self._log = setup_logger("onc", self.verbosity)
 
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
 

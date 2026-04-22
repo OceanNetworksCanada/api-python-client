@@ -1,19 +1,14 @@
-import logging
 import weakref
-from time import time
-from urllib import parse
 
 import requests
-
-from ._util import _createErrorMessage, _formatDuration
-from onc.modules._Messages import (setup_logger,
-                                   build_error_message,
-                                   scrub_token,
-                                   REQ_MSG,
-                                   RESPONSE_TIME_MSG,
-                                   RESPONSE_MSG)
-
-
+from onc.modules._Messages import (
+    REQ_MSG,
+    RESPONSE_MSG,
+    RESPONSE_TIME_MSG,
+    build_error_message,
+    scrub_token,
+    setup_logger,
+)
 
 
 class _OncService:
@@ -23,7 +18,7 @@ class _OncService:
 
     def __init__(self, parent: object):
         self.parent = weakref.ref(parent)
-        self._log = setup_logger('onc.service', level=self._config('verbosity'))
+        self._log = setup_logger("onc.service", level=self._config("verbosity"))
 
     def _doRequest(self, url: str, filters: dict | None = None, getTime: bool = False):
         """
@@ -53,10 +48,7 @@ class _OncService:
         response = requests.get(url, filters, timeout=timeout)
 
         if self._config("redact_token"):
-            try:
-                response_url = scrub_token(response.url)
-            except:
-                response_url = response.url
+            response_url = scrub_token(response.url)
         else:
             response_url = response.url
 
@@ -65,7 +57,7 @@ class _OncService:
 
         # Display the time it took for ONC to respond in seconds.
         # The requests.Response.elapsed value is a datetime.timedelta object.
-        responseTime = round(response.elapsed.total_seconds(),3) # To milliseconds.
+        responseTime = round(response.elapsed.total_seconds(), 3)  # To milliseconds.
         self._log.debug(RESPONSE_TIME_MSG.format(responseTime))
 
         json_response = response.json()
@@ -83,8 +75,7 @@ class _OncService:
         else:
             self._log.error(RESPONSE_MSG.format(response.reason, response.status_code))
 
-            self._log.error(build_error_message(response,
-                                                 self._config("redact_token")))
+            self._log.error(build_error_message(response, self._config("redact_token")))
 
             if self._config("raise_http_errors"):
                 response.raise_for_status()
@@ -92,7 +83,6 @@ class _OncService:
             if getTime:
                 return response, responseTime
             return response
-
 
     def _serviceUrl(self, service: str):
         """
@@ -144,4 +134,3 @@ class _OncService:
                 "'locationCode' and 'deviceCategoryCode', "
                 "or a 'deviceCode' present."
             )
-

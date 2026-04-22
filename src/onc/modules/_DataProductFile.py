@@ -19,11 +19,19 @@ class _DataProductFile:
     Is able to poll and wait if required
     """
 
-    def __init__(self, dpRunId: int, index: str, baseUrl: str, token: str, verbosity: str = "INFO"):
+    def __init__(
+        self,
+        dpRunId: int,
+        index: str,
+        baseUrl: str,
+        token: str,
+        verbosity: str = "INFO",
+    ):
         self.verbosity = verbosity
         # Use child logger 'onc.poll' consistent with _PollLog
         from ._Messages import setup_logger
-        self._log = setup_logger('onc.poll', verbosity)
+
+        self._log = setup_logger("onc.poll", verbosity)
         self._retries = 0
         self._status = 202
         self._downloaded = False
@@ -78,7 +86,9 @@ class _DataProductFile:
                         response, outPath, filename, overwrite
                     )
                 except FileExistsError:
-                    self._log.info(f'   Skipping "{self._filePath}": File already exists.')
+                    self._log.info(
+                        f'   Skipping "{self._filePath}": File already exists.'
+                    )
                     self._status = 777
 
             elif self._status == 202:  # Still processing, wait and retry

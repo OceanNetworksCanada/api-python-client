@@ -10,7 +10,6 @@ class _OncDiscovery(_OncService):
     def __init__(self, parent: object):
         super().__init__(parent)
 
-
     def _discoveryRequest(self, filters: dict, service: str):
         url = self._serviceUrl(service)
         filters["token"] = self._config("token")

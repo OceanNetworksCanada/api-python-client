@@ -4,17 +4,11 @@ import weakref
 from time import time
 
 import dateutil.parser
-import humanize
+from onc.modules._Messages import (
+    setup_logger,
+)
 
 from ._util import _formatDuration
-
-from onc.modules._Messages import (setup_logger, MULTIPAGE_MSG,
-                                   build_error_message,
-                                   scrub_token,
-                                   REQ_MSG,
-                                   RESPONSE_TIME_MSG,
-                                   RESPONSE_MSG)
-
 
 
 # Handles data multi-page downloads (scalardata, rawdata, archivefiles)
@@ -22,13 +16,13 @@ class _MultiPage:
     def __init__(self, parent: object):
         self.parent = weakref.ref(parent)
         self.result = None
-        self._log = setup_logger('onc.multi', self._config('verbosity') or 'INFO')
+        self._log = setup_logger("onc.multi", self._config("verbosity") or "INFO")
 
     def _config(self, key):
         p = self.parent()
         if p is None:
             return None
-        if hasattr(p, '_config'):
+        if hasattr(p, "_config"):
             return p._config(key)
         return getattr(p, key, None)
 
@@ -36,7 +30,11 @@ class _MultiPage:
         """
         Requests all pages from the service, with the url and filters
         Multiple pages will be downloaded until completed
-        @return: Service response with concatenated data for all pages obtained
+
+        Returns
+        -------
+        dict
+            Service response with concatenated data for all pages obtained.
         """
         # pop archivefiles extension
         extension = None
@@ -48,28 +46,38 @@ class _MultiPage:
         start = time()
         response, responseTime = self._doPageRequest(url, filters, service, extension)
 
-        if isinstance(response,dict):
+        if isinstance(response, dict):
             rNext = response["next"]
 
             if rNext is not None:
-                self._log.info("The requested data quantity is greater than the supplied "
-                                "row limit and will be downloaded over multiple requests.")
+                self._log.info(
+                    "The requested data quantity is greater than the supplied "
+                    "row limit and will be downloaded over multiple requests."
+                )
 
                 pageCount = 1
                 pageEstimate = self._estimatePages(response, service)
                 if pageEstimate > 0:
                     # Exclude the first page when calculating the time estimation
                     timeEstimate = _formatDuration((pageEstimate - 1) * responseTime)
-                    self._log.info(f'Download time for page {pageCount}: {round(responseTime,2)} seconds')
-                    self._log.info(f'Est. number of pages remaining for download: {pageEstimate-1}')
-                    self._log.info(f'Est. number of seconds to download remaining data: {timeEstimate}')
+                    self._log.info(
+                        f"Download time for page {pageCount}: {round(responseTime, 2)} seconds"
+                    )
+                    self._log.info(
+                        f"Est. number of pages remaining for download: {pageEstimate - 1}"
+                    )
+                    self._log.info(
+                        f"Est. number of seconds to download remaining data: {timeEstimate}"
+                    )
 
                 # keep downloading pages until next is None
                 while rNext is not None:
                     pageCount += 1
                     rowCount = self._rowCount(response, service)
 
-                    self._log.info(f"   Submitting request for page {pageCount} ({rowCount} samples)...")
+                    self._log.info(
+                        f"   Submitting request for page {pageCount} ({rowCount} samples)..."
+                    )
 
                     nextResponse, nextTime = self._doPageRequest(
                         url, rNext["parameters"], service, extension
@@ -81,7 +89,9 @@ class _MultiPage:
 
                 totalTime = _formatDuration(time() - start)
 
-                self._log.info(f"   Downloaded {self._rowCount(response, service):d} total samples in {totalTime}.")
+                self._log.info(
+                    f"   Downloaded {self._rowCount(response, service):d} total samples in {totalTime}."
+                )
                 response["next"] = None
 
         return response
@@ -92,8 +102,22 @@ class _MultiPage:
         """
         Wraps the _doRequest method
         Performs additional processing of the response for certain services
-        @param extension: Only provide for archivefiles filtering
-        Returns a tuple (jsonResponse, duration)
+
+        Parameters
+        ----------
+        url : str
+            API endpoint URL.
+        filters : dict
+            Filters for the request.
+        service : str
+            Name of the service (e.g. archivefile).
+        extension : str, optional
+            Only provide for archivefiles filtering.
+
+        Returns
+        -------
+        tuple
+            (jsonResponse, duration)
         """
         if service.startswith("archivefile"):
             response, duration = self.parent()._doRequest(url, filters, getTime=True)

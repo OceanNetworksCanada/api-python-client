@@ -6,7 +6,7 @@ import requests
 
 from ._MultiPage import _MultiPage
 from ._OncService import _OncService
-from ._util import _createErrorMessage, _formatDuration, saveAsFile
+from ._util import _formatDuration, saveAsFile
 
 
 class _OncArchive(_OncService):
@@ -16,7 +16,6 @@ class _OncArchive(_OncService):
 
     def __init__(self, parent: object):
         super().__init__(parent)
-
 
     def getArchivefileByLocation(self, filters: dict, allPages: bool):
         """
@@ -75,6 +74,7 @@ class _OncArchive(_OncService):
 
         else:
             from ._Messages import build_error_message
+
             self._log.error(build_error_message(response, self._config("redact_token")))
             response.raise_for_status()
 
