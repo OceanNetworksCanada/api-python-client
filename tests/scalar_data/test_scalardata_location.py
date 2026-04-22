@@ -8,24 +8,24 @@ def params_multiple_pages(params_location):
     return params_location | {"rowLimit": 25}
 
 
-def test_invalid_param_value(requester, params_location):
+def test_invalid_param_value(requester, params_location, err_400):
     params_invalid_param_value = params_location | {"locationCode": "XYZ123"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getScalardata(params_invalid_param_value)
 
 
-def test_invalid_param_name(requester, params_location):
+def test_invalid_param_name(requester, params_location, err_400):
     params_invalid_param_name = params_location | {"locationCodes": "NCBC"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 129"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getScalardata(params_invalid_param_name)
 
 
-def test_no_data(requester, params_location):
+def test_no_data(requester, params_location, err_400):
     params_no_data = params_location | {
         "dateFrom": "2000-01-01",
         "dateTo": "2000-01-02",
     }
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getScalardata(params_no_data)
 
 

@@ -1,6 +1,7 @@
 import pytest
 
 
+@pytest.mark.slow
 def test_valid_manual(requester, params, expected_keys_download_results, util):
     """
     Test request -> status -> run -> download -> status.
@@ -35,6 +36,7 @@ def test_valid_manual(requester, params, expected_keys_download_results, util):
     assert data_status_after_download["searchHdrStatus"] == "COMPLETED"
 
 
+@pytest.mark.slow
 def test_valid_cancel_restart(requester, params, expected_keys_download_results, util):
     """
     Test request -> run -> cancel -> download (fail) -> restart -> download.
