@@ -1,14 +1,14 @@
-import logging
-import pprint
 import weakref
-from time import time
-from urllib import parse
 
 import requests
-
-from ._util import _createErrorMessage, _formatDuration
-
-logging.basicConfig(format="%(levelname)s: %(message)s")
+from onc.modules._Messages import (
+    REQ_MSG,
+    RESPONSE_MSG,
+    RESPONSE_TIME_MSG,
+    build_error_message,
+    scrub_token,
+    setup_logger,
+)
 
 
 class _OncService:
@@ -18,6 +18,7 @@ class _OncService:
 
     def __init__(self, parent: object):
         self.parent = weakref.ref(parent)
+        self._log = setup_logger("onc.service", level=self._config("verbosity"))
 
     def _doRequest(self, url: str, filters: dict | None = None, getTime: bool = False):
         """
@@ -44,48 +45,44 @@ class _OncService:
         filters["token"] = self._config("token")
         timeout = self._config("timeout")
 
-        txtParams = parse.unquote(parse.urlencode(filters))
-        self._log(f"Requesting URL:\n{url}?{txtParams}")
-
-        start = time()
         response = requests.get(url, filters, timeout=timeout)
-        responseTime = time() - start
 
-        if response.ok:
-            jsonResult = response.json()
+        if self._config("redact_token"):
+            response_url = scrub_token(response.url)
         else:
-            status = response.status_code
-            if status in [400, 401]:
-                msg = _createErrorMessage(response)
-                raise requests.HTTPError(msg)
-            else:
+            response_url = response.url
+
+        # Log the url the user submitted.
+        self._log.debug(REQ_MSG.format(response_url))
+
+        # Display the time it took for ONC to respond in seconds.
+        # The requests.Response.elapsed value is a datetime.timedelta object.
+        responseTime = round(response.elapsed.total_seconds(), 3)  # To milliseconds.
+        self._log.debug(RESPONSE_TIME_MSG.format(responseTime))
+
+        json_response = response.json()
+
+        # Log warning messages if json_response["messages"] is not an empty list
+        if "messages" in json_response and json_response["messages"]:
+            for message in json_response["messages"]:
+                self._log.warning(f"* {message}")
+
+        if response.status_code in (requests.codes.ok, requests.codes.accepted):
+            self._log.debug(RESPONSE_MSG.format(response.reason, response.status_code))
+            if getTime:
+                return json_response, responseTime
+            return json_response
+        else:
+            self._log.error(RESPONSE_MSG.format(response.reason, response.status_code))
+
+            self._log.error(build_error_message(response, self._config("redact_token")))
+
+            if self._config("raise_http_errors"):
                 response.raise_for_status()
-        self._log(f"Web Service response time: {_formatDuration(responseTime)}")
 
-        # Log warning messages only when showWarning is True
-        # and jsonResult["messages"] is not an empty list
-        if (
-            self._config("showWarning")
-            and "messages" in jsonResult
-            and jsonResult["messages"]
-        ):
-            long_message = "\n".join(
-                [f"* {message}" for message in jsonResult["messages"]]
-            )
-
-            filters_without_token = filters.copy()
-            del filters_without_token["token"]
-            filters_str = pprint.pformat(filters_without_token)
-
-            logging.warning(
-                f"When calling {url} with filters\n{filters_str},\n"
-                f"there are several warning messages:\n{long_message}\n"
-            )
-
-        if getTime:
-            return jsonResult, responseTime
-        else:
-            return jsonResult
+            if getTime:
+                return response, responseTime
+            return response
 
     def _serviceUrl(self, service: str):
         """
@@ -114,14 +111,6 @@ class _OncService:
             return f"{self._config('baseUrl')}api/{service}"
 
         return ""
-
-    def _log(self, message: str):
-        """
-        Prints message to console only when self.showInfo is true
-        @param message: String
-        """
-        if self._config("showInfo"):
-            print(message)
 
     def _config(self, key: str):
         """

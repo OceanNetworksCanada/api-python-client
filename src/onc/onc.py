@@ -1,10 +1,12 @@
 import datetime
 import json
+import logging
 import os
 import re
 from pathlib import Path
 
 from dateutil import parser
+from onc.modules._Messages import setup_logger
 from onc.modules._OncArchive import _OncArchive
 from onc.modules._OncDelivery import _OncDelivery
 from onc.modules._OncDiscovery import _OncDiscovery
@@ -27,14 +29,12 @@ class ONC:
 
         - True: Use the production server.
         - False: Use the internal ONC test server (reserved for ONC staff IP addresses).
-    showInfo : boolean, default False
-        Whether verbose script messages are displayed, such as request url and processing time information.
-
-        - True: Print all information and debug messages (intended for debugging).
-        - False: Only print information messages.
-    showWarning : boolean, default True
-        Whether warning messages are displayed. Some web services have "messages" key in the response JSON
-        to indicate that something might need attention, like using a default value for a missing parameter.
+    verbosity : str, default "INFO"
+        The logging verbosity level. Supported values: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL".
+    showInfo : boolean [Deprecated]
+        Use verbosity="DEBUG" or "INFO" instead.
+    showWarning : boolean [Deprecated]
+        Use verbosity="WARNING" instead.
     outPath : str | Path, default "output"
         The directory that files are saved to (relative to the current directory) when downloading files.
         The directory will be created if it does not exist during the download.
@@ -46,18 +46,34 @@ class ONC:
     >>> from onc import ONC
     >>> onc = ONC()  # Only if you set the env variable "ONC_TOKEN" # doctest: +SKIP
     >>> onc = ONC("YOUR_TOKEN_HERE")  # doctest: +SKIP
-    >>> onc = ONC("YOUR_TOKEN_HERE", showInfo=True, outPath="onc-files")  # doctest: +SKIP
+    >>> onc = ONC("YOUR_TOKEN_HERE", verbosity="DEBUG", outPath="onc-files")  # doctest: +SKIP
     """  # noqa: E501
 
     def __init__(
         self,
         token: str | None = None,
-        production: bool = True,
-        showInfo: bool = False,
-        showWarning: bool = True,
         outPath: str | Path = "output",
+        verbosity: str = "INFO",
+        raise_http_errors: bool = True,
+        redact_token: bool = False,
         timeout: int = 60,
+        production: bool = True,
+        **kwargs,
     ):
+        if "showInfo" in kwargs or "showWarning" in kwargs:
+            import warnings
+
+            warnings.warn(
+                "showInfo and showWarning are deprecated. Use verbosity instead.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+            # If verbosity wasn't explicitly changed from default, use showInfo/showWarning to set it
+            if verbosity == "INFO":
+                if kwargs.get("showInfo") is True:
+                    verbosity = "DEBUG"
+                if kwargs.get("showWarning") is False:
+                    verbosity = "ERROR"
         if token is None or token == "":
             token = os.environ.get("ONC_TOKEN")
         if token is None or token == "":
@@ -65,9 +81,14 @@ class ONC:
                 "ONC API token is required. Please provide it as the first argument, "
                 "or set it as the environment variable 'ONC_TOKEN'."
             )
+
+        self.verbosity = verbosity
+        self.redact_token = redact_token
+        self.raise_http_errors = raise_http_errors
+        self._log = setup_logger("onc", self.verbosity)
+
         self.token = re.sub(r"[^a-zA-Z0-9\-]+", "", token)
-        self.showInfo = showInfo
-        self.showWarning = showWarning
+
         self.timeout = timeout
         self.production = production
         self.outPath = outPath
@@ -77,6 +98,8 @@ class ONC:
         self.delivery = _OncDelivery(self)
         self.realTime = _OncRealTime(self)
         self.archive = _OncArchive(self)
+
+        self._log.debug("Initialized ONC module.")
 
     @property
     def outPath(self) -> Path:
@@ -106,6 +129,28 @@ class ONC:
             self.baseUrl = "https://data.oceannetworks.ca/"
         else:
             self.baseUrl = "https://qa.oceannetworks.ca/"
+
+    @property
+    def verbosity(self) -> str:
+        """
+        Return the current verbosity level.
+        """
+        return self._verbosity
+
+    @verbosity.setter
+    def verbosity(self, level: str) -> None:
+        """
+        Set the logging verbosity level for the ONC instance and all its services.
+
+        Supported values: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL".
+        """
+        self._verbosity = level.upper()
+        setup_logger("onc", self._verbosity)
+
+        # Update all existing loggers that start with 'onc.'
+        for name in logging.root.manager.loggerDict:
+            if name.startswith("onc."):
+                setup_logger(name, self._verbosity)
 
     def print(self, obj, filename: str = "") -> None:
         """
@@ -137,6 +182,34 @@ class ONC:
 
             with open(filePath, "w+") as file:
                 file.write(text)
+
+    @property
+    def showInfo(self) -> bool:
+        """
+        [Deprecated] Return whether the logger level is DEBUG.
+        """
+        return self._log.getEffectiveLevel() <= logging.DEBUG
+
+    @showInfo.setter
+    def showInfo(self, value: bool) -> None:
+        """
+        [Deprecated] Set the logger level based on the boolean value.
+        """
+        self.verbosity = "DEBUG" if value else "INFO"
+
+    @property
+    def showWarning(self) -> bool:
+        """
+        [Deprecated] Return whether the logger level is WARNING or lower.
+        """
+        return self._log.getEffectiveLevel() <= logging.WARNING
+
+    @showWarning.setter
+    def showWarning(self, value: bool) -> None:
+        """
+        [Deprecated] Set the logger level based on the boolean value.
+        """
+        self.verbosity = "WARNING" if value else "ERROR"
 
     def formatUtc(self, dateString: str = "now") -> str:
         """

@@ -6,7 +6,7 @@ import requests
 
 from ._MultiPage import _MultiPage
 from ._OncService import _OncService
-from ._util import _createErrorMessage, _formatDuration, saveAsFile
+from ._util import _formatDuration, saveAsFile
 
 
 class _OncArchive(_OncService):
@@ -73,8 +73,10 @@ class _OncArchive(_OncService):
             size, downloadTime = saveAsFile(response, outPath, filename, overwrite)
 
         else:
-            msg = _createErrorMessage(response)
-            raise requests.HTTPError(msg)
+            from ._Messages import build_error_message
+
+            self._log.error(build_error_message(response, self._config("redact_token")))
+            response.raise_for_status()
 
         # Prepare a readable status
         txtStatus = "error"
@@ -109,7 +111,7 @@ class _OncArchive(_OncService):
         dataRows = self.getArchivefile(filters, allPages)
 
         n = len(dataRows["files"])
-        print(f"Obtained a list of {n} files to download.")
+        self._log.info(f"Obtained a list of {n} files to download.")
 
         # Download the files obtained
         tries = 1
@@ -124,7 +126,7 @@ class _OncArchive(_OncService):
             fileExists = os.path.exists(filePath)
 
             if not fileExists or os.path.getsize(filePath) == 0 or overwrite:
-                print(f'   ({tries} of {n}) Downloading file: "{filename}"')
+                self._log.info(f'   ({tries} of {n}) Downloading file: "{filename}"')
                 downInfo = self.downloadArchivefile(filename, overwrite)
                 size += downInfo["size"]
                 time += downInfo["downloadTime"]
@@ -132,7 +134,7 @@ class _OncArchive(_OncService):
                 successes += 1
                 tries += 1
             else:
-                print(f'   Skipping "{filename}": File already exists.')
+                self._log.info(f'   Skipping "{filename}": File already exists.')
                 downInfo = {
                     "url": self.getArchivefileUrl(filename),
                     "status": "skipped",
@@ -142,8 +144,8 @@ class _OncArchive(_OncService):
                 }
                 downInfos.append(downInfo)
 
-        print(f"{successes} files ({humanize.naturalsize(size)}) downloaded")
-        print(f"Total Download Time: {_formatDuration(time)}")
+        self._log.info(f"{successes} files ({humanize.naturalsize(size)}) downloaded")
+        self._log.info(f"Total Download Time: {_formatDuration(time)}")
 
         return {
             "downloadResults": downInfos,

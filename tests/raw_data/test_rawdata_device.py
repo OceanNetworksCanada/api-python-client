@@ -18,15 +18,15 @@ def params_multiple_pages(params):
     return params | {"rowLimit": 25}
 
 
-def test_invalid_param_value(requester, params):
+def test_invalid_param_value(requester, params, err_400):
     params_invalid_param_value = params | {"deviceCode": "XYZ123"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getRawdata(params_invalid_param_value)
 
 
-def test_invalid_param_name(requester, params):
+def test_invalid_param_name(requester, params, err_400):
     params_invalid_param_name = params | {"deviceCodes": "BPR-Folger-59"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 129"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getRawdata(params_invalid_param_name)
 
 

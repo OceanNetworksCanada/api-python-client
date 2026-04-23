@@ -77,6 +77,9 @@ select = [
     "B", # flake8-bugbear
     "SIM", # flake8-simplify
 ]
+ignore = [
+    "E501",
+]
 
 [tool.pytest.ini_options]
 testpaths = [
@@ -84,4 +87,7 @@ testpaths = [
 ]
 addopts = [
     "--import-mode=importlib",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
 ]

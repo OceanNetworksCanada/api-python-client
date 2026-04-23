@@ -9,8 +9,8 @@ class _OncRealTime(_OncService):
     Near real-time services methods
     """
 
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, parent: object):
+        super().__init__(parent)
 
     def getScalardataByLocation(self, filters: dict, allPages: bool):
         """

@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import pytest
+import requests
 from dotenv import load_dotenv
 from onc import ONC
 
@@ -17,6 +18,16 @@ def pytest_configure():
 @pytest.fixture
 def requester(tmp_path) -> ONC:
     return ONC(production=is_prod, outPath=tmp_path)
+
+
+@pytest.fixture
+def err_400():
+    return f"{requests.codes.bad} Client Error"
+
+
+@pytest.fixture
+def err_404():
+    return f"{requests.codes.not_found} Client Error"
 
 
 @pytest.fixture(scope="session")
