@@ -8,15 +8,15 @@ def params_multiple_pages(params_device):
     return params_device | {"rowLimit": 25}
 
 
-def test_invalid_param_value(requester, params_device):
+def test_invalid_param_value(requester, params_device, err_400):
     params_invalid_param_value = params_device | {"deviceCode": "XYZ123"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getScalardata(params_invalid_param_value)
 
 
-def test_invalid_param_name(requester, params_device):
+def test_invalid_param_name(requester, params_device, err_400):
     params_invalid_param_name = params_device | {"deviceCodes": "BPR-Folger-59"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 129"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getScalardata(params_invalid_param_name)
 
 

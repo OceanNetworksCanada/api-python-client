@@ -12,9 +12,9 @@ def params():
     }
 
 
-def test_invalid_param_value(requester, params):
+def test_invalid_param_value(requester, params, err_400):
     params_invalid_param_value = params | {"locationCode": "INVALID"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDataAvailability(params_invalid_param_value)
 
 

@@ -2,12 +2,13 @@ import pytest
 import requests
 
 
-def test_invalid_param_value(requester, params):
+def test_invalid_param_value(requester, params, err_400):
     params_invalid_param_value = params | {"dataProductCode": "XYZ123"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.orderDataProduct(params_invalid_param_value)
 
 
+@pytest.mark.slow
 def test_valid_default(requester, params, expected_keys_download_results, util):
     data = requester.orderDataProduct(params)
 
@@ -30,6 +31,7 @@ def test_valid_default(requester, params, expected_keys_download_results, util):
     )
 
 
+@pytest.mark.slow
 def test_valid_no_metadata(requester, params, expected_keys_download_results, util):
     data = requester.orderDataProduct(params, includeMetadataFile=False)
 
@@ -49,6 +51,7 @@ def test_valid_no_metadata(requester, params, expected_keys_download_results, ut
     )
 
 
+@pytest.mark.slow
 def test_valid_results_only(requester, params, expected_keys_download_results, util):
     data = requester.orderDataProduct(params, downloadResultsOnly=True)
 

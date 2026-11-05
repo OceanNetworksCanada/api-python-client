@@ -341,9 +341,14 @@ def copyFieldIfExists(fromDic, toDic, keys):
     """
     Copy the field at name from fromDic to toDic only if it exists
 
-    @param fromDic: Origin Dictionary
-    @param toDic: Destination Dictionary
-    @param keys: Array of keys of the elements to copy
+    Parameters
+    ----------
+    fromDic : dict
+        Origin Dictionary.
+    toDic : dict
+        Destination Dictionary.
+    keys : list
+        Array of keys of the elements to copy.
     """
     for key in keys:
         if key in fromDic:

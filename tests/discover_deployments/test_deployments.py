@@ -2,46 +2,46 @@ import pytest
 import requests
 
 
-def test_invalid_time_range_greater_start_time(requester):
+def test_invalid_time_range_greater_start_time(requester, err_400):
     params_invalid_time_range_greater_start_time = {
         "locationCode": "BACAX",
         "deviceCategoryCode": "CTD",
         "dateFrom": "2020-01-01",
         "dateTo": "2019-01-01",
     }
-    with pytest.raises(requests.HTTPError, match=r"API Error 23"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDeployments(params_invalid_time_range_greater_start_time)
 
 
-def test_invalid_time_range_future_start_time(requester):
+def test_invalid_time_range_future_start_time(requester, err_400):
     params_invalid_time_range_future_start_time = {
         "locationCode": "BACAX",
         "deviceCategoryCode": "CTD",
         "dateFrom": "2050-01-01",
     }
-    with pytest.raises(requests.HTTPError, match=r"API Error 25"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDeployments(params_invalid_time_range_future_start_time)
 
 
-def test_invalid_param_value(requester):
+def test_invalid_param_value(requester, err_400):
     params_invalid_param_value = {"locationCode": "XYZ123", "deviceCategoryCode": "CTD"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDeployments(params_invalid_param_value)
 
 
-def test_invalid_param_name(requester):
+def test_invalid_param_name(requester, err_400):
     params_invalid_param_name = {"locationCodes": "BACAX", "deviceCategoryCode": "CTD"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 129"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDeployments(params_invalid_param_name)
 
 
-def test_no_data(requester):
+def test_no_data(requester, err_400):
     params_no_data = {
         "locationCode": "BACAX",
         "deviceCategoryCode": "CTD",
         "dateTo": "1900-01-01",
     }
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDeployments(params_no_data)
 
 

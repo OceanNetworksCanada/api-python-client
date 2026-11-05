@@ -2,40 +2,40 @@ import pytest
 import requests
 
 
-def test_invalid_time_range_greater_start_time(requester):
+def test_invalid_time_range_greater_start_time(requester, err_400):
     params_invalid_time_range_greater_start_time = {
         "locationCode": "ARCT",
         "dateFrom": "2020-01-01",
         "dateTo": "2019-01-01",
     }
-    with pytest.raises(requests.HTTPError, match=r"API Error 23"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getLocationsTree(params_invalid_time_range_greater_start_time)
 
 
-def test_invalid_time_range_future_start_time(requester):
+def test_invalid_time_range_future_start_time(requester, err_400):
     params_invalid_time_range_future_start_time = {
         "locationCode": "ARCT",
         "dateFrom": "2050-01-01",
     }
-    with pytest.raises(requests.HTTPError, match=r"API Error 25"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getLocationsTree(params_invalid_time_range_future_start_time)
 
 
-def test_invalid_param_value(requester):
+def test_invalid_param_value(requester, err_400):
     params_invalid_param_value = {"locationCode": "XYZ123"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getLocationsTree(params_invalid_param_value)
 
 
-def test_invalid_param(requester):
+def test_invalid_param(requester, err_400):
     params_invalid_param_name = {"locationCodes": "ARCT"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 129"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getLocationsTree(params_invalid_param_name)
 
 
-def test_no_data(requester):
+def test_no_data(requester, err_404):
     params_no_data = {"locationCode": "ARCT", "dateTo": "1900-01-01"}
-    with pytest.raises(requests.HTTPError, match=r"404 Client Error"):
+    with pytest.raises(requests.HTTPError, match=err_404):
         requester.getLocationsTree(params_no_data)
 
 

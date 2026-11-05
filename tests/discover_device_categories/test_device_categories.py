@@ -2,25 +2,25 @@ import pytest
 import requests
 
 
-def test_invalid_param_value(requester):
+def test_invalid_param_value(requester, err_400):
     params_invalid_param_value = {"deviceCategoryCode": "XYZ123"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 127"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDeviceCategories(params_invalid_param_value)
 
 
-def test_invalid_param_name(requester):
+def test_invalid_param_name(requester, err_400):
     params_invalid_param_name = {"deviceCategoryCodes": "CTD"}
-    with pytest.raises(requests.HTTPError, match=r"API Error 129"):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.getDeviceCategories(params_invalid_param_name)
 
 
-def test_no_data(requester):
+def test_no_data(requester, err_404):
     params_no_data = {
         "deviceCategoryCode": "CTD",
         "deviceCategoryName": "Conductivity",
         "description": "TemperatureXXX",
     }
-    with pytest.raises(requests.HTTPError, match=r"404 Client Error"):
+    with pytest.raises(requests.HTTPError, match=err_404):
         requester.getDeviceCategories(params_no_data)
 
 
