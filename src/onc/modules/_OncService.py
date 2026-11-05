@@ -60,22 +60,11 @@ class _OncService:
         responseTime = round(response.elapsed.total_seconds(), 3)  # To milliseconds.
         self._log.debug(RESPONSE_TIME_MSG.format(responseTime))
 
-        json_response = response.json()
-
-        # Log warning messages if json_response["messages"] is not an empty list
-        if "messages" in json_response and json_response["messages"]:
-            for message in json_response["messages"]:
-                self._log.warning(f"* {message}")
-
-        if response.status_code in (requests.codes.ok, requests.codes.accepted):
-            self._log.debug(RESPONSE_MSG.format(response.reason, response.status_code))
-            if getTime:
-                return json_response, responseTime
-            return json_response
-        else:
+        if response.status_code not in (requests.codes.ok, requests.codes.accepted):
             self._log.error(RESPONSE_MSG.format(response.reason, response.status_code))
-
-            self._log.error(build_error_message(response, self._config("redact_token")))
+            error_message = build_error_message(response, self._config("redact_token"))
+            if error_message:
+                self._log.error(error_message)
 
             if self._config("raise_http_errors"):
                 response.raise_for_status()
@@ -83,6 +72,18 @@ class _OncService:
             if getTime:
                 return response, responseTime
             return response
+
+        json_response = response.json()
+
+        # The logger's configured level controls which API messages are emitted.
+        if "messages" in json_response and json_response["messages"]:
+            for message in json_response["messages"]:
+                self._log.warning(f"* {message}")
+
+        self._log.debug(RESPONSE_MSG.format(response.reason, response.status_code))
+        if getTime:
+            return json_response, responseTime
+        return json_response
 
     def _serviceUrl(self, service: str):
         """

@@ -117,7 +117,13 @@ def build_error_message(response: requests.Response, redact_token: bool) -> str:
     str
         An error message.
     """
-    payload = response.json()
+    try:
+        payload = response.json()
+    except requests.exceptions.JSONDecodeError:
+        return response.text.strip() or (
+            f"HTTP {response.status_code} {response.reason}"
+        )
+
     message = payload.get("message")
 
     if "errors" in payload:

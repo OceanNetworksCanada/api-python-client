@@ -29,17 +29,21 @@ class ONC:
 
         - True: Use the production server.
         - False: Use the internal ONC test server (reserved for ONC staff IP addresses).
-    verbosity : str, default "INFO"
-        The logging verbosity level. Supported values: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL".
-    showInfo : boolean [Deprecated]
-        Use verbosity="DEBUG" or "INFO" instead.
-    showWarning : boolean [Deprecated]
-        Use verbosity="WARNING" instead.
+    showInfo : boolean, optional
+        Deprecated. Maps to verbosity="DEBUG" when true.
+    showWarning : boolean, optional
+        Deprecated. Maps to verbosity="ERROR" when false if showInfo is also False.
     outPath : str | Path, default "output"
         The directory that files are saved to (relative to the current directory) when downloading files.
         The directory will be created if it does not exist during the download.
     timeout : int, default 60
         Number of seconds before a request to the API is canceled due to a timeout.
+    verbosity : str, default "INFO"
+        The logging verbosity level. Supported values: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL".
+    raise_http_errors : bool, default True
+        Whether unsuccessful HTTP responses raise ``requests.HTTPError``.
+    redact_token : bool, default False
+        Whether request tokens are redacted from log messages.
 
     Examples
     --------
@@ -52,15 +56,17 @@ class ONC:
     def __init__(
         self,
         token: str | None = None,
+        production: bool = True,
+        showInfo: bool | None = None,
+        showWarning: bool | None = None,
         outPath: str | Path = "output",
-        verbosity: str = "INFO",
+        timeout: int = 60,
+        *,
+        verbosity: str | None = None,
         raise_http_errors: bool = True,
         redact_token: bool = False,
-        timeout: int = 60,
-        production: bool = True,
-        **kwargs,
     ):
-        if "showInfo" in kwargs or "showWarning" in kwargs:
+        if showInfo is not None or showWarning is not None:
             import warnings
 
             warnings.warn(
@@ -68,12 +74,6 @@ class ONC:
                 DeprecationWarning,
                 stacklevel=2,
             )
-            # If verbosity wasn't explicitly changed from default, use showInfo/showWarning to set it
-            if verbosity == "INFO":
-                if kwargs.get("showInfo") is True:
-                    verbosity = "DEBUG"
-                if kwargs.get("showWarning") is False:
-                    verbosity = "ERROR"
         if token is None or token == "":
             token = os.environ.get("ONC_TOKEN")
         if token is None or token == "":
@@ -82,6 +82,13 @@ class ONC:
                 "or set it as the environment variable 'ONC_TOKEN'."
             )
 
+        if verbosity is None:
+            if showInfo is True:
+                verbosity = "DEBUG"
+            elif showWarning is False:
+                verbosity = "ERROR"
+            else:
+                verbosity = "INFO"
         self.verbosity = verbosity
         self.redact_token = redact_token
         self.raise_http_errors = raise_http_errors
@@ -188,7 +195,7 @@ class ONC:
         """
         [Deprecated] Return whether the logger level is DEBUG.
         """
-        return self._log.getEffectiveLevel() <= logging.DEBUG
+        return self._log.isEnabledFor(logging.DEBUG)
 
     @showInfo.setter
     def showInfo(self, value: bool) -> None:
@@ -200,9 +207,9 @@ class ONC:
     @property
     def showWarning(self) -> bool:
         """
-        [Deprecated] Return whether the logger level is WARNING or lower.
+        [Deprecated] Return whether the logger level enables warnings.
         """
-        return self._log.getEffectiveLevel() <= logging.WARNING
+        return self._log.isEnabledFor(logging.WARNING)
 
     @showWarning.setter
     def showWarning(self, value: bool) -> None:

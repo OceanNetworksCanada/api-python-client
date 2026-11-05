@@ -12,12 +12,12 @@ def test_invalid_time_range_greater_start_time(requester, err_400):
         requester.getDevices(params_invalid_time_range_greater_start_time)
 
 
-def test_invalid_time_range_future_start_time(requester, err_400):
+def test_invalid_time_range_future_start_time(requester, err_404):
     params_invalid_time_range_future_start_time = {
         "deviceCode": "BPR-Folger-59",
         "dateFrom": "2050-01-01",
     }
-    with pytest.raises(requests.HTTPError, match=err_400):
+    with pytest.raises(requests.HTTPError, match=err_404):
         requester.getDevices(params_invalid_time_range_future_start_time)
 
 
