@@ -4,13 +4,13 @@ import pytest
 import requests
 
 
-def test_invalid_param_value(requester):
-    with pytest.raises(requests.HTTPError, match=r"API Error 96"):
+def test_invalid_param_value(requester, err_400):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.downloadArchivefile("FAKEFILE.XYZ")
 
 
-def test_invalid_params_missing_required(requester):
-    with pytest.raises(requests.HTTPError, match=r"API Error 128"):
+def test_invalid_params_missing_required(requester, err_400):
+    with pytest.raises(requests.HTTPError, match=err_400):
         requester.downloadArchivefile()
 
 

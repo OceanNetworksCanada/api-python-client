@@ -35,7 +35,11 @@ def saveAsFile(
 def _formatSize(size: float) -> str:
     """
     Returns a formatted file size string representation
-    @param size: {float} Size in bytes
+
+    Parameters
+    ----------
+    size : float
+        Size in bytes.
     """
     return humanize.naturalsize(size)
 
@@ -43,7 +47,11 @@ def _formatSize(size: float) -> str:
 def _formatDuration(secs: float) -> str:
     """
     Returns a formatted time duration string representation of a duration in seconds
-    @param seconds: float
+
+    Parameters
+    ----------
+    secs : float
+        Duration in seconds.
     """
     if secs < 1.0:
         txtDownTime = f"{secs:.3f} seconds"
