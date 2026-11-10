@@ -62,5 +62,21 @@ def test_valid_params_multiple_pages(requester, params_multiple_pages):
     assert data["next"] is not None, "Test should return multiple pages."
 
 
+def test_valid_params_multiple_pages_object_format(
+    requester, params_device, params_multiple_pages
+):
+    object_format = {"outputFormat": "object"}
+    data = requester.getScalardata(params_device | object_format)
+    data_all_pages = requester.getScalardata(
+        params_multiple_pages | object_format, allPages=True
+    )
+
+    assert isinstance(data_all_pages["sensorData"][0]["data"], list)
+    assert (
+        data_all_pages["sensorData"][0]["data"] == data["sensorData"][0]["data"]
+    ), "Test should concatenate rows for all pages."
+    assert data_all_pages["next"] is None, "Test should return only one page."
+
+
 def _get_row_num(data):
     return len(data["sensorData"][0]["data"]["values"])
