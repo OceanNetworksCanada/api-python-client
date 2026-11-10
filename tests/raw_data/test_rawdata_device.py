@@ -72,5 +72,21 @@ def test_valid_params_multi_pages(requester, params_multiple_pages):
     assert data["next"] is not None, "Test should return multiple pages."
 
 
+def test_valid_params_multiple_pages_object_format(
+    requester, params, params_multiple_pages
+):
+    object_format = {"outputFormat": "object"}
+    data = requester.getRawdata(params | object_format)
+    data_all_pages = requester.getRawdata(
+        params_multiple_pages | object_format, allPages=True
+    )
+
+    assert isinstance(data_all_pages["data"], list)
+    assert (
+        data_all_pages["data"] == data["data"]
+    ), "Test should concatenate rows for all pages."
+    assert data_all_pages["next"] is None, "Test should return only one page."
+
+
 def _get_row_num(data):
     return len(data["data"]["readings"])

@@ -133,22 +133,35 @@ class _MultiPage:
         Compatible with the row structure of different services
         """
         if service.startswith("scalardata"):
-            keys = response["sensorData"][0]["data"].keys()
-
             for sensorData in response["sensorData"]:
                 sensorCode = sensorData["sensorCode"]
 
+                # Sensor order may differ between pages, so match by sensor code.
                 nextSensor = next(
                     ns
                     for ns in nextResponse["sensorData"]
                     if ns["sensorCode"] == sensorCode
                 )
-                for key in keys:
-                    sensorData["data"][key] += nextSensor["data"][key]
+                data = sensorData["data"]
+                nextData = nextSensor["data"]
+                if not isinstance(data, list):
+                    # Array format stores each field in a separate list.
+                    for key in data:
+                        data[key] += nextData[key]
+                else:
+                    # Object format stores whole readings in a single list.
+                    data.extend(nextData)
 
         elif service.startswith("rawdata"):
-            for key in response["data"]:
-                response["data"][key] += nextResponse["data"][key]
+            data = response["data"]
+            nextData = nextResponse["data"]
+            if not isinstance(data, list):
+                # Array format stores each field in a separate list.
+                for key in data:
+                    data[key] += nextData[key]
+            else:
+                # Object format stores whole readings in a single list.
+                data.extend(nextData)
 
         elif service.startswith("archivefile"):
             response["files"] += nextResponse["files"]
@@ -190,10 +203,22 @@ class _MultiPage:
         Returns the number of records in the response
         """
         if service.startswith("scalardata"):
-            return len(response["sensorData"][0]["data"]["sampleTimes"])
+            data = response["sensorData"][0]["data"]
+            if not isinstance(data, list):
+                # Default array format: {"sampleTimes": ["...", ...], "values": [...], "qaqcFlags": [...]}
+                return len(data["sampleTimes"])
+            else:
+                # Object format: [{"sampleTime": "...", "value": 0.0, "qaqcFlag": 1}, ...]
+                return len(data)
 
         elif service.startswith("rawdata"):
-            return len(response["data"]["times"])
+            data = response["data"]
+            if not isinstance(data, list):
+                # Default array format: {"times": ["...", ...], "readings": [...], "lineTypes": [...]}
+                return len(data["times"])
+            else:
+                # Object format: [{"sampleTime": "...", "rawData": "...", "lineType": "..."}, ...]
+                return len(data)
 
         elif service.startswith("archivefile"):
             return len(response["files"])
@@ -208,12 +233,26 @@ class _MultiPage:
         # grab the first and last sample times
 
         if service.startswith("scalardata"):
-            first = response["sensorData"][0]["data"]["sampleTimes"][0]
-            last = response["sensorData"][0]["data"]["sampleTimes"][-1]
+            data = response["sensorData"][0]["data"]
+            if not isinstance(data, list):
+                # Default array format: {"sampleTimes": ["...", ...], "values": [...], "qaqcFlags": [...]}
+                first = data["sampleTimes"][0]
+                last = data["sampleTimes"][-1]
+            else:
+                # Object format: [{"sampleTime": "...", "value": 0.0, "qaqcFlag": 1}, ...]
+                first = data[0]["sampleTime"]
+                last = data[-1]["sampleTime"]
 
         elif service.startswith("rawdata"):
-            first = response["data"]["times"][0]
-            last = response["data"]["times"][-1]
+            data = response["data"]
+            if not isinstance(data, list):
+                # Default array format: {"times": ["...", ...], "readings": [...], "lineTypes": [...]}
+                first = data["times"][0]
+                last = data["times"][-1]
+            else:
+                # Object format: [{"sampleTime": "...", "rawData": "...", "lineType": "..."}, ...]
+                first = data[0]["sampleTime"]
+                last = data[-1]["sampleTime"]
 
         elif service.startswith("archivefile"):
             row0 = response["files"][0]
