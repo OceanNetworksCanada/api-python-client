@@ -133,23 +133,33 @@ class _MultiPage:
         Compatible with the row structure of different services
         """
         if service.startswith("scalardata"):
-            for sensorData in response["sensorData"]:
-                sensorCode = sensorData["sensorCode"]
+            # Index accumulated sensors by their unique code.
+            # sensor: {"sensorCode": "clock", "data": {"sampleTimes": [...], ...}, ...}
+            # sensors: {"clock": <sensor>, ...}
+            sensors = {}
+            for sensor in response["sensorData"]:
+                sensors[sensor["sensorCode"]] = sensor
 
-                # Sensor order may differ between pages, so match by sensor code.
-                nextSensor = next(
-                    ns
-                    for ns in nextResponse["sensorData"]
-                    if ns["sensorCode"] == sensorCode
-                )
+            # Sensors can appear or disappear between pages.
+            for nextSensor in nextResponse["sensorData"]:
+                # nextSensor has the same structure as sensor, from the next page.
+                sensorCode = nextSensor["sensorCode"]
+                # sensorData is the accumulated sensor dict, or None if it is new.
+                sensorData = sensors.get(sensorCode)
+                if sensorData is None:
+                    # Preserve new sensors and make them available for later matches.
+                    response["sensorData"].append(nextSensor)
+                    sensors[sensorCode] = nextSensor
+                    continue
+
                 data = sensorData["data"]
                 nextData = nextSensor["data"]
                 if not isinstance(data, list):
-                    # Array format stores each field in a separate list.
+                    # Array format: {"sampleTimes": [...], "values": [...], "qaqcFlags": [...]}
                     for key in data:
                         data[key] += nextData[key]
                 else:
-                    # Object format stores whole readings in a single list.
+                    # Object format: [{"sampleTime": "...", "value": 0.0, "qaqcFlag": 1}, ...]
                     data.extend(nextData)
 
         elif service.startswith("rawdata"):
